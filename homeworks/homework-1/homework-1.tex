@@ -1,0 +1,182 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Homework \#1}
+\rhead{\today}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+
+
+\begin{document}
+
+% I will prove Problem 2.8 of the textbook and call it a ``lemma'' because I will need it to prove Problem 2.9.
+
+% \begin{lemma}[Problem 2.8]
+% \label{cluster-subseq}
+%     Show that \( l \) is a cluster point of \( \{ x_n \} \) if and only there is a subsequence \( \{ x_{n_{j}} \}_{j=1}^{\infty} \) that converges to \( l \).
+
+%         \begin{proof}
+%             To complete this proof, we will need to show a forward and then a backward implication. 
+%             \begin{itemize}
+%                 \item[(\( \Rightarrow \))] Let \( \{ x_n\} \) be a sequence in \( \R \) with \( l \) as a cluster point. Let \( \epsilon > 0 \) be chosen. Because \( l \) is a cluster point, 
+%                 \item[(\( \Leftarrow \))] Conversely, suppose the subsequence \( \{ x_{n_{j}} \}_{j=1}^{\infty} \) of \( \{ x_n\} \) converges to the point \( l \), and let \( \epsilon > 0 \) be chosen. This means there exists \( N' \in \N \) such that whenever \( j \geq N' \), we have that \( | x_{n_{j}} - l  | < \epsilon \). Now fix any \( N \in \N \). Now let us choose \( j \geq N' \) large enough so that \( n_{j} > N \), and so because \( \{ x_{n_{j}} \}_{j=1}^{\infty} \) is convergent, \( | x_n - l  | < \epsilon \). Thus \( l \) is a cluster point.
+%             \end{itemize}
+%         \end{proof}
+    
+% \end{lemma}
+
+\begin{problem}[2.9]
+    Properties of sequences in \( \R \).
+    \begin{enumerate}[label = (\alph{*}.)] 
+  
+        \item Show that \( \lim \sup x_n \) and \( \lim \inf x_n \) are the largest and smallest cluster points of the sequence \( \{ x_n\} \).
+            \begin{proof}
+                Let \( \{ x_n \} \) be any sequence in \( \R \). First to show that \( l  = \lim \sup x_n \) is indeed a cluster point, let \( \epsilon > 0 \) be chosen. Because \( l \) is the limit superior, there exists \( n_1 \in \N \) such that \( x_{k_{1}} < l + \epsilon \) for all \( k_1 \geq n_1 \). Additionally, there are infinitely many value of this value \( n_1 \) such that \( x_k  > l - \epsilon \) for some \( k_1 \geq n_1 \), which together with the last sentence implies that \( | x_{k_{1}} - l | < \epsilon \). To inductively create a subsequence, let \( n_1, \ldots, n_j \) and \( x_{k_{1}}, \ldots, x_{k_{j}} \) be arbitrary. Let \( n_{j+1} \) be chosen such that \( n_{j+1} > \max \{ k_1, \ldots, k_j \} \). Then, because \( l \) is the limit superior \( x_{k} < l + \epsilon \) for any \( k \geq n_{j+1} \). Further, for sufficiently large \( n_{j+1} \), there exists \( k_{j+1} \geq n_{j+1} \) such that \( x_{k_{j+1}} > l - \epsilon \), which gives us that \( | x_{k_{j+1}} - l| < \epsilon \). Because we can always choose the next point in the subsequence in this manner, this means that the  subsequence \( \{ x_{n_{j} }\} \) converges to \( l \). By Problem 2.8, this means that \( l \) is a cluster point of \( \{ x_n \} \).
+                
+                By way of contradiction, suppose that \( l \) is not the largest cluster point of the sequence. That is, there exists a cluster point \( y \) of \( \{ x_n \} \) such that \( y > l \). Note that by Problem 2.8, this means that there exists a subsequence \( \{ x_{n_{j} }\} \) which converges to \( y \). Because \( l \) is the limit superior of the sequence, for any \( \epsilon > 0 \), we can find \( n \in \N \) such that \( x_k < l + \epsilon \) whenever \( k \geq n \). Since this is true for any \( \epsilon > 0 \), we can choose \( \epsilon > 0 \) small enough so that we have 
+                    \[
+                        l < l + \epsilon < y - \epsilon < y.  
+                    \]
+                This means that there are a finite number of terms of \( \{ x_n \} \) contained within the interval \( (y - \epsilon, y + \epsilon) \). In other words, there does not exist a subsequence \( \{ x_{n_{j} }\} \) which converges to \( y \) as we would necessarily need an infinite number of terms  within \( \epsilon \) of \( y \)---a contradiction. Therefore, \( l \) is the largest cluster point.
+
+                By a reverse argument, we can show that \( \lim \inf x_n \) is a cluster point of \( \{ x_n\} \) as well as the smallest cluster point.
+            \end{proof}
+        \item Show that every bounded sequence has a convergent subsequence.
+        
+            \begin{proof}
+                Let \( \{ x_n \} \) be a bounded sequence. In other words, \( \sup x_n \) is a  finite real number. By definition of the limit superior, \( \lim \sup x_n \leq \sup x_n \). From part (a), because \( lim \sup x_n \) is a cluster point, we  can always construct a convergent subsequence (as well as for the limit inferior of the sequence) and so this completes this part.
+            \end{proof}
+    \end{enumerate}
+
+\end{problem}
+
+\begin{problem}[2.43]
+
+    Let \( f \) be defined as 
+        \[
+            f(x) =  
+            \begin{cases}
+                x & \text{if} \ x \ \text{is irrational} \\
+                p \sin \left( \frac{1}{q} \right) & \text{if} \ x = \frac{p}{q} \ \text{in lowest terms.}    
+            \end{cases}  
+        \]
+
+            At what points is \( f \) continuous? (Please justify your answer.)
+
+            \begin{proof}
+
+                I claim that \( f \) is not continuous at the rational numbers. To that end, let \( x \in Q \) and choose \( \epsilon = x - f(x) \). Fix \( \delta > 0 \). Note that we can always find an irrational number \( y \in (x, x + \delta) \). Because \( y \) is irrational, by definition of the function, \( f(y) - f(x) = y - f(x) \). But then \( y - f(x) > x - f(x) = \epsilon \).
+
+                For \( x =  0  \), fix \( \epsilon > 0 \). Choose \( \delta = \epsilon  \), and a pick a point \( y \in \R \) such that \( |x - y| = |y - 0| = |y| < \delta \).
+                Now because \(\sin(1/q) < 1/q  \) for any \( q \in \N \), we know that 
+                    \begin{align*}
+                        |f(y)  - f(0)| &\leq |y - 0| \\ 
+                                    &< \delta \\
+                                    &= \epsilon
+                    \end{align*}
+                so \( f \) is continuous at \( 0 \).
+
+                \( f \)  is also continuous at the irrationals. This is because we can if we pick any point \( x \) in the irrationals, we can find sufficiently large \( q \) so a rational number \( y = \frac{p}{q} \) is close to \( x \) (i.e, for a fixed \( \epsilon \), choose \( \delta \) to be smaller than \( f(y) - y \) for this to work). Then this would allow us to bound \( |f(y) - f(x)| \) leveraging that we can put the rational numbers in lowest terms    
+                
+            \end{proof}
+    
+\end{problem}
+
+\begin{problem}
+
+    Show that \( F \subset \R \) is a closed set if and only if \( F^{\C} \) is open.
+
+    \begin{proof}
+
+        To complete this proof, we will need a forward and backwards implication. 
+        \begin{itemize}
+                \item[(\( \Rightarrow \))] Suppose \( F \subset \R \) is a closed set. Because we desire to show that \( F^{\C} \) is open, let \( x \in F^{\C} \) be a point. This means that \( x \not\in F \). Since \( F \) is a closed set (i.e., \( F = \overline{F} \) ) and \( x \not\in F \), we know \( x \) is not a point of closure of \( F \). So there exists \( \delta > 0 \) such that for all \( y \in F \), we do not have \( | x - y| < \delta \). But then if \( |x - y| < \delta \), this must mean that \( y \in F^{\C} \), and so \( F \) is an open set.
+            
+                \item[(\( \Leftarrow \))] Conversely, suppose that the set \( F^{\C} \) is open. Let \( x \in F^{\C} \). Then there exists \( \delta > 0 \) such that if \( | x - y | < \delta \), then \( y \in F^{C} \). This means that there is no \( y \in F \) such that \(| x-y | < \delta \) and so \( x \) cannot be a point of closure of \( F \). Thus, because \( x \) is arbitrary, \( F \) necessarily contains all its points of closure; in other words, \( F = \overline{F} \) and thus F must be closed, completing this direction.
+            \end{itemize}
+        Having completed both implications, this completes the proof.
+    \end{proof}
+    
+\end{problem}
+
+
+\end{document}
