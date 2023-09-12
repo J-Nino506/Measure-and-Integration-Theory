@@ -84,11 +84,168 @@
 \newtheorem{problem}{Problem}
 \newtheorem*{lemma}{Lemma}
 \newtheorem*{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+
 
 \begin{document}
 
+\begin{thm}[2.3, \textbf{Axiom of Archimedes}]
+
+    If \( x \in \R \) is any real number, then there exists \( n \in \N \) such that \( x < n \).
+
+    \begin{proof}
+        We can break this into two cases
+            \begin{enumerate}
+                \item Let \( x < 1 \). If so, then simply choose \( x = 1 \).
+                \item Let \( x \geq 1 \). Define the set \( S = \{ n \in N : n \leq x \} \). Then since this set is bounded above, by the Completeness Axiom, \( \sup S = y \) exists. Because \( x \) is an upper bound \( S \), by definition of the supremum, we have that \( y \leq x \).
+                Let \( r  = \frac{1}{2} \). Then we can find \( k \in S \) such that \( y - \frac{1}{2}  < k \leq y \). But then we have that \( y <  y + \frac{1}{2} < k + 1 \leq y +1 \). Then this means \( k + 1 \not\in S \) and so \( x < k + 1\), completing this case.
+            \end{enumerate}
+        Having exhausted all cases, this completes the proof.
+    \end{proof}
+    
+\end{thm}
+
+\begin{prop}[\textbf{Well-Ordering Principle}]
+
+    Every nonempty subset \( S \subset \N \) has a minimum. 
+
+\end{prop}
+
+\begin{prop}[\textbf{Density of the Rational Numbers}]
+
+    Let \( x, y \in \R \). Then if \( x < y \), there exists \( q \in \Q \) such that \( x < \gamma < y \)
+    
+\end{prop}
+
+\section*{Section 2.4, Sequences in \(\R\)}
+
 \begin{definition}
+    We define a \textbf{sequence} of real numbers to be a function that maps each each natural number \( n \) into the real number \( x \). That is, a sequence is a function \( s: \N \to A \) for \( A \subset \R \). This is written as \( \{ x_n \} \) or \( \{ x_n \}_{n=1}^{\infty} \).
+\end{definition}
+
+\begin{definition}[\textbf{Convergence of a Sequence}]
+
+    A sequence converges to the real number \( l \in \R \) if for all \( \epsilon > 0 \), there exists \( N \in \N \) such that for all \( n \geq N \),
+        \[
+            |a_n - l| < \epsilon.  
+        \]
     
 \end{definition}
 
+\begin{definition}[\textbf{Cauchy Sequence}]
+
+    A sequence \( \{ x_n \} \) in \( \R \) is \textbf{Cauchy} sequence if for all \( \epsilon > 0 \), there exists \( N \in \N \) such that for all \( n, m \geq N \),
+        \[
+            | a_n - a_m| < \epsilon.  
+        \]
+    
+\end{definition}
+
+\begin{thm}
+    Let \( \{x_n\} \) be a sequence in \( \R \). Then \( \{ x_n\} \) is Cauchy if and only \( \{ x_n \} \) is Cauchy.
+
+\end{thm}
+
+\begin{definition}
+    The number \( l \in \R \) is called a \textbf{cluster point} of \(  \{x_n\} \) if there exists a subsequence \( \{ x_{n_{m}} \} \) of \( \{ x_n\} \) such that \( x_{n_{m}} \to l \).
+
+    We can define this in another way. The number \( l \in \R \) is called \textbf{cluster point} of \( \{ x_n \} \) if for all \( \epsilon > 0 \) and for all \( N \in \N \), there exists \( n \geq N \) such that \( |x_n - l| < \epsilon \).
+\end{definition}
+
+\begin{definition}
+    We define the \textbf{limit superior} of a sequence \( \{ x_n \} \) in \( \R \) to be 
+        \[
+            \overline{\lim}_{n \to \infty} \ x_n = \inf_{n} \sup_{k \geq n} x_k. 
+        \]
+    This is also denoted as \( \lim \sup \).
+\end{definition}
+
+\begin{definition}
+    We define the \textbf{limit inferior} of a sequence \( \{ x_n \} \) in \( \R \) to be 
+        \[
+            \underline{\lim}_{n \to \infty} \ x_n = \sup_{n} \inf_{k \geq n} x_k. 
+        \]
+    This is also denoted as \( \lim \inf \).
+\end{definition}
+
+Observe that 
+
+\begin{prop}
+    From the last two definitions, we have the following property.
+    \begin{itemize}
+
+        \item \( \overline{\lim}_{n \to \infty} \) is the largest cluster point.
+        \item \( \underline{\lim}_{n \to \infty} \) is the smallest cluster point.
+    \end{itemize}
+    
+\end{prop}
+
+\section*{Section 2.5, Open and Closed Sets in \( \R \)}
+
+\begin{definition}
+    The set \( O \subset \R \) is called an \textbf{open} set if for all \( x \in O \), there exists \( \delta > 0 \) such that \( x - \delta, x + \delta \).
+
+    Equivalently, \( O \) is an \textbf{open} set if for all \( x \in O \), there is a \( \delta > 0 \) such that each \( y \) with \( |x - y| < \delta \) belongs to \( O \).
+\end{definition}
+
+\begin{prop}
+    From this above, we have the following properties:
+
+    \begin{enumerate}
+        \item The set \( \displaystyle \bigcup_{\alpha} O_{\alpha} \) is open. 
+        \item The set \( \displaystyle \bigcup_{n=1}^{n} O_m \) is open.
+    \end{enumerate}
+\end{prop}
+
+\begin{thm}[\textbf{Lindelof Theorem}]
+
+    Every open set in \( \R \) is a disjoint union of countable union of open intervals.
+
+        \begin{proof}
+            This proof is contained on page 42 of Royden.
+        \end{proof}
+    
+\end{thm}
+
+\begin{definition}
+    A real number \( x \in \R \) is called \textbf{point of closure} of a set \( E \subset \R \) if for every \( \delta > 0 \) there exists a \( y \in E \) such that \( |x - y| < \delta \).
+
+    The set of points of closure of \( E \) is denoted \( \overline{E} \).
+\end{definition}
+
+\begin{prop}
+    If \( A \subset B \subset \R \), then \( \overline{A} \subset \overline{B} \). Additionally, \( \overline{A \cup B } = \overline{A} \cup \overline{B} \).
+
+        \begin{proof}
+            The proof of this is on page 43 of Royden.
+        \end{proof}
+\end{prop}
+
+\begin{definition}
+    A set \( F \subset \R \) is called a \textbf{closed} set if \( \overline{F} = F \).
+\end{definition}
+
+Note that because \( F  \subset \overline{F} \) always, a set \( F \) is closed if \( \overline{F} \subset F \)---that is, \( F \) contains all of its points of closure.
+
+\begin{prop}
+    For any set \( E \), the set \( \overline{E} \) is closed; that is \( \overline{\overline{E}} = \overline{E} \).
+\end{prop}
+
+\begin{prop}
+    Let \( E \subset \R \). Then \( E \) is open if and only if \( E^{\C} \) is closed.
+\end{prop}
+
+\begin{definition}
+    We say that a collection of sets \( \C \) is a \textbf{cover} of a set \( F \) if 
+        \[
+            F \subset \bigcup_{O \in \C} O.  
+        \]
+    The collection \( \C \) is a covering of the set \( F \).
+\end{definition}
+
+\begin{thm}[\textbf{Heine-Borel}]
+
+    Let \( E \subset \R \) be set. Then \( E \) is compact if and only if \( E \) is closed and bounded.
+    
+\end{thm}
 \end{document}
