@@ -84,11 +84,93 @@
 \newtheorem{problem}{Problem}
 \newtheorem*{lemma}{Lemma}
 \newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
 
 \begin{document}
 
+\section*{Compactness}
+
+\begin{thm}
+    Let \(E \subset \R \). Then \( E \) is compact if and only \( E\) is sequentially compact. That is, for every \( \{ x_n \} \) in \( E \), there exists a convergent subsequence \( x_{n_{m} } \to x_0 \) in E.
+\end{thm}
+
+
+\begin{thm}
+
+        Let \( \{ I_n \} \) be a sequence of closed intervals such that \( I_{n+1} \subset I_n \). Then 
+            \[
+                \bigcap_{n=1}^{\infty} I_n \neq \emptyset.  
+            \]
+        If \( [a_n, b_n] \) is an interval and \( \displaystyle\lim_{n \to \infty} a_n = \lim_{n \to \infty} = a \), then \( \displaystyle \bigcap_{n=1}^{\infty} \).
+\end{thm}
+
+\section*{Section 2.6, Continuous Functions}
+
 \begin{definition}
+    Let \( E \subset \R \), and let \( f: E \to \R \) be a real-valued function. Then \( f \) is \textbf{continuous} at the point \( x = a \in E\) if for all \( \epsilon > 0 \), there exists \( \delta > 0 \) such that for all \( y \in E \) with \( |x - y| < \delta \) implies that \( |f(x) - f(y)| < \epsilon \).
+\end{definition}
+
+Note that we can have continuity in terms of sequences. I will state it as a theorem here even though it was not in lecture because it is important to be able to use on its own.
+
+\begin{thm}
+    Let \( f: E \to \R \) be a function with \( E \subset \R \). Let \( x \in E \) be any point. Then \( f \) is continuous at \( a \) if and only for every sequence \( \{x_n\} \) in E converging to \( a\), the sequence \( \{ f(x_n) \} \) in \( f(E) \) (the image of \( E\)) converges to \( f(a) \).
+\end{thm}
+
+\begin{prop}
+    Let \( E \subset \R \) be compact. Let \( f: E \to \R \) be continuous real-valued function. Then \( f(E) \) is a compact set. 
+
+    \begin{proof}
+        Let \( \subset \R \) be a compact and suppose the function \( f: E \to \R \) is continuous. To show that \( f(E) \) is compact, we will use the Heine-Borel theorem and show that it is closed and bounded. To show that \( f(E) \) is closed, suppose we have any sequence \( \{ f(x_n) \} \) converging to the point \( f(a) \in \R \). Additionally, let \( \{ x_n \} \) be any sequence in \( E \). Because \( E \) is compact, there exists a subsequence \( \{ x_{n_{m}} \}\) which converges to a point \( x_0 \in E \). Since \( f \) is continuous, by the preceding theorem this means that the sequence \( \{ f(x_{n_{m}} )\} \) converges to \( f(x_{0}) \in f(E) \).
+    \end{proof}
+\end{prop}
+
+\begin{prop}[\textbf{2.17, Extreme Value Theorem}]
+
+    Let \( E \subset \R \) be a compact set, and let \( f: E \to \R \) be a continuous function. Then there exists \( x_1, x_2 \in E \) such that
+        \[
+            f(x_1) \leq f(x) \leq (x_2), \ \text{for all x} \in E.  
+        \] 
+    
+\end{prop}
+
+\begin{prop}[\textbf{2.18}]
+
+    Let \( f: \R \to \R \) be a function. Then \( f \) is \textbf{continuous} if and only if \( f^{-1}(O) \) is open for all open sets \( O \subset \R \).
+    
+\end{prop}
+
+\begin{prop}[\textbf{2.19}]
+
+    Let \( E \subset \R \), and let \( f: E \to \R \) be continuous. Without loss of generality, suppose that \( f(a) \leq f(b) \). Then for all \( \gamma \in [f(a), f(b)] \), there exists \( c \in [a, b] \) such that \( f(c) = \gamma \).
+    
+\end{prop}
+
+\begin{definition}[\textbf{Uniform Continuity}]
+
+    Let \( E \subset \R \). A function \( f: E \to \R \) is \textbf{uniformly continuous} if for all \( \epsilon > 0 \), there exists \( \delta > 0 \) such that for all \( x, y \in E \) with \( |x - y| < \delta \) implies that \( |f(x) - f(y)| < \epsilon \).
     
 \end{definition}
+
+\begin{prop}[\textbf{2.20}]
+
+    Let \( E \subset \R \) be a compact set. If \( f: E \to \R \) is a continuous function on \( E \), then \( f \) is uniformly continuous on \( E \).
+    
+\end{prop}
+
+\begin{definition}
+    Let \( f_n: E \to \R \) be a sequence of functions, and let \( f: E \to \R \).
+
+        \begin{enumerate}
+            \item The sequence \( \{ f_n \} \) \textbf{converges pointwise} on \( E \) to \( f \) if for all \( \epsilon > 0 \) and for all \( x \in E \), there exists \( N \in \N \) such that for all \( n \geq  N\), \( |f(x) - f_n(x)| < \epsilon \).
+            \item The sequence \( \{ f_n \} \) \textbf{converges uniformly} if for all \( \epsilon > 0 \), there exists \( N \in \N \) such that for all \( x \in E \) and for all \( n \geq N\), \( |f(x) - f_n(z)| < \epsilon \).
+        \end{enumerate}
+\end{definition}
+
+\section*{Section 3.1, Lebesgue Measure}
+
+
+[Perhaps finish these notes another time...]
+
+
 
 \end{document}
