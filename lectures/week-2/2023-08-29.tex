@@ -160,6 +160,14 @@
     This is also denoted as \( \lim \sup \).
 \end{definition}
 
+\begin{thm}
+    A number \( l \in \R \) is the \textbf{limit superior} of the sequence \( \{ x_n \} \) if and only if 
+        \begin{enumerate}[label = (\roman{*})]
+            \item For all \( \epsilon > 0 \), there exists \( n \in \N \) such that for all \( k \geq n\), \( x_k < l + \epsilon \)
+            \item For all \( \epsilon > 0 \) and for all \( n \in \N \), there exists \( k \geq n \) such that \( x_{k} > l - \epsilon \). 
+        \end{enumerate}
+\end{thm}
+
 \begin{definition}
     We define the \textbf{limit inferior} of a sequence \( \{ x_n \} \) in \( \R \) to be 
         \[
@@ -168,7 +176,13 @@
     This is also denoted as \( \lim \inf \).
 \end{definition}
 
-Observe that 
+\begin{thm}
+    A number \( l \in \R \) is the \textbf{limit inferior} of the sequence \( \{ x_n \} \) if and only if 
+        \begin{enumerate}[label = (\roman{*})]
+            \item For all \( \epsilon > 0 \), there exists \( n \in \N \) such that for all \( k \geq n\), \( x_k > l - \epsilon \)
+            \item For all \( \epsilon > 0 \) and for all \( n \in \N \), there exists \( k \geq n \) such that \( x_{k} < l + \epsilon \). 
+        \end{enumerate}
+\end{thm}
 
 \begin{prop}
     From the last two definitions, we have the following property.
