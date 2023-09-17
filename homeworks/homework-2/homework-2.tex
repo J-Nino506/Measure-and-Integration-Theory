@@ -90,54 +90,248 @@
 
 \begin{problem}[3.5]
 
-    Let \( A \) be thee set of rational numbers between \( 0 \) and \( 1 \), and let \( \{ I_n \} \) be a \textbf{finite} collection of open intervals covering A. Then \( \displaystyle \sum_{i=1}^{n} l(I_n) \geq 1 \).
+    Let \( A \) be the set of rational numbers between \( 0 \) and \( 1 \), and let \( \{ I_n \} \) be a \textbf{finite} collection of open intervals covering A. Then \( \displaystyle \sum_{n=1}^{k} l(I_n) \geq 1 \).
 
         \begin{proof}
-            
+            Define the set \( A = \Q \cap [0, 1] \). Let \( \{ I_n \}_{n=1}^{k} \) be a \textbf{finite} collection of open intervals covering A meaning we have that 
+                \[
+                    A \subset \bigcup_{n=1}^{k} I_n
+                \]
+            We can create the following string of inequalities:
+                \begin{align*}
+                    1 = l([0, 1]) &= m^{*}([0, 1]) \\
+                                  &= m^{*}\left( \overline{A} \right) & \text{Density of} \ \Q \\
+                                  &\leq m^{*} \left( \overline{\bigcup_{k=1}^{n} I_n}\right) & A \subset B \implies \overline{A} \subset \overline{B} \\
+                                  &= m^{*} \left( \bigcup_{k=1}^{n} \overline{I_n} \right) & \overline{A \cup B} = \overline{A} \cup \overline{B} \\
+                                  &\leq \sum_{k=1}^{n} m^{*}\left( \overline{I_{n}}\right) & \text{Subadditivity of} \ m^{*} \\
+                                  &= \sum_{k=1}^{n} l\left( \overline{I_n} \right) \\
+                                  &= \sum_{k=1}^{n} l(I_n)
+                \end{align*}
+            which shows the desired result, completing the proof.
         \end{proof}
      
 \end{problem}
 
 \begin{problem}[3.10]
 
-    Show that if \( E_1 \) and \( E_2 \) are measure, then 
+    Show that if \( E_1 \) and \( E_2 \) are measurable, then 
         \[
-            m(E_1 \cap  E_2) + m(E_1 + E_2) = mE_1 + mE_2.
+            m(E_1 \cap  E_2) + m(E_1 \cup E_2) = mE_1 + mE_2.
         \]
     Recall that if \( E \) is measurable, then \( mE := m^{*} E \).
 
         \begin{proof}
             
+            Suppose \( E_1 \) and \( E_2 \) are measurable sets. To show the above equality, the goal will be to rewrite sets as disjoint unions and utilize the subadditivity of \( m \). So note that 
+                \begin{align*}
+                    E_1 \cup E_2 = (E_1 \setminus E_2) \cup (E_2 \setminus E_1) \cup (E_1 \cap E_2)
+                \end{align*}
+            and so by the subadditivity of \( m \),
+                \[
+                    m(E_1 \cup E_2) = m(E_1 \setminus E_2) + m(E_2 \setminus E_1) + m(E_1 \cap E_2).
+                \]
+            Thus, adding \( m(E_1 \cap E_2) \) to the left-hand side
+                \begin{align*}
+                    m(E_1 \cup E_2) + m(E_1 \cap E_2) &= (m(E_1 \setminus E_2) + m(E_2 \setminus E_1) + m(E_1 \cap E_2)) + m(E_1 \cap E_2) \\
+                                                      &= (m(E_1 \setminus E_2) +  m(E_1 \cap E_2)) + (m(E_2 \setminus E_1) + m(E_1 \cap E_2)).
+                \end{align*}
+
+            Now, let us write \( E_1 \) and \( E_2 \) as disjoint unions:
+                \begin{align*}
+                    E_1 &= (E_1 \setminus E_2) \cup (E_1 \cap E_2); \\
+                    E_2 &= (E_2 \setminus E_1) \cup (E_1 \cap E_2)
+                \end{align*}
+            which, again, by the subadditivity of \( m \),
+                \begin{align*}
+                    m(E_1) &= m(E_1 \setminus E_2) + m(E_1 \cap E_2); \\
+                    m(E_2) &= m(E_2 \setminus E_1) + m(E_1 \cap E_2).
+                \end{align*}
+            Therefore, this gives us that 
+                \[
+                    m(E_1 \cup E_2) + m(E_1 \cap E_2) = m(E_1) + m(E_2)
+                \]
+            showing the desired result.
         \end{proof}
     
 \end{problem}
 
 \begin{problem}[3.13]
 
-    Prove Proposition 15 by the following steps:
+    Prove Proposition 15 by the following steps which I will state below for the record.
+
+
+    Let \( E \) be any given set. Then the following are equivalent:
+        \begin{enumerate}[label = (\roman{*})]
+            \item \( E \) is measurable.
+            \item For all \( \epsilon > 0 \), there is an open set \( O \supset E \) with \( m^{*}(O \setminus E) < \epsilon \).
+            \item For all \( \epsilon > 0 \), there is a closed set \( F \subset E \) with \( m^{*}(E \setminus F) < \epsilon \).
+            \item There is a \( G \in G_{\delta} \) with \( E \subset G \) such that \( m^{*}(G \setminus E) = 0 \). 
+            \item There is a \( F \in F_{\sigma} \) with \( F \subset E \) such that \( m^{*}(E \setminus F) = 0 \). 
+            
+            \noindent If \( m^{*}(E) < \infty \), the above statements are equivalent:
+
+            \item For all \( \epsilon > 0 \), there is a finite union \( U \) of open intervals such that \( m^{*}(U \Delta E) < \epsilon \).
+
+        \end{enumerate}
+
         \begin{enumerate}[label = \alph{*}.]
             \item Show that for \( m^{*} E < \infty \), \( (i) \Rightarrow (ii) \Leftrightarrow (vi) \).
             \begin{proof}
-                To show that the following are equivalent, we will need to create a chain of implications starting with the outline above. 
+                To show that the following are equivalent, we will need to create a chain of implications starting with the outline above. For all of these proofs, assume that \( m^{*}(E) < \infty \).
 
                 \begin{enumerate}
-                    \item[\((i) \Rightarrow (ii)\)]
-                    \item[\((ii) \Rightarrow (vi)\)]
-                    \item[\((vi) \Rightarrow (ii)\)]   
+                    \item[(i)  \( \Rightarrow \) (ii)] 
+
+                        Suppose \( E \) is a measurable set. Let \( \epsilon > 0 \) be chosen. Because \( E \) is measurable and thus \( m^{*}(E) = m(E) \), there exists a countable collection of open intervals \( \{ I_n \}_{n=1}^{\infty} \) so that 
+                            \[
+                                m(E) + \epsilon > \sum_{n=1}^{\infty} l(I_n).  
+                            \]
+                        Since \( \{ I_n \}_{n=1}^{\infty} \) is open, the set \( \displaystyle O = \bigcup_{n=1}^{\infty} I_n \) is an open set as well. By Proposition 3.1, we know that 
+                            \[
+                                m(O) = m \left( \bigcup_{n=1}^{\infty} I_n \right)  =  \sum_{n=1}^{\infty} l(I_n).
+                            \]
+                        Again, because \( E \) is measurable, we know that \( E \subset O \). Now it is left to show that \( m(O \setminus E) \). Because \( O \) and \( E \) are disjoint, we have that
+                            \begin{align*}
+                                m(O \setminus E) &= m(O) - m(E) \\
+                                                 &= \sum_{n=1}^{\infty} l(I_n) - m(E) \\
+                                                 &< \left(  m(E) + \epsilon \right) - m(E) \\
+                                                 &= \epsilon
+                            \end{align*}
+                        which completes this direction.
+
+                    \item[(ii) \( \Rightarrow \) (vi)]
+                            
+                            Let \( \epsilon > 0 \) be chosen. Then by our hypothesis, there exists an open set \(  O \) such that \( \displaystyle m^{*}(O \setminus E) < \frac{\epsilon}{2} \). By the Lindelof Lemma, the set \( O \) can be written as countable union of open intervals i.e., there exists a countable collection of intervals \( \{I_n\}_{n=1}^{\infty} \) so that \( \displaystyle O = \bigcup_{n=1}^{\infty} I_n \). Satisfying the conditions of Proposition 3.5, we can leverage this as suggested and get that 
+                                \begin{align*}
+                                    \sum_{n=1}^{\infty} l(I_n) &= m^{*} \left( \bigcup_{n=1}^{\infty} I_n \right) \\
+                                        &\leq m^{*}(E) + \frac{\epsilon}{2}.
+                                \end{align*}
+                            This means that there exists \( N \in \N \) so that 
+                                \[
+                                    \sum_{n=N+1}^{\infty} l(I_n) = m^{*} \left( \bigcup_{n=N+1}^{\infty} I_n \right) < \frac{\epsilon}{2}.
+                                \]
+                            Let \( \{ I_{1}, \ldots, I_{N} \} \) be the finite set of collections up to but including \( N + 1 \) and so we let \( \displaystyle U = \bigcup_{n=1}^{N} I_n \). We can note that \( U \Delta E = (U \setminus E) \cup (E \setminus U )\). Additionally, \( U \setminus E \subset O \setminus E \) by construction of \( U \) and \( E \setminus U \subset O \setminus E \) by hypothesis. Finally, note that 
+                                \[
+                                    O \setminus U = \left( \bigcup_{n=1}^{\infty} I_n \right) \setminus \left( \bigcup_{n=1}^{N} I_n \right) = \bigcup_{n=N+1}^{\infty} I_n.
+                                \]
+                            
+                            Thus, with of all this, we have that
+                                \begin{align*}
+                                    m^{*} \left( U \Delta E  \right) &= m^{*} \left( (U \setminus E) \cup (E \setminus U ) \right) \\
+                                    &= m^{*}(U \setminus E) + m^{*}(E \setminus U) \\
+                                    &\leq m^{*}(O \setminus E) + m^{*}(O \setminus U) \\
+                                    &< \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+                                    &= \epsilon
+                                \end{align*}
+                            which finishes this direction.
+                    \item[(vi) \( \Rightarrow \) (ii)] 
+                    
+                        Let \( \epsilon > 0 \) be chosen. By assumption, for any set \( E \), there exists a finite union \( U \) of open intervals so that \( \)
+                                \begin{align*}
+                                    m^{*}( U \Delta E) = m( (U \setminus E) \cup (E \setminus U)) < \frac{2 \epsilon}{3}.
+                                \end{align*}
+                        By Proposition 3.5, there exists an open set \( O \supset E \setminus U \) so that 
+                                \[
+                                    m^{*}(O) \leq m(E \setminus U) + \frac{\epsilon}{3} 
+                                \]
+                        which is equivalent to saying that
+                                \[
+                                    m^{*}(O \setminus(E \setminus U)) < \frac{\epsilon}{3}.  
+                                \]
+                        Note that \( E \subset O \cup U \) trivially. Thus, we have that 
+                                \begin{align*}
+                                    m^{*}(O \setminus E) &\leq m^{*}( (U \cup O) \setminus (E)) \\
+                                                         &= m^{*}((U \setminus E) \cup (O \setminus E) ) \\
+                                                         &\leq m( (O \setminus(E \setminus U)) \cup (U \setminus E) \cup (E \setminus U)) \\
+                                                         &= m(O \setminus(E \setminus U)) + m(U \setminus E) + m(E \setminus U) \\
+                                                         &< \frac{2 \epsilon}{3} + \frac{\epsilon}{3} \\
+                                                         &= \epsilon
+                                \end{align*}
+                        giving us the desired result.
                 \end{enumerate}
+                This completes the first set of our chain of equivalences.
             \end{proof}
-            \item Use part a. to show that for arbitrary sets, \( (i) \Rightarrow (ii) \Rightarrow (iv) \Rightarrow (i) \).
+            \item Use part (a) to show that for arbitrary sets,  (i) \( \Rightarrow \) (ii)  \( \Rightarrow \) (iv)  \( \Rightarrow (i) \).
             \begin{proof}
-                Finally, to complete the chain of implications, we will use the outline above. 
+                We continue on our journey to a chain of equivalences with this next set! :)
 
                 \begin{enumerate}
-                    \item[\((i) \Rightarrow (ii)\)]
-                    \item[\((ii) \Rightarrow (vi)\)]
-                    \item[\((iv) \Rightarrow (i)\)]   
+                    \item[(i) \( \Rightarrow  \) (ii)] 
+                    
+                        Suppose that \( E \) is measurable and since we showed that this direction for \( m^{*}(E) < \infty \), suppose \( m^{*}(E) = \infty \).
+                        For any \( n \in \N \), define the set \( E_n = E \cup [-n, n] \). From part(a), there exists an open set \( O_n \supset E_n \) for all \( n \in \N \) so that 
+                            \begin{align*}
+                                m^{*}(O_n \setminus E_n) < \frac{\epsilon}{2^{n}}.
+                            \end{align*}
+                        Define the set \( \displaystyle O = \bigcup_{n=1}^{\infty} O_n \). Then note that \( E \subset O \) and \( \displaystyle E \subset \bigcup_{n=1}^{\infty} E_n \). Using this, we can show that 
+                            \begin{align*}
+                                m^{*}(O \setminus E) &= m^{*} \left( \bigcup_{n=1}^{\infty} O_n \setminus E \right) \\
+                                &\leq m^{*} \left( \bigcup_{n=1}^{\infty} O_n \setminus \bigcup_{n=1}^{\infty} E_n \right) \\
+                                &\leq m^{*} \left( \bigcup_{n=1}^{\infty} O_n \setminus E_n \right) \\
+                                &\leq \sum_{i=1}^{\infty} m^{*}(O_n \setminus E_n) \\
+                                &< \sum_{i=1}^{\infty} \frac{\epsilon}{2^{k}} \\
+                                &= \epsilon
+                            \end{align*}
+                        which completes the proof. 
+
+                    \item[(ii) \( \Rightarrow \) (iv)] 
+                    
+                        By assumption, we can choose \( n \in \N \) so that the open set \( O_n \supset E \) implies that \( \displaystyle m^{*}(E \setminus O_n) < \frac{1}{n} < \epsilon \) for any \( \epsilon > 0 \), which is possible using the Archimedes principle. Let \( \displaystyle G = \bigcap_{n=1}^{\infty} O_n \), which is thus a countable intersection of open sets (i.e., \( G \in G_{\delta} \)). Note that \( E \subset G \subset O_n \) and so 
+                            \begin{align*}
+                                m^{*}(G \setminus E) &\leq m^{*}(O_n \setminus E) \\
+                                                  &< \frac{1}{n} \\
+                                                  &< \epsilon.
+                            \end{align*}
+                        Because we can always find \( n \in \N \) for all \( \epsilon <0 \), we have that \(  m^{*}(G \setminus E) = 0 \). Since we can choose \( n \in \N \), certainly \( F \subset E \) and \( F_n \subset F \) which gives that 
+                            \begin{align*}
+                                m^{*}(E \setminus F) &\leq m(E \setminus F_n) \\
+                                                     &
+                            \end{align*}
+                    
+                    \item[(iv) \( \Rightarrow \) (i)]   
+                            
+                    Assume there exists some \( G \in G_{\delta} \) such that \( E \subset G \) and \( m^{*}(G \setminus E) = 0 \). Because \( G \in G_{\delta} \) and \( m^{*}(G \setminus E) = 0 \), this implies that \( G \setminus E \) is a measurable set. But then since \( G \setminus E \)  is a measurable set, \( G \) is a measurable set. Thus since \( E = G \setminus (G \setminus E) \), it follows that \( E \) is measurable.
+
                 \end{enumerate}
+            This completes this chain of implications.
             \end{proof}
+            \item Use part (b) to show that (i) \( \Rightarrow \) (iii) \( \Rightarrow \) (v) \( \Rightarrow \) (i).
+            \begin{proof}
+                Finally, can finish the chain on equivalences and finish proving Proposition 3.15. 
+
+                \begin{enumerate}
+                    \item[(i) \( \Rightarrow  \) (iii)] 
+
+                        Suppose \( E \) is measurable set (i.e., \( E \in \mathcal{M} \)). Let \( \epsilon  > 0 \) be chosen. Because \( \mathcal{M} \) is a \( \sigma \)-algebra and closed under complement, we know that \( E^{\C} \) is a measurable set as well. From part (b) (the infinite case of (i) \( \Rightarrow\) (ii)), there exists an open set \( O \supset E^{\C} \) so that \( m^{*}\left( O \setminus E^{\C} \right) < \epsilon \). Let \( F = O^{\C} \), which is a closed set because its complement is open. Then \( F \subset E \) and noting that \( O \setminus E^{\C} = E \cap O = E \setminus F \), we have that 
+                            \[
+                                m^{*}(F \setminus E ) = m^{*}(O \setminus E^{\C}) = m^{*}(E \cap O) < \epsilon
+                            \]
+                        which completes the proof. 
+
+                    \item[(iii) \( \Rightarrow \) (v)]
+                        Similar to the approach of (ii) \( \Rightarrow \) (iv) in part (b), let us choose \( n \in \N \) using the Archimedes principle so that a closed \( F_n \subset E \) means that 
+                            \[
+                                 m^{*}(E \setminus F_n) < \frac{1}{n} < \epsilon \ \text{for all} \ \epsilon > 0.
+                            \]
+                        Let \( \displaystyle F = \bigcup_{n=1}^{\infty} F_n \), which is a countable union of closed sets and so \( F \in F_{\sigma} \). Also \( F \subset E \) and \( F_n \subset F \) for any \( n \in \N \) so we know that
+                            \begin{align*}
+                                m(E \setminus F) &\leq m(E \setminus F_n) \\
+                                                 &< \frac{1}{n} \\
+                                                 &< \epsilon.
+                            \end{align*}
+                        By the same reasoning as the end of the proof of (ii) \( \Rightarrow \) (iv) from part (b), we can conclude that \( m(E \setminus F) = 0 \).
+
+
+                    \item[(v) \( \Rightarrow \) (i)]   
+                    
+                    Again, from part (b), we will use similar logic as (iv) \( \Rightarrow \) (i). Because \( F \in F_{\sigma} \) and \( m^{*}(E \setminus F) = 0 \), this implies that \( E \setminus F \) is a measurable set. But then since \( E \setminus F \)  is a measurable set, \( F \) is a measurable set. Thus since \( E = F \cup (E \setminus F) \), it follows that \( E \) is measurable.
+                \end{enumerate}
+
+                Finally, having finished the chain of equivalences, we have shown that all of the statements are equivalent, which completes the proof.
+            \end{proof}
+            
+            
         \end{enumerate}
-    
 \end{problem}
 
 \end{document}
