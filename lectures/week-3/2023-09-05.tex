@@ -84,11 +84,132 @@
 \newtheorem{problem}{Problem}
 \newtheorem*{lemma}{Lemma}
 \newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
 
 \begin{document}
 
+\section*{Section 3.2, Outer Measure}
+
 \begin{definition}
+
+    The \textbf{outer measure} \( m^{*}(A) \) of a set \( A \subset \R \) is given
+        \[
+            m^{*}(A) = \inf_{A \subset \bigcup I_{n}} \sum_{n} l(I_n)  
+        \]
+    where \( \{I_n\} \) is a countable collection of open intervals that cover \( A \).
     
 \end{definition}
+
+Note that from this definition, we get that 
+    \begin{enumerate}
+        \item \( m^{*}(\emptyset) =  0 \)
+        \item If \( A \subset B \), \( m^{*}(A) < m^{*}(B) \).
+        \item \( m^{*} \) does not satisfy disjoint additivity. 
+    \end{enumerate}
+    
+\begin{prop}[\textbf{3.1}]
+
+    The outer measure of an interval is its length; that is, \( m^{*}(I) = l(I) \) where \( I = [a, b], (a, b), [a, b),\) or \( (a,b] \).
+
+    \begin{proof}
+
+        It is sufficient to show that \( m^{*}([a,b]) = l([a,b]) \) since every other interval is a subset of \( [a, b] \). Let \( \epsilon > 0 \). Then \( [a, b] \subset \left[a - \frac{\epsilon}{2}, b + \frac{\epsilon}{2}\right]   \) which implies, by the definition of the outer measure,
+            \[
+                m^{*}([a, b]) \leq l \left( \left[ a - \frac{\epsilon}{2}, b + \frac{\epsilon}{2} \right]\right) = b - a + \epsilon.  
+            \]
+        Because \( \epsilon \) was fixed, this means that \( m^{*} \leq b - a \). 
+        
+        Now we must show that \( m^{*} \geq b - a \). Because \( [a, b] \) is compact, for any collection \( \{I_n\} \) of open intervals covering \( [a,b] \), there exists a finite collection of intervals \( \{ I_1, \ldots, I_k \} \) so that 
+            \[
+                [a, b] \subset \bigcup_{n=1}^{k} I_n.    
+            \]
+        This gives us that
+            \[
+                \sum_{n} I_n \geq \sum_{n=1}^{k} I_n \geq b - a
+            \]
+        and so \( b - a \) is a lower bound. But since \( m^{*} \) as the greatest lower bound of all such sums, we have that \( m^{*} \geq b - a \).
+
+        Therefore, \( m^{*}([a, b]) = l([a,b]) = b - a \).
+        
+    \end{proof}
+
+\end{prop}
+
+\begin{prop}[\textbf{3.2, Subadditivity}]
+
+    Let \( \{ A_n \} \) be a countable collection of sets on \( \R \). Then 
+        \[
+            m^{*} \left( \bigcup_{n} A_n \right) \leq \sum_{n} m^{*}(A_n).  
+        \]
+
+    \begin{proof}
+        Proof on page 57. 
+
+    \end{proof}
+
+    
+\end{prop}
+
+\begin{cor}[\textbf{3.3}]
+
+    If \( A \) is a countable set, then \( m^{*}(A) = 0 \).
+
+    \begin{proof}
+
+        Proof is on the end of page 57. 
+
+    \end{proof}
+\end{cor}
+
+
+\section*{Section 3.2, Measurable Sets and Lebesgue Measure}
+
+\begin{definition}
+    A set \( E \subset \R \) is (Lebesgue) \textbf{measurable} if for all sets \( A \), we have that
+        \[
+            m^{*}(A) = m^{*}(A \cup E) + m^{*}(A \cup E^{\C}).  
+        \]
+\end{definition}
+
+\begin{lemma}[\textbf{3.6}]
+    
+    If \( m^{*}(E) = 0 \), then \( E \) is measurable. 
+
+        \begin{proof}
+            Let \( A \) be any chosen set. Because \( A \cap E \subset E \) and \( m^{*}(E) = 0 \),
+                \[
+                    m^{*}(A \cap E) \leq m(E) = 0.  
+                \]
+            Note that \( A \cap E^{\C} \subset A \) and so \( m^{*}(A) \leq m^{*}(A \cap E^{\C}) \) and so it suffices to show that
+            \( m^{*}(A) \geq m^{*}(A \cap E^{\C}) \). Using this, we can show that
+                \begin{align*}
+                    m^{*}(A) \geq m^{*}(A \cap E^{\C}) + 0 = m^{*}(A \cap E^{\C}) = m^{*}(A \cap E)
+                \end{align*}
+            giving us the desired result.
+        \end{proof}
+
+\end{lemma}
+
+\begin{definition}
+    Let \( \mathcal{M} \) be the set of measurable sets in \( \R \) 
+\end{definition}
+
+\begin{lemma}[\textbf{3.7}]
+
+    If \( E_1 \) and \( E_2 \) are measurable sets, then so is \( E_1 \cup E_2 \).
+
+        \begin{proof}
+            Proof on top of page 57.
+        \end{proof}
+    
+\end{lemma}
+
+\begin{cor}[\textbf{3.8}]
+
+    The family \( \mathcal{M} \) of measurable sets if an algebra of sets. In other words, if \( E \in \mathcal{M} \), then \( E^{\C} \in \mathcal{M} \). Further, if \( E_1, E_2 \in \mathcal{M} \), then \( E_1 \cup E_2 \in \mathcal{M} \).
+    
+\end{cor}
+
 
 \end{document}
