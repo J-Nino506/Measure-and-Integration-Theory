@@ -84,11 +84,115 @@
 \newtheorem{problem}{Problem}
 \newtheorem*{lemma}{Lemma}
 \newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
 
 \begin{document}
 
-\begin{definition}
+\begin{lemma}[\textbf{3.9}]
+    Let \( A \) be any set, and \( E_1, \ldots, E_n \) be a finite sequence of sets such that \( E_i \cap E_j \) for all \( i \neq j \). Then
+        \[
+            m^{*} \left( A \cap \left[ \bigcup_{i=1}^{n} E_i \right]\right)  = \sum_{i=1}^{n} m^{*}(A \cap E_i).
+        \]
+
+        \begin{proof}
+            We proceed by induction. For \( n = 1 \), we have the set \( E_1 \) and the equality holds. Suppose that we have \( n = k \) sets \( E_1, \ldots, E_k \) with \( E_i \cap E_j \neq \emptyset \) for all \( i \neq j \) so that
+                \[
+                    m^{*} \left( A \cap \left[ \bigcup_{i=1}^{k} E_i \right]\right)  = \sum_{i=1}^{k} m^{*}(A \cap E_i).
+                \]
+            Consider \( n =  k + 1 \). Because each \( E_i \) is disjoint, 
+                \begin{align*}
+                    A \cap \left( \bigcup_{i=1}^{k+1} E_i \right) \cap E_{k+1}  &= A \cap E_{k+1}; \\
+                    A \cap \left( \bigcup_{i=1}^{k+1} E_i \right) \cap E^{\C}_{k+1} &= A \cap \bigcup_{i=1}^{k} E_i.  
+                \end{align*}
+            Because the \( E_i \)'s are measurable,
+                \begin{align*}
+                    m^{*} \left( A \cap \bigcup_{i=1}^{k+1} E_i \right) &= m^{*} \left( A \cap E_{k+1} \right) + m^{*} \left(A \cap \bigcup_{i=1}^{k} E_i \right) \\
+                    &= m^{*} \left( A \cap E_{k+1} \right) + \sum_{i=1}^{k} m^{*}(A \cap E_i) && \text{Induction Hypothesis} \\
+                    &= \sum_{i=1}^{k+1} m^{*}(A \cap E_i)
+                \end{align*}
+            which, by induction, completes the proof. 
+        \end{proof}
+\end{lemma}
+
+\begin{thm}[\textbf{3.10}]
     
+    \( \mathcal{M} \) is a \( \sigma \)-algebra. In other words, in addition to being an algebra of sets, if \( \{ E_{i} \}_{i=1}^{\infty} \subset \mathcal{M}\), then 
+    \( \displaystyle \bigcup_{i=1}^{\infty} E_i \in \mathcal{M} \).
+
+        \begin{proof}\footnote{Proof on bottom of page 59 and top of page 60.}
+
+
+        \end{proof}
+    
+\end{thm}
+
+\begin{lemma}[\textbf{3.11}]
+
+    The interval \( (a, \infty) \) is measurable for all \( a \in \R \).
+
+        \begin{proof}\footnote{Proof on the bottom of page 60 through the middle of page 61.}
+            
+        \end{proof}
+    
+\end{lemma}
+
+\begin{thm}[\textbf{3.12}]
+
+    Every Borel set is measurable. In particular, each open set and each closed set is measurable.
+
+        \begin{proof}\footnote{Proof on the bottom of page 61.} 
+            
+        \end{proof}
+
+    
+\end{thm}
+
+\begin{definition}
+    Let \( E \in \mathcal{M} \). We define \( m(E) := m^{*}(E) \) to be the \textbf{Lebesgue measure} of \( E \)/
 \end{definition}
 
+\begin{prop}[\textbf{3.13, Countable Additivity}]
+
+    Let \( \{ E_i\}_{i=1}^{n} \) be a sequence of measurable sets. Then 
+        \[
+            m \left( \bigcup_{i=1}^{\infty} E_i \right) \leq \sum_{i=1}^{n} m(E_i).    
+        \]
+    If, in addition, \( E_i \cap E_j \) for all \( i \neq j \). then 
+        \[
+            m \left( \bigcup_{i=1}^{\infty} E_i \right) = \sum_{i=1}^{n} m(E_i).
+        \]
+
+    
+\end{prop}
+
+\begin{prop}[\textbf{3.14}]
+
+    Let \( \{E_i\} \subset \mathcal{M} \) be a decreasing sequence (i.e., \( E_{i+1} \subset E_i \)). Let \( m(E_1) < \infty \). Then
+        \[
+            m\left( \bigcap_{n=1}^{\infty} E_n \right) = \lim_{n \to \infty} m(E_n).
+        \]
+    
+\end{prop}
+
+\begin{prop}[\textbf{3.15}]
+
+    
+    Let \( E \) be any given set. Then the following are equivalent:
+        \begin{enumerate}[label = (\roman{*})]
+            \item \( E \) is measurable.
+            \item For all \( \epsilon > 0 \), there is an open set \( O \supset E \) with \( m^{*}(O \setminus E) < \epsilon \).
+            \item For all \( \epsilon > 0 \), there is a closed set \( F \subset E \) with \( m^{*}(E \setminus F) < \epsilon \).
+            \item There is a \( G \in G_{\delta} \) with \( E \subset G \) such that \( m^{*}(G \setminus E) = 0 \). 
+            \item There is a \( F \in F_{\sigma} \) with \( F \subset E \) such that \( m^{*}(E \setminus F) = 0 \). 
+            
+            \noindent If \( m^{*}(E) < \infty \), the above statements are equivalent:
+
+            \item For all \( \epsilon > 0 \), there is a finite union \( U \) of open intervals such that \( m^{*}(U \Delta E) < \epsilon \).
+        \end{enumerate}
+    
+\end{prop}
+
 \end{document}
+
+\section*{Section 3.5, Measurable Functions}
