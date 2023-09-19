@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#5}
+\rhead{September 7, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\section*{Section 3.5, Measurable Functions}
+
+\begin{prop}[\textbf{3.18}]
+
+    Let \( E \subset \R\), and Let \( f: E \to [-\infty, \infty] \) be an extended real-valued function whose domain is measurable. Let \( \alpha \in \R \) be any real number. Then the following statements are equivalent:
+
+    \begin{enumerate}[label = (\roman{*})]
+        
+        \item The set \( \{ x: f(x) > \alpha \} \) is measurable.
+        \item The set \( \{ x: f(x) \geq \alpha \} \) is measurable. 
+        \item The set \( \{ x: f(x) < \alpha \} \) is measurable. 
+        \item The set \( \{ x: f(x) \leq \alpha \} \) is measurable. 
+        
+        \noindent All together, these imply
+
+        \item The set \( \{ x: f(x) = \alpha \} \) is measurable. 
+    \end{enumerate}
+
+        \begin{proof}\footnote{Proof is on page 67.}
+            
+        \end{proof}
+
+    
+\end{prop}
+
+\begin{definition}
+     An extended real-valued function \( f: E \to [-\infty, \infty] \) is \textbf{(Lebesgue) measurable} if its domain is measurable and satisfies one of the first four statements of Proposition 18.
+\end{definition}
+
+Note that this means that any continuous function is measurable since then the pre-image of any open set is still an open set. 
+
+\begin{prop}[\textbf{3.19}]
+    
+    Let \(f \) and \( g \) be two measurable functions defined on the same domain, and let \( c \in \R \). Then the functions \( f + c \), \( cf \), \( f + g \), \( g - f \), and \( fg \) are measurable.
+
+        \begin{proof}
+            For \( f(x) + c \), note that 
+                \[
+                    \{ x: f(x) + c < \alpha \} = \{ x: f(x) < \alpha - c \}.    
+                \]
+        \end{proof}
+    
+\end{prop}
+
+\begin{thm}[\textbf{3.20, Limit of Measurable Functions is Measurable}]
+
+    Let \( \{ f_n \} \) be a sequence of measurable functions with the same domain. Then the functions \( \sup\{f_1(x), \ldots, f_n(x) \} \), \( \inf \{ f_1(x), \ldots, f_n(x)\}\), \( \sup_{n} f_n \), \( \inf_{n} f_n \), \( \varlimsup f_n \), and \( \varliminf f_n \) are measurable. 
+
+        \begin{proof}
+            Let \( \{ f_n\} \) be a sequence of measurable functions. Let \( h(x) = \sup\{f_1(x), \ldots, f_n(x) \} \) and we so must show that \( \{ x: h(x) < \alpha \}\) for all \( \alpha \in \R \). To that end, let \( \alpha \in \R \) be chosen. Then 
+                \[
+                     \{ x: h(x) < \alpha \} = \bigcup_{i=1}^{n} \, \{ x: f_i(x) > \alpha \}
+                \]
+            which, because the right-hand side is a union of measurable sets from the \( f_i \)'s being measurable, means that the set \( \{ x: h(x) < \alpha \}\)  is also measurable. 
+        \end{proof}
+
+
+\end{thm}
+
+\begin{definition}
+    A property is said to hold \textbf{almost everywhere} (a.e) if the set of points where it fails to hold is a set of measure zero. Thus \(f = g\) a.e if \( f \) and \( g \) have the same domain and \( m \{ x: f(x) \neq g(x) \} \). 
+\end{definition}
+
+\begin{prop}[\textbf{3.21}]
+
+    If \( f \) is measurable and \( f =  g\) a.e, then \( g \) is measurable.
+
+        \begin{proof}
+            Let \( \{ x: g(x) > \alpha \} \). This is equivalent to saying that     
+                \[
+                    \{ x: g(x) > \alpha \} = \{ x: f(x) > \alpha \} \cup \{ x: g(x) > \alpha \}
+                \]
+        \end{proof}
+    
+\end{prop}
+
+\begin{prop}[\textbf{3.22}]
+
+    Let \( f: [a,b] \to E \) be a measurable function with \( E \subset \R \) and is equal to \( \pm \infty \) only on sets with measure zero. Then for all \( \epsilon > 0 \), there exist a step function \( g \) and a continuous function \( f \) such 
+        \[
+            |f - g| < \epsilon \quad \text{and} \quad |f - h| < \epsilon  
+        \]
+    except on set of measure less than \( \epsilon \); i.e., \( m\{x: |f(x) - g(x)| \geq \epsilon\} <  \epsilon \) and \( m\{x: |f(x) - h(x)| \geq \epsilon\} <  \epsilon \). If in addition \( m \leq f \leq M \), then we may choose the functions \( g \) and \( h \) so that \( m \leq g \leq M\) and \( m \leq h \leq M \).
+ 
+\end{prop}
+
+\begin{prop}[\textbf{3.23, (Weak) Egonoff's Theorem}]
+
+    Let \( E \) be a measurable set of finite measure, and \( \{ f_n \} \) be a sequence of measurable functions defined on \( E \). Let \( f \) be real-valued function such for each \( x \in E \) we have \( f_n(x) \to f(x) \). Then for all \( \epsilon > 0 \) and all \( \delta > 0 \), there is measurable set \( A \subset E \) with \( m(A) < \delta \) and \( N \in \N \) such that for all \( x \not\in A \) and all \( n \geq N\),
+        \[
+            |f_n(x) - f(x)| < \epsilon.    
+        \]
+    
+\end{prop}
+
+\end{document}
