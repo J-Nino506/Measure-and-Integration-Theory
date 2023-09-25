@@ -73,7 +73,7 @@
 \pagestyle{fancy}
 \lhead{Math 6421: Measure Theory}
 \chead{\bf Jose Nino: Lecture \#5}
-\rhead{September 7, 2023}
+\rhead{September 12, 2023}
 \cfoot{Page \thepage}
 % \setlength{\headheight}{10pt}
 
@@ -108,6 +108,8 @@
     \end{enumerate}
 
         \begin{proof}\footnote{Proof is on page 67.}
+
+            
             
         \end{proof}
 
@@ -125,16 +127,41 @@ Note that this means that any continuous function is measurable since then the p
     Let \(f \) and \( g \) be two measurable functions defined on the same domain, and let \( c \in \R \). Then the functions \( f + c \), \( cf \), \( f + g \), \( g - f \), and \( fg \) are measurable.
 
         \begin{proof}
-            For \( f(x) + c \), note that 
+            Let \( \alpha \in \R \) be any real number. Fix \( c \in \R \). For \( f(x) + c \), note that 
                 \[
-                    \{ x: f(x) + c < \alpha \} = \{ x: f(x) < \alpha - c \}.    
+                    \{ x: f(x) + c < \alpha \} = \{ x: f(x) < \alpha - c \}
                 \]
-        \end{proof}
-    
+            and \( \alpha - c \) is a real number, this set is still measurable i.e., \( f + c \) is measurable. A similar argument shows that \( cf \) is measurable as well. 
+
+            Take the set 
+                \begin{equation}
+                    \label{prop-3.19-addition}
+                    \{ x : f(x) + g(x) < \alpha \}.    
+                \end{equation}
+            Observe that \( f(x) + g(x) < \alpha \Leftrightarrow  f(x) < \alpha - g(x) \). By the density of \( \Q \), there exists \( r \in \Q \) such that \( f(x) < r < \alpha - g(x) \). So we can write \cref{prop-3.19-addition} as
+                \[
+                    \{ x : f(x) + g(x) < \alpha \} = \bigcup_{r \in \Q}  \left( \{ x : f(x) < r \} \cap \{ x : g(x) < \alpha - r \} \right).
+                \]
+            Because this set is countable, this set is measurable and thus \( f + g \) is measurable. 
+
+            To show that \( fg \) is measurable, we can show that \( f^2 \) is measurable since \
+                \[
+                 fg = \frac{1}{2} \left( (f+g)^2 - f^2 - g^2 \right).
+                \]
+            Take the set 
+                \begin{equation}
+                    \label{prop-3.19-product}
+                    \{ x : f^{2}(x) < \alpha \}. 
+                \end{equation}
+            For \( \alpha \geq 0 \), note that \( f^{2} < \alpha \) is the same as saying \( f(x) > \sqrt{\alpha} \) and \( f(x) < -\sqrt{\alpha} \). Thus, \cref{prop-3.19-product} can rewritten as 
+                \[
+                    \{ x : f^{2}(x) < \alpha \} = \{ x: f(x) > \sqrt{\alpha} \} \cup \{x: f(x) < -\sqrt{\alpha} \}.
+                \]
+            This is a measurable set which completes the proof.
+            \end{proof}
 \end{prop}
-
-\begin{thm}[\textbf{3.20, Limit of Measurable Functions is Measurable}]
-
+            
+\begin{thm}[\textbf{3.20, Limit of Measurable Functions is Measurable}]\footnote{Proof is on bottom of page 68 and top of page 69}
     Let \( \{ f_n \} \) be a sequence of measurable functions with the same domain. Then the functions \( \sup\{f_1(x), \ldots, f_n(x) \} \), \( \inf \{ f_1(x), \ldots, f_n(x)\}\), \( \sup_{n} f_n \), \( \inf_{n} f_n \), \( \varlimsup f_n \), and \( \varliminf f_n \) are measurable. 
 
         \begin{proof}
@@ -142,22 +169,28 @@ Note that this means that any continuous function is measurable since then the p
                 \[
                      \{ x: h(x) < \alpha \} = \bigcup_{i=1}^{n} \, \{ x: f_i(x) > \alpha \}
                 \]
-            which, because the right-hand side is a union of measurable sets from the \( f_i \)'s being measurable, means that the set \( \{ x: h(x) < \alpha \}\)  is also measurable. 
+            which, because the right-hand side is a union of measurable sets from the \( f_i \)'s being measurable, means that the set \( \{ x: h(x) < \alpha \}\)  is also measurable.
+
+            Let \( g(x) = \sup_{n} f_n \). By a similar argument as above, 
+                \[
+                    \{ x: h(x) < \alpha \} = \bigcup_{i=1}^{\infty} \, \{ x: f_i(x) > \alpha \}  
+                \]
+            is a countable set so \( \{ x: g(x) < \alpha \}\) is measurable. 
         \end{proof}
-
-
 \end{thm}
 
 \begin{definition}
     A property is said to hold \textbf{almost everywhere} (a.e) if the set of points where it fails to hold is a set of measure zero. Thus \(f = g\) a.e if \( f \) and \( g \) have the same domain and \( m \{ x: f(x) \neq g(x) \} \). 
 \end{definition}
 
-\begin{prop}[\textbf{3.21}]
+\begin{prop}[\textbf{3.21}]\footnote{Proof is on middle of page 69.}
 
     If \( f \) is measurable and \( f =  g\) a.e, then \( g \) is measurable.
 
         \begin{proof}
-            Let \( \{ x: g(x) > \alpha \} \). This is equivalent to saying that     
+            Let \( E = \{ x: f(x) \neq g(x) \} \). 
+            
+            This is equivalent to saying that     
                 \[
                     \{ x: g(x) > \alpha \} = \{ x: f(x) > \alpha \} \cup \{ x: g(x) > \alpha \}
                 \]
@@ -165,7 +198,9 @@ Note that this means that any continuous function is measurable since then the p
     
 \end{prop}
 
-\begin{prop}[\textbf{3.22}]
+The following proposition essentially says that measurable functions are nearly continuous; or. in other words, we can ``nicely'' approximate measurable functions. 
+
+\begin{prop}[\textbf{3.22, Littlewood's 2nd Principle}]
 
     Let \( f: [a,b] \to E \) be a measurable function with \( E \subset \R \) and is equal to \( \pm \infty \) only on sets with measure zero. Then for all \( \epsilon > 0 \), there exist a step function \( g \) and a continuous function \( f \) such 
         \[
