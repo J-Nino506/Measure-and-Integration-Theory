@@ -76,6 +76,7 @@
 \newcommand{\lowint}[2]{
   \underline{\int_{#1}^{#2}}
 }
+\newcommand{\dif}{\, \mathrm{d}}
 
 \pagestyle{fancy}
 \lhead{Math 6421: Measure Theory}
@@ -102,10 +103,72 @@
 
     \begin{enumerate}[label = (\alph{*})]
     
-        \item Let \( f \) be a bounded function \( [a,b] \), and let \( h \) be the upper envelope of \( f \) (cf. Problem 2.51). Then \( \displaystyle R \lowint{a}{b} f = \int_{a}^{b} h \).
+        \item Let \( f \) be a bounded function on \( [a,b] \), and let \( h \) be the upper envelope of \( f \) (cf. Problem 2.51). Then \( \displaystyle R \upint{a}{b} f = \int_{a}^{b} h \).
+        
+            \begin{proof}
+                Let \( f \) be a bounded function on \( [a,b] \) with \( \displaystyle h(y) = \inf_{\delta > 0} \sup_{|x-y| < \delta} f(x) \) for all \( x \in [a,b] \) be the upper envelope of \( f \). 
+                Because \( f \) is bounded, by Problem 2.51 part (b), \( h \) is lower semicontinuous. 
+                To show equality, we will show that 
+                    \[
+                        R \upint{a}{b} f \leq \int_{a}^{b} h \quad \text{and} \quad R \upint{a}{b} f \geq \int_{a}^{b} h.
+                    \]
+                
+                Let \( \phi \) be a step function on \( [a,b] \) such that \( \phi \geq f \).
+                Then for any \( x \in [a,b] \), \( h(x) \leq f(x) \leq \phi(x) \), except at the defined partition points of \( \phi \). 
+                Thus, by using the definition of Lebesgue integration, we have that 
+                    \[
+                        \int_{a}^{b} h(x) \dif x \leq \int_{a}^{b} f(x) \dif x = \inf \int_{a}^{b} \phi(x) \dif x \leq R \upint{a}{b} f(x) \dif x.
+                    \]
+                For the other inequality, we note that because \( h \) is upper semicontinuous, by Problem 2.51 part (g), there exists a monotonically decreasing sequence of step functions \( \{\phi_n \} \) such that \( \phi_n \to h \) pointwise. 
+                Because \( f \) is bounded, we have that for all \( x \in [a,b] \), there exists some \( M > 0 \) such that 
+                    \[
+                        |\phi_n| \leq |h| \leq |f| \leq M \ \text{for all} \ n \in \N.   
+                    \]
+                Thus using the Bounded Convergence Theorem and properties of the upper Riemann integral, 
+                    \[
+                          \lim_{n \to \infty} \int_{a}^{b} \phi_n(x) \dif x = \int_{a}^{b} h(x) \dif x \leq R \int_{a}^{b} f(x) \dif x \leq R \upint{a}{b} f(x) \dif x.
+                    \]
+                Therefore, 
+                    \[
+                        R \upint{a}{b} f = \int_{a}^{b} h
+                    \]
+                which is the desired result.
+            \end{proof}
         \item Use part (a) to prove Proposition 7 which is stated as follows
             \begin{prop}[\textbf{4.7}]
                 A bounded function \( f \) on \( [a,b] \) is Riemann integrable if and only if the set of points at which \( f \) is discontinuous has measure zero. 
+
+                \begin{proof}
+                    Let \( f \) be a bounded function on \( [a,b] \). We will need to show a forward and backwards implication to complete this proof. For simplicity, define \( E \) to be the set of discontinuities of \( f \). Additionally, let \( \displaystyle g(y) = \sup_{\delta > 0} \inf_{|x-y| < \delta} f(x) \) be the lower envelope of \( f \).
+
+                        \begin{enumerate} 
+                            \item[(\(\Leftarrow\))] First, suppose \( m(E) =  0 \). Since \( g \) is the lower envelope of \( f \), there exists a monotonically increasing sequence of step functions \( \{ \phi_n\} \to g \) pointwise. Thus, by a similar but reverse argument to part (a),
+                            \begin{equation}
+                                \label{4.1_eq-1}
+                                \int_{a}^{b} g(x) \dif x = \lowint{a}{b} f(x) \dif x.  
+                            \end{equation}
+                            So because \( f \) is continuous everywhere except on the set \( E \)---namely, continuous on \( [a,b] \setminus E\)--- by Problem 2.51, \( g(x) = h(x) \) is continuous on the set \( [a,b] \setminus E \). But since \( m(E) = 0 \), this means \( g = h \) almost everywhere and thus, using part (a) of this problem and \cref{4.1_eq-1}, 
+                                \[
+                                    \lowint{a}{b} f(x) \dif x = \int_{a}^{b} g(x) \dif x = \int_{a}^{b} h(x) \dif x = \upint{a}{b} f(x) \dif x.
+                                \]
+                            Thus, \( f \) is Riemann integrable. 
+                            \item[(\(\Rightarrow\))] Now suppose \( f \) is Riemann integrable. Thus, the lower and upper integrals of \( f \) are equal to each other and so using \cref{4.1_eq-1}
+        
+                                \[
+                                    \int_{a}^{b} h(x) \dif x = \int_{a}^{b} g(x) \dif x.
+                                \]
+                            Consider the set \( \displaystyle A_n = \left\{ x:  | g(x) - h(x)| > \frac{1}{n} \right\} \) for all \( n \in \N \). Because the integrals of \( g \) and \( h \) are equal,    
+                                \[
+                                    \int_{a}^{b} |h(x)- g(x)| \dif x = 0.
+                                \]
+                            So for any fixed \( n \in \N \),    
+                                \[
+                                    \int_{a}^{b} |h(x)- g(x)| \dif x \geq m(A_n).
+                                \]
+                            So \( h(x) = g(x) \) almost everywhere and so by Problem 2.51 part(a), we must that \( f \) is continuous almost everywhere as well. But then this means that the measure of discontinuities is zero---that is, \( m(E) = 0 \) which is what we wanted to show. 
+                        \end{enumerate}
+                    Having completed both directions, we have shown the desired equivalence. 
+                \end{proof}
                 
             \end{prop}
     \end{enumerate}
@@ -115,7 +178,19 @@
 
 \begin{problem}[4.3]
 
-    Let \( f \) be a nonnegative measurable function. Show that \( \displaystyle f = 0 \) implies \( f = 0 \) almost everywhere. 
+    Let \( f \) be a nonnegative measurable function. Show that \( \displaystyle \int f = 0 \) implies \( f = 0 \) almost everywhere. 
+
+        \begin{proof}
+            Let \( f \geq 0 \) be a measurable function, and suppose that \(\displaystyle \int f = 0 \). We want to show that the set \( E = {x: f(x) \neq 0} = \{x: f(x) > 0 \} \) has measure \( 0 \). Define the set
+                \[
+                    E_n = \left\{ x: f(x) \geq \frac{1}{n} \right\} \text{for all} \ n \in \N.  
+                \]
+            Note that \( \displaystyle \bigcup_{n=1}^{\infty} E_n = E \). Fix \( n \in \N \). Because the integral of \( f \) is equal to \( 0 \), 
+                \[
+                    0 = \int_{E_{n}} \geq \int_{E_{n}}  \frac{1}{n} = m(E_n) \cdot \frac{1}{n} \geq 0.
+                \]
+            Thus, because \( n \in \N \) was fixed, \( \displaystyle m\left( \bigcup_{n=1}^{\infty} E_n \right) =  0 = m(E) \), and therefore \( f = 0 \) almost everywhere.
+        \end{proof}
 
 \end{problem}  
 
@@ -125,6 +200,27 @@
         \[
             \int \varliminf_{n \to \infty} f_n \leq \varliminf_{n \to \infty} \int f_n.  
         \]
+
+        \begin{proof}
+            Let \( \{ f_n\} \geq 0 \) for each \( n \in \N \) on any set \( E \).
+            Define \( \displaystyle h_n = \inf_{k \geq n} f_k \) for all \( n \in \N \). Note that as \( n \to \infty\), \( \displaystyle h_n \to \varliminf_{n \to \infty} f_n \) (i.e., \( h_n\) converges pointwise on \( E \) to the limit inferior of \( f_n\)). Thus, by Fatou's lemma, we have that
+                \[
+                    \int_{E} \varliminf_{n \to \infty} f \leq \int_{E} \varliminf_{n \to \infty} h_n.    
+                \]
+            But since \( h_n \) is the infimum of the \( f_n \)'s, this implies that \( h_n  \leq f_n \) for all \( n \in \N \) and so
+                \[
+                  \int_{E} h_n \leq \int_{E} f_n 
+                \]
+            and thus
+                \[
+                    \varliminf_{n \to \infty} \int_{E} h_n \leq \varliminf_{n \to \infty} \int_{E} f_n. 
+                \]
+            By combining all three inequalities, we get that
+                \[
+                    \int_{E} \varliminf_{n \to \infty} f \leq \varliminf_{n \to \infty} \int_{E} h_n \leq \varliminf_{n \to \infty} \int_{E} f_n
+                \]
+            which then completes the proof.           
+        \end{proof}
     
 \end{problem}
 
