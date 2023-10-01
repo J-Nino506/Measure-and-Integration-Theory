@@ -78,18 +78,141 @@
 % \setlength{\headheight}{10pt}
 
 \theoremstyle{definition}
-\newtheorem*{thm}{Theorem}
+\newtheorem{thm}{Theorem}
 \newtheorem*{exercise}{Exercise}
 \newtheorem*{definition}{Definition}
 \newtheorem{problem}{Problem}
 \newtheorem*{lemma}{Lemma}
 \newtheorem*{cor}{Corollary}
+\newtheorem{prop}{Proposition}
 
 
 \begin{document}
 
-\begin{definition}
-    
+\section*{Construction of the Real Numbers, \( \R \)}
+
+\begin{itemize}
+    \item We first start from \( \N \cup \{ 0\} \) and add numbers together subsequently (i.e.  \( 1 \), \( \underbrace{1 + 1}_{2} \), \( \underbrace{1 + 1 + 1}_{3} \), \ldots)
+    \item To construct the integers \( \Z  \), we take the set difference with the natural numbers so that we have 
+        \[
+            \Z = \N \cup \{ 0 \} \setminus \N.  
+        \]
+    \item Then the rationals numbers, \( \Q \), can be constructed from the integers and are defined by the set 
+        \[
+            \Q = \left\{  \frac{m}{n} : m, n \in \Z \right\}.  
+        \]
+    \item To construct the irrational numbers, \( \R \setminus \Q \), we can use the dedekind cut to do this. However, this is convoluted and we can go about this in a different way.
+
+\end{itemize}
+
+\subsection*{Axioms of the Real Numbers}
+\begin{enumerate}[label=\textbf{A}.]
+    \item \textbf{The Field Axioms:} For all real numbers \( x, y \in \R \) we have:
+    \begin{enumerate}[label=A\arabic*.]
+        \item x + y = y + x
+        \item (x + y) + z  =  x + (y + z)
+        \item There exists \( 0 \in \R \) such that \( x + 0 = \) for all \( x \in \R \). \newline
+        [\textbf{Identity element under addition}]
+        \item For each \( x \in \R \) there is a \( w \in \R \) such that \( x + w = 0 \). \newline
+        [\textbf{Inverse element under addition}]
+        \item xy = yx
+        \item (xy)z = x(yz)
+        \item There exists \( 1 \in \R \) such that \( 1 \neq 0 \) and \( x \cdot 1 = x \) for all \( x \in \R \).
+        \item For each \( x \in \R \) different from \( 0 \) there is \( w \in \R \) such that \( xw = 1 \).
+        \item x(y + z) = xy + xz.
+    \end{enumerate}
+\end{enumerate}
+
+    We can prove some properties now:
+
+    \noindent 
+    \begin{prop}
+        The additive inverse is unique. 
+            \begin{proof}
+                Let \( x \in \R \). Suppose we have two numbers \( w_1, w_2 \in \R \) such that \( x + w_1 = 0 = x + w_2 \). Using the axioms and our assumption, we can show the following:
+                    \begin{align*}
+                        w_1 &= w_1 + 0 & \text{Axiom A3} \\
+                            &= w_1 + x + w_2 & \text{Assumption of} \ 0 = x + w_2 \\
+                            &= w_2 + x w_1 & \text{Axiom A1} \\
+                            &= w_2
+                    \end{align*}
+                which completes the proof.
+            \end{proof}
+    \end{prop}
+
+\begin{enumerate}[label=\textbf{B}.]
+    \item \textbf{The Axioms of Order:} The subset \( P \) of positive real numbers satisfies the following:
+    \begin{enumerate}[label=B\arabic*.]
+        \item If \( x, y \in P\), then \( x + y \in P \).
+        \item If \( x, y \in P\), then \( xy \in P \).
+        \item If \( x \in P \), then \( -x \not\in P \).
+        \item If \( x \in \R \), then \( x = 0 \) or \( x \in P \) or \( -x \in P \).
+    \end{enumerate}
+\end{enumerate}
+
+Note that any system which satisfies the axioms of groups A and B is called an  \textbf{ordered field}.
+
+\begin{definition} We can give definitions of the ordered operations \( < \), \( \leq \), \( > \) and \( \geq \).
+    \begin{itemize}
+        \item \( x < y \) means that \( y - x \in P \).
+        \item \( x \leq y \) means that \( y - x \in P \cup \{ 0 \} \). Or, this means that \( x < y \) or \( x = y \).
+        \item \( x > y \) means that \( x - y \in P \).
+        \item \( x \geq y \) means that \( x - y \in P \cup \{ 0 \} \). Or, this means that \( x > y \) or \( x = y \).
+    \end{itemize}
 \end{definition}
+
+From this, we can deduce and prove some which is any set which satisfies the axioms of group A and B.
+
+\begin{definition}
+    Let \( x, y \in \R \) and define the absolute value as 
+        \[
+            |x| = 
+            \begin{cases}
+                x & x \geq 0 \\
+                -x & x < 0.
+            \end{cases}  
+        \]
+\end{definition}
+
+\begin{prop} Let \( a, b, c \in \R \).
+    \begin{enumerate}
+        \item \( a < b \) if and only if \( -b < -a \).
+        \item If \( a < b \) and \( b < c \), then \( a < c \).
+        \item If \( a < b \) and \( c > 0 \), then \( ac < bc \).
+        \item For \( a, b \in \R \), then only one is true \( a = b \), \( a > b \) and \( a < b \).
+        \item If \( x \neq 0 \), then \( x^2  = x \cdot x > 0 \); in particular, \( 1 > 0 \). 
+        \item If \(x, y \in \R \), then \( | x + y | \leq |x| + |y| \).
+    \end{enumerate}
+\end{prop}
+
+\begin{definition}
+    Let \( S \subset \R \). The number \( b \in \R \) is an \textbf{upper bound} for S if for each \( x \in S \), we have \( x \leq b \). 
+
+    Similarly, a number \( x \in \R \) is the \textbf{least upper bound} for \( S \) if it is an upper bound for \(( S ) \) and if \( x \leq b \) for each upper bound \( b \) of \( S \). We then call \( x \) the \textbf{supremum} of \( S \) and denote this \( x = \sup  S \).
+\end{definition}
+
+
+\begin{definition}
+    Let \( S \subset \R \). The number \( l \in \R \) is an \textbf{lower bound} for S if for each \( x \in S \), we have \( l \leq x \). 
+
+    Similarly, a number \( x \in \R \) is the \textbf{greatest lower bound} for \( S \) if it is a lower bound for \( S  \) and if \( x \leq l \) for each lower bound \( l \) of \( S \). We then call \( x \) the \textbf{infimum} of \( S \) and denote this \( x = \inf  S \).
+\end{definition}
+
+\begin{enumerate}[label=\textbf{C}.]
+    \item \textbf{Completeness Axiom:} Every nonempty set \( S \subset \R \) which has an upper bound has a least upper bound. 
+\end{enumerate}
+
+
+\begin{prop}
+
+    Let \( L, U \subset \R \) be nonempty subsets with \( R = L \cup U \) and such that for each \( l \in L \) and each \( u \in U \) we have \( l  < u \). Then either \( L \) has a greatest element or \( L \) has a least element. 
+    
+\end{prop}
+
+\begin{prop}[Approximation Property.]
+    Let \( S \subset \R \) be a nonempty. If \( u = \sup S \), then for all \( \gamma >  0 \), there exists \( Sr \in S \) such that \( u - r < Sr < u \).
+    
+\end{prop}
+
 
 \end{document}
