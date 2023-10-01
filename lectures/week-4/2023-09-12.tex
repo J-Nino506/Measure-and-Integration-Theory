@@ -109,8 +109,6 @@
 
         \begin{proof}\footnote{Proof is on page 67.}
 
-            
-            
         \end{proof}
 
     
@@ -162,6 +160,17 @@ Note that this means that any continuous function is measurable since then the p
 \end{prop}
             
 \begin{thm}[\textbf{3.20, Limit of Measurable Functions is Measurable}]\footnote{Proof is on bottom of page 68 and top of page 69}
+        \begin{proof}
+            For \( f(x) + c \), note that 
+                \[
+                    \{ x: f(x) + c < \alpha \} = \{ x: f(x) < \alpha - c \}.    
+                \]
+        \end{proof}
+\end{thm}
+
+\begin{thm}[\textbf{3.20, Limit of Measurable Functions is Measurable}]
+
+
     Let \( \{ f_n \} \) be a sequence of measurable functions with the same domain. Then the functions \( \sup\{f_1(x), \ldots, f_n(x) \} \), \( \inf \{ f_1(x), \ldots, f_n(x)\}\), \( \sup_{n} f_n \), \( \inf_{n} f_n \), \( \varlimsup f_n \), and \( \varliminf f_n \) are measurable. 
 
         \begin{proof}
@@ -183,14 +192,16 @@ Note that this means that any continuous function is measurable since then the p
     A property is said to hold \textbf{almost everywhere} (a.e) if the set of points where it fails to hold is a set of measure zero. Thus \(f = g\) a.e if \( f \) and \( g \) have the same domain and \( m \{ x: f(x) \neq g(x) \} \). 
 \end{definition}
 
-\begin{prop}[\textbf{3.21}]\footnote{Proof is on middle of page 69.}
 
-    If \( f \) is measurable and \( f =  g\) a.e, then \( g \) is measurable.
+\begin{prop}[\textbf{3.21}] If \( f \) is measurable and \( f =  g\) a.e, then \( g \) is measurable.
 
-        \begin{proof}
+        \begin{proof}\footnote{Proof is on middle of page 69.}
             Let \( E = \{ x: f(x) \neq g(x) \} \). 
             
             This is equivalent to saying that     
+
+            Let \( \{ x: g(x) > \alpha \} \). This is equivalent to saying that     
+
                 \[
                     \{ x: g(x) > \alpha \} = \{ x: f(x) > \alpha \} \cup \{ x: g(x) > \alpha \}
                 \]
@@ -198,9 +209,11 @@ Note that this means that any continuous function is measurable since then the p
     
 \end{prop}
 
+
 The following proposition essentially says that measurable functions are nearly continuous; or. in other words, we can ``nicely'' approximate measurable functions. 
 
 \begin{prop}[\textbf{3.22, Littlewood's 2nd Principle}]
+
 
     Let \( f: [a,b] \to E \) be a measurable function with \( E \subset \R \) and is equal to \( \pm \infty \) only on sets with measure zero. Then for all \( \epsilon > 0 \), there exist a step function \( g \) and a continuous function \( f \) such 
         \[
@@ -208,6 +221,16 @@ The following proposition essentially says that measurable functions are nearly 
         \]
     except on set of measure less than \( \epsilon \); i.e., \( m\{x: |f(x) - g(x)| \geq \epsilon\} <  \epsilon \) and \( m\{x: |f(x) - h(x)| \geq \epsilon\} <  \epsilon \). If in addition \( m \leq f \leq M \), then we may choose the functions \( g \) and \( h \) so that \( m \leq g \leq M\) and \( m \leq h \leq M \).
  
+\end{prop}
+
+
+\begin{prop}[\textbf{3.23, (Weak) Egonoff's Theorem}]
+
+    Let \( E \) be a measurable set of finite measure, and \( \{ f_n \} \) be a sequence of measurable functions defined on \( E \). Let \( f \) be real-valued function such for each \( x \in E \) we have \( f_n(x) \to f(x) \). Then for all \( \epsilon > 0 \) and all \( \delta > 0 \), there is measurable set \( A \subset E \) with \( m(A) < \delta \) and \( N \in \N \) such that for all \( x \not\in A \) and all \( n \geq N\),
+        \[
+            |f_n(x) - f(x)| < \epsilon.    
+        \]
+    
 \end{prop}
 
 \end{document}
