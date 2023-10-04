@@ -1,0 +1,287 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#9}
+\rhead{September 21, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\section*{Section 4.3 Integral of Nonnegative Functions}
+
+\begin{definition}
+  Let \( f \geq 0 \) be measurable, and \( E \) be a measurable set. The \textbf{Lebesgue integral} of \( f \) over is defined by 
+    \[
+        \int_{E} f := \sup_{h \leq f} \int_{E} h
+    \]
+  where \( h \) is a bounded measurable function and \( m\left\{ x: h(x) \neq 0 \right\} < \infty \).
+  
+\end{definition}
+
+\begin{prop}[\textbf{4.8}]
+
+  If \( f \) and \( g \) are nonnegative measurable functions, then:
+    \begin{enumerate}[label = \roman{*}.]
+      \item For all \( c > 0 \),
+        \[
+            \int_{E} cf = c \int_{E} f.
+        \]
+        \item \[ \int_{E} f + g = \int_{E} f + \int_{E} g. \]
+        \item If \( f \leq g \) a.e, then 
+          \[
+              \int_{E} f \leq \int_{E} g.
+          \]
+    \end{enumerate}
+
+
+    \begin{proof}\footnote{Proof is on page 86 of Royden.}  Note that (i) and (iii) come from Proposition 4.5. So for (ii), we first claim that 
+      \[
+        \int_{E} f + g \leq \int_{E} f + \int_{E} g.
+      \]
+    Let \( h \leq f \) be a bounded, measurable function with \( m \{ x: h \neq 0\} < \infty \), and let \( k \leq g \) be a bounded, measurable function with \( m \{ x: k \neq 0 \} < \infty \).  Then \( h +k \leq f + g \) and
+      \[
+         \{ x: h + k \neq 0 \} = \{ x: h \neq 0 \} \cup \{ x: k \neq 0 \}
+      \]
+    and so \( m \{x: h + k \neq 0 \} < \infty \). By definition of the Lebesgue integral (which is a sup), we have the following:
+      \begin{align*}
+        \int_{E} f + g \geq \int_{E} h + k &= \int_{E} h + \int_{E} k \\
+        &\geq \int_{E} h + \int_{E} g \\
+        &\geq \int_{E} h + \int_{E} k \\
+        &\geq \int_{E} f + \int_{E} g.
+      \end{align*}
+
+      For the other direction, let \( l \leq f + g \) be a bounded, measurable function and \( m\{ x: l(x) \neq 0 \} < \infty \). 
+      Define \( \displaystyle h(x) = \min\{ f(x), l(x)\} \leq l(x) \) and so \( h(x) \) is bounded as well. Then
+        \begin{align*}
+          \int_{E} f + \int_{E} g \geq \int_{E} + \int_{E} k = \int_{E} h + k = \int_{E} l
+        \end{align*}
+      which, by definition of the Lebesgue integral, 
+        \[
+          \int_{E} f + \int_{E} g  \leq \int_{E} f + g.
+        \]
+    \end{proof}
+
+\end{prop}
+
+\begin{thm}[\textbf{4.9, Fatou's Lemma}]
+
+  If \( \{f_n\} \) is a sequence of nonnegative measurable functions and \( f_n(x) \to f(x) \) pointwise almost everywhere on a set \( E \), then 
+    \[
+        \int_{E} f \leq \varliminf_{n \to \infty} \int_{E} f_n.
+    \]
+  \begin{proof}
+    Without loss of generality, suppose that \( f_n(x) \to f(x) \) on E (because the integrals over sets of measure zero are zero.) 
+    Suppose that \( h \leq f \) is a bounded, measurable function and define \( E' = \{ x: h(x) \neq 0 \} \) and so \( m(E') < \infty \). 
+    Define \( h_n(x) = \min \{ h(x), f_n(x)\}\) and so \( h_n(x) \to h(x) \) pointwise on \( E' \) and \( h_n \leq h \leq f_n \leq f \) and so \( \{h_n\} \) is a bounded sequence. So, by the Bounded Convergence Theorem,
+      \begin{align*}
+        \int_{E} h &= \int_{E'} h \\
+         &= \lim_{n \to \infty} \int_{E} h_n && \text{Bounded Convergence Theorem} \\
+         &\leq \varliminf_{n \to \infty} \int_{E} f_n.
+      \end{align*}
+    Taking the sup over \( h \),\footnote{Wait, clarify what this means...}
+      \[
+          \int_{E} f \leq \varliminf_{n \to \infty} \int_{E} f_n.
+      \]
+
+  \end{proof}
+
+\end{thm}
+
+\begin{thm}[\textbf{4.10, Monotone Convergence Theorem}]
+
+  Let \( \{f_n\} \) be an increasing sequence of nonnegative measurable functions, and let \( \displaystyle f = \lim_{n \to \infty} f_n \) almost everywhere. Then 
+    \[
+        \int f = \lim_{n \to \infty} \int f_n.
+    \]
+  \begin{proof}
+    By Fatou's Lemma,
+      \[
+        \int f \leq \varliminf_{n \to \infty} \int f_n.
+      \]
+    So we just need the other direction for equality. Because \( \{ f_n\} \) is increasing and converges to \( f \), \( f_n \leq f \) for each \( n \in \N \) and thus
+      \[
+        \int f_n \leq \int f.
+      \]
+    But then the limit inferior is less than than this quantity i.e., 
+      \[
+          \varliminf_{n \to \infty} \int f_n \leq f 
+      \]
+    and so 
+      \[  
+          \varliminf_{n \to \infty} \int f_n =  \int f. 
+      \]
+  \end{proof}
+
+
+\end{thm}
+
+\begin{cor}[\textbf{4.11}]
+
+  Let \( \{u_n\} \) be a sequence of nonnegative measurable functions, and let \( \displaystyle f(x) = \sum_{i=1}^{n} u_n(x) \). Then 
+    \[
+      \int f = \sum_{i=1}^{n} \int u_n.  
+    \]
+  
+\end{cor}
+
+\begin{prop}[\textbf{4.12}]
+
+    Let \( f \) be a nonnegative function and \( \{ E_i \} \) a disjoint sequence of measurable sets. Let \( \displaystyle E = \bigcup_{i=1}^{\infty} E_i \). Then
+      \[
+          \int_{E} f = \sum_{i=1}^{\infty} \int_{E_i} f.
+      \]
+  
+    
+\end{prop}
+
+\begin{definition}
+  Let \( f \geq 0 \) be a nonnegative measurable function. We say that \( f \) is \textbf{Lebesgue measurable} over \( E \) if
+    \[
+        \int_{E} f \leq \infty.
+    \]
+\end{definition}
+
+\begin{prop}[\textbf{4.13}]
+
+  Let \( f \) and \( g \) be two nonnegative measurable functions. 
+  If \( f \) is integrable over \( E \) and \( g(x) \leq f(x) \) on \( E \), then \( g \) is also integrable on \( E \) and, 
+    \[
+        \int_{E} f - g = \int_{E} f - \int_{E} g.
+    \]
+
+    \begin{proof}
+      Note that \( f - g \geq 0 \) on \( E \) so we can write this as the sum of two nonnegative functions i.e., \( f = (f - g) + g \).  Thus, since this is the sum of two nonnegative functions, by Proposition 4.8 part (ii), we have that 
+        \begin{align*}
+          \int_{E} f &= \int_{E} (f - g) + \int_{E} g \\.
+        \end{align*}
+      Because the integral of \( f \) is finite, the right-hand side must also be finite and so \( g \) is measurable.\footnote{This proof does not show the explicit formula, though?}
+    \end{proof}
+\end{prop}
+
+\begin{prop}[\textbf{4.14}]
+
+  Let \( f \) be a nonnegative function which is integrable over \( E \). Then for all \( \epsilon > 0 \), there exists \( \delta > 0 \) such that for every set \( A \subset E \) with \( m(A) < \delta \), we have that
+    \[
+      \int_{A} f < \epsilon.
+    \]
+    \begin{proof}
+      Let \( \epsilon > 0 \) be chosen. If \( f \) is bounded, there exists \( M > 0 \) such that \( |f(x)| \leq M \) for all \( x \in E \). So set \( \displaystyle \delta = \frac{\epsilon}{M} \) and estimate \( \displaystyle \int_{A} f \).
+
+      If is unbounded then define 
+        \[
+            f_n(x) = \min \{ n, f(x) \}.
+        \]
+      Then \( \{f_n\} \) is an increasing sequence and \( f_n \to f \) pointwise (i.e, \( f_n \uparrow f \) pointwise). By the Monotone Convergence Theorem,
+        \[
+            \lim_{n \to \infty} \int_{E} f_n = \int_{E} f.
+        \]
+      Thus there exists \( N \in \N \) such that if \( n \geq N \),
+        \[
+            \int_{E} f - \lim_{N \to \infty }\int_{E} f_N < \frac{\epsilon}{2}
+        \]
+      and thus implying that 
+        \[
+          \lim_{N \to \infty }\int_{E} f_N > \int_{E} f + \frac{\epsilon}{2}.
+        \]
+      Set \( \displaystyle \delta = \frac{\epsilon}{2N} \). Choose a set \( A \subset E \) such that \( m(A) < \delta \). Then 
+        \begin{align*}
+          \int_{A} f &= \int_{A} f - f_N + \int_{A} f_N \\
+                     &< \frac{\epsilon}{2} + \int_{A} f_N \\
+                     &= \frac{\epsilon}{2} + N \cdot m(A) \\
+                     &< \frac{\epsilon}{2} + N \cdot \frac{\epsilon}{2N} \\
+                     &= \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+                     &= \epsilon.
+        \end{align*}
+    \end{proof}
+\end{prop}
+
+\end{document}

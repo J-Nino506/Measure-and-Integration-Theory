@@ -1,0 +1,246 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#7}
+\rhead{September 14, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{prop}[\textbf{3.23, (Weak) Egonoff's Theorem}]
+
+    Let \( E \) be a measurable set of finite measure, and \( \{ f_n \} \) be a sequence of measurable functions defined on \( E \). Let \( f \) be real-valued function such for each \( x \in E \) we have \( f_n(x) \to f(x) \). Then for all \( \epsilon > 0 \) and all \( \delta > 0 \), there is measurable set \( A \subset E \) with \( m(A) < \delta \) and \( N \in \N \) such that for all \( x \not\in A \) and all \( n \geq N\),
+        \[
+            |f_n(x) - f(x)| < \epsilon.    
+        \]
+
+        \begin{proof}\footnote{Proof on page 72-73.}
+
+            Let \( \epsilon > 0 \) be chosen. Define the set
+                \[
+                    G_n = \{ x \in E: |f_n(x) - f(x)| \geq \epsilon \}
+                \]
+            and also
+                \[
+                    E_N = \bigcup_{n=N}^{\infty} G_n = \{ x \in E: |f_n(x) - f(x)| \geq \epsilon \ \text{for some} \ n \geq N \}.
+                \]  
+            Because \( \{ E_N \} \) is a decreasing sequence and \( f_n(x) \to f(x)\) pointwise, for all \( x \in E \), \( |f_n(x) - f(x)| < \epsilon \) and so \( \displaystyle \bigcup_{i=1}^{\infty} E_N = \emptyset \). Thus, by Proposition 3.14,
+                \begin{align*}
+                    E_N = \emptyset \implies m(E_N) &= 0 \\
+                                                    &= m \left( \bigcup_{N=1}^{\infty} E_N \right) \\
+                                                    &= \lim_{N \to \infty} E_N.
+                \end{align*}
+            So for any \( \delta > 0 \), there exists \( N_0 \in \N \) such that for all \( n > N_0 \), \( m(E_N) < \delta \). Now take \( A = E_N \) for any \( N > N_0 \) and so \( m(A) < \delta \) and also 
+                \[
+                    A^{\C} = \{ x \in E: x \not\in E\} = \{ x \in E: |f_n(x) - f(x)| < \epsilon \ \text{for all} \ n > N_0 \}.
+                \]
+        \end{proof}
+
+\section*{Section 4.1 Riemann Integration}
+
+        \begin{definition}
+            Let \( f:[a,b] \to \R \) be a bounded real-valued function and let
+                \[
+                    P = \{ a = \xi_{0} < \xi_{1} < \cdots < \xi_n = b \}
+                \]
+            be a subdivision (partition) of \( [a, b] \). We can define the \textbf{upper sum}, \( S \) and \textbf{lower sum}, \( s \), respectively, as
+                \[
+                    S = \sum_{i=1}^{n} (\xi_i - \xi_{i-1})M_i \qquad \text{and} \qquad  s = \sum_{i=1}^{n} (\xi_i - \xi_{i-1})m_i
+                \]
+            where
+                \[
+                    M_i = \sup \left\{ f(x): x \in [\xi_{i-1}, \xi_{i} ] \right\} \qquad \text{and} \qquad  m_i = \inf \left\{ f(x): x \in [\xi_{i-1}, \xi_i ]\right\}.
+                \]
+        \end{definition}
+    
+\end{prop}
+
+\begin{definition}
+    Let \( f: [a , b] \to \R \) be a bounded real-valued function. Define the \textbf{upper Riemann integral} of \( f \) as
+        \[
+            R \upint{a}{b} f(x) \, \mathrm{d} x = \inf \{ S: P \ \text{is a partition of} \ [a,b] \}
+        \]
+    and the \textbf{lower Riemann integral} of \( f \) as
+        \[
+            R \lowint{a}{b} f(x) \, \mathrm{d} x = \sup \{ s: P \ \text{is a partition of} \ [a,b] \}.
+        \]
+\end{definition}
+
+\begin{definition}
+    Let \( f: [a , b] \to \R \) be a bounded function. Then \( f \) is Riemann integrable if 
+        \[
+            R \lowint{a}{b} f(x) \, \mathrm{d} x = R \int_{a}^{b} f(x) \, \mathrm{d}x = R \upint{a}{b} f(x) \, \mathrm{d} x.
+        \]
+    In other words, if the upper and lower Riemann integrals are equal to each other. 
+\end{definition}
+
+Note this theorem is \emph{NOT} from Royden but from my real analysis course in undergraduate. It comes from the definition of the upper and lower Riemann integral definitions by ends up being a useful way to show Riemann integration. 
+
+\begin{thm}
+
+    Let \( f \) be a bounded function on \( [a,b] \). Then \( f \) is Riemann integrable if and only if for all \( \epsilon > 0 \), there exists a subdivision (partition) \( P \) of \( [a,b] \) such that 
+        \[
+            S  - s < \epsilon.    
+        \]
+
+\end{thm}
+
+\section*{Section 4.2 The Lebesgue Integral}
+
+\begin{definition}
+    The \textbf{characteristic function} of \( E \) is defined as
+        \[
+            \chi_{E}(x) = \begin{cases}
+                1 & x \in E \\
+                0 & x \not\in E.
+            \end{cases}  
+        \]
+    A linear combination 
+        \[
+            \phi(x) = \sum_{i=1}^{n} a_i \chi_{E_{i}}(x)  
+        \]
+    is called a \textbf{simple function} if the sets \( \{ E_1, \ldots, E_n \}\) are measurable. Note that \( \phi \) is simple if and only if it is measurable and only assumes a finite number of values.
+
+    The \textbf{canonical representation} of \( \phi \) is such that 
+        \[
+            \phi = \sum_{i=1}^{n} a_{i} \chi_{A_{i}}    
+        \]
+    where \( A_i = \{ x: \phi(x) = a_i \} \) and where the \( A_i \)'s are disjoint and the \( a_i \)'s are distinct and nonzero. 
+\end{definition}
+
+\begin{definition}
+    Let 
+        \[
+            \phi = \sum_{i=1}^{n} a_{i} \chi_{A_{i}} 
+        \]
+    be a simple function which vanishes outside of a set of finite measure. Then the integral of \( \phi \) is defined as
+        \[
+            \int \phi = \sum_{i=1}^{n} a_i \cdot m(A_i). 
+        \] 
+\end{definition}
+
+\begin{lemma}[\textbf{4.1}]
+
+    Let \( \displaystyle  \phi = \sum_{i=1}^{n} a_{i} \chi_{A_{i}}  \) with \( E_i \cap E_j = \emptyset \) for all \( i \neq j \) where \( E_i \in \mathfrak{M} \) and \( m(E_i) < \infty \) for each \( i = 1, \ldots n \). Then 
+        \[
+            \int \phi = \sum_{i=1}^{n} a_i \cdot m(E_i).   
+        \]
+    
+\end{lemma}
+
+\begin{prop}[\textbf{4.2}]
+
+    Let \( \phi, \psi \) be simple functions vanishing outside of a set with finite measure. Then
+        \[
+            \int (a \phi + b \psi) = a \int \phi + b \int \psi.
+        \]
+    If \( \phi \geq \psi \) almost everywhere,
+        \[
+            \int \phi \geq \int \psi.    
+        \]
+\end{prop}
+
+\begin{prop}[\textbf{4.3}]
+    Let \( E \in \mathfrak{M} \), and let \( f: E \to \R \) with \( m(E) < \infty \) be a bounded, measurable function. Let \( \phi, \psi \) be simple functions. Then
+        \[
+            \\inf \left\{ \int \psi: \psi \geq f \right\} = \sup \left\{ \int \phi : \phi \leq f \right\}.  
+        \] 
+    if and only if \( f \) is measurable. 
+        \begin{proof}\footnote{Proof is on pages 79-80.}
+            
+        \end{proof}
+\end{prop}
+
+
+
+
+\end{document}

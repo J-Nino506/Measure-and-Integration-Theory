@@ -1,0 +1,256 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\dif}{\; \mathrm{d}}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#8}
+\rhead{September 19, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{prop}[\textbf{4.3}]
+  Let \( E \in \mathfrak{M} \), and let \( f: E \to \R \) with \( m(E) < \infty \) be a bounded, measurable function. Let \( \phi, \psi \) be simple functions. Then
+      \[
+          \inf \left\{ \int \psi: \psi \geq f \right\} = \sup \left\{ \int \phi : \phi \leq f \right\}.  
+      \] 
+  if and only if \( f \) is measurable. 
+
+\begin{proof}\footnote{Proof is on pages 79-80.}
+  We will need to show two implications.
+  \begin{enumerate}
+    \item[(\(\Leftarrow\))] First, suppose that \( f \) is measurable. 
+    Fix any \( n \in \N \) and define the set 
+      \[ 
+         E_k = \left\{x: \frac{k-1}{n} M < f(x) \leq \frac{kM}{n} \right\}
+      \]
+    with \( k \in [-n, n] \) and \( |f(x)| < M \). Note that because \( f \) is measurable, each \( E_k \) is a measurable set and also we have that \( \displaystyle \bigcup_{k = -n}^{n} E_K = E \). 
+    Define the upper and lower sequence of simple functions, \( \{\psi_n\} \) and \( \{\phi_n\} \), respectively, as 
+      \[
+          \psi_n (x) = \sum_{k=-n}^{n} \frac{M}{n} \cdot k \cdot \chi_{E_{k}}(x) 
+          \quad \text{and} \quad
+          \phi_n = \sum_{k=-n}^{n} \frac{M}{n} \cdot (k-1) \cdot \chi_{E_{k}}(x).
+      \]
+    So for any \( x \in E \), \( \phi(x) \leq f(x) \leq \psi(x) \). Thus,
+      \[
+        \inf_{\psi \geq f} \int_{E} \psi \leq \int_{E} \psi = \frac{M}{n}  \sum_{k=-n}^{n} k \cdot m(E_k) 
+      \]
+    and 
+      \[
+          \sup_{\phi \leq f} \int_{E} \phi \geq \int_{E} \phi = \frac{M}{n} \sum_{k=-n}^{n} (k-1) \cdot m(E_k).
+      \]
+    Putting these two inequalities together, we can show that 
+      \begin{align*}
+        \inf_{\psi \geq f} \int_{E} \psi  - \sup_{\phi \leq f} \int_{E} \phi &\leq \int_{E} \psi - \phi  \\
+        &= \sum_{k=-n}^{n} \left( \psi_n - \phi_n \right) m(E_k) \\
+        &= \frac{M}{n} m(E).
+      \end{align*}
+    Since \( n \in \N \) is fixed, this quantity is zero. Thus
+      \[
+        \inf_{\psi \geq f} \int_{E} \psi  - \sup_{\phi \leq f} \int_{E} \phi = 0 \Rightarrow \inf_{\psi \geq f} \int_{E} \psi  = \sup_{\phi \leq f} \int_{E} \phi
+      \]
+    completing this direction. 
+    \item[(\( \Rightarrow \))] Conversely, suppose that 
+        \[
+          \inf_{\psi \geq f} \int_{E} \psi  = \sup_{\phi \leq f} \int_{E} \phi.
+        \]
+      By definition of the infimum and supremum, there exists sequences of simple functions \( \{ \phi_n\} \) and \( \{ \psi_n\} \) 
+      such that \( \phi_n \leq f \leq \psi_n \) for all \( n \in \N \) with 
+        \[
+            \int_{E} \phi_n - \psi_n < \frac{1}{n}.
+        \]
+      Define \( \displaystyle \phi^{*} = \sup_{n} \phi_{n} \) and \( \displaystyle \psi^{*} = \inf_{n} \psi(n) \). 
+      Since simple functions are measurable functions, by Proposition 3.20, \( \phi^{*} \) and \( \psi^{*} \) are measurable as well and \( \phi_n \leq f \leq \psi_n \).
+
+      We claim that \( f = \phi^{*} \) a.e. Consider the set
+        \[
+          \Delta = \{ x: \phi^{*}(x) < \psi^{*}(x) \}.
+        \]
+      Let \( \nu \in \N \) and let 
+        \[
+            \Delta_{\nu} = \left\{ x: \phi^{*}(x) < \psi^{*}(x) - \frac{1}{\nu} \right\}
+        \]
+      which means that 
+        \[
+            \Delta = \bigcup_{\nu \in \N} \Delta_{\nu}.
+        \]
+      For any \( n \in \N \),
+        \[
+          \Delta_{\nu} \subset \left\{ x: \phi(x) < \psi(x) - \frac{1}{\nu} \right\}.
+        \]
+      Thus, we have that, for any \( n \in \N \),
+        \begin{align*}
+          m \left( \Delta_{\nu} \right) &= \int \chi_{\Delta_{\nu}} = \nu \int \frac{1}{\nu} \cdot \chi_{\Delta_{\nu}} \\
+          &\leq \nu \int_{\Delta_{\nu}} \left( \psi_n - \phi_n \right) \\
+          &< \mu \int_{E} \frac{1}{n} \\
+          &= \frac{\nu}{n} m(E).
+        \end{align*}
+      Because \( \nu \) is fixed and \( n \) is arbitrary, \( \displaystyle m(\Delta_{\nu}) = 0 \) which implies that \( \displaystyle m(\Delta) = 0 \). So then \( \phi^{*} = \psi^{*} \) except on a set of measure zero, and \( \phi^{*} = f \) except on a set of measure zero i.e., \( f = \phi^{*} \) a.e. implying that \( f \) is measurable by Proposition 3.21.
+  \end{enumerate}
+  Having completed both directions, this completes the proof and shows the well-definedness of Lebesgue integration. 
+\end{proof}
+\end{prop}
+
+\begin{prop}[\textbf{4.4}] Let \( f \) be a bounded function defined on \( [a,b] \). If \( f \) is Riemann integrable, then it is measureble and 
+    \[
+        R \int_{a}^{b} f(x) \dif x = \int_{a}^{b} f(x) \dif x.
+    \]
+
+    \begin{proof}
+      This proof is on page 82 of Royden (very simple proof, in fact).
+    \end{proof}
+  
+\end{prop}
+
+\begin{prop}[\textbf{4.5}]
+
+  If \( f \) and \( g \) are bounded measurable functions defined on a set \( E \) of finite measure, then:
+    \begin{enumerate}[label = \roman{*}.]
+      \item For any \( a,b \in \R \), \[ \int_{E} (af + bg) = a \int_{E} f + b \int_{E} g. \]
+      \item If \( f = g \) a.e., then 
+        \[
+            \int_{E} f = \int_{E} g.
+        \]
+      \item If \( f \leq g \) almost everywhere. then 
+        \[
+            \int_{E} f \leq \int_{E} g. 
+        \]
+      Hence 
+        \[
+            \left| \int_{E} f \right| \leq \int_{E} \left| f \right|.
+        \]
+      \item If \( A \leq f(x) \leq B \), then 
+        \[
+            Am(E) \leq \int_{E} f \leq Bm(E).
+        \]
+      \item If \( A \) and \( B \) are disjoint measurable sets of finite measure
+    \end{enumerate}
+  
+\end{prop}
+
+\begin{prop}[\textbf{4.6, Bounded Convergence Theorem}]
+
+  Let \( \{ f_n \} \) be a sequence of measurable functions defined over a measurable set \( E \) of finite measure. Suppose there is \( M \in \R  \) such that \( |f_n(x) | \leq M \) for all \( x \in E \) and for all \( n \in \N \). If \( f_n(x) \to f(x) \) pointwise (i.e., \( \displaystyle \lim_{n \to \infty} f_n = f(x) \)), then 
+    \[
+        \int_{E} f_n \to \int_{E} f \Leftrightarrow \lim_{n \to \infty} \int_{E} f_n(x) = \int_{E} f.
+    \]
+  
+\end{prop}
+
+  \begin{proof}
+    Let \( \epsilon > 0 \) be chosen. By Proposition 3.23 (Weak Ergoroff's Theorem), there exists \( N \in \N \) and \( A \subset E \) with 
+      \[
+        m(A) = \tilde{\delta} < \frac{\epsilon}{4M}
+      \]
+    such that that for all \( x \in E \setminus A \) and for all \( n > N \),
+      \[
+          \left| f_n(x) - f(x) \right| < \frac{\epsilon}{2 \cdot m(E)} = \tilde{\epsilon}.
+      \]
+    Thus, we can show the following:
+    \begin{align*}
+        \left| \int_{E} f_n - \int_{E} f \right| = \left| \int_{E} f_n - f \right| 
+        &\leq \int_{E} \left| f_n - f \right| \\
+        &= \int_{A} |f_n - f| + \int_{E \setminus A} |f_n - f| \\
+        &\leq 2M \cdot m(A) + \int_{E \setminus A} |f_n - f| \\
+        &\leq 2M \cdot m(A) + \frac{\epsilon \cdot  m(E \setminus A)}{2 \cdot m(E)} \\
+        &< 2M \cdot \frac{\epsilon}{4 M} + \frac{\epsilon \cdot m(E \setminus A)}{2 \cdot m(E)} \\ 
+        &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+        &= \epsilon
+    \end{align*}
+  and so we are done!!
+  \end{proof}
+
+\begin{prop}[\textbf{4.7}]
+  Let \( f \) be bounded on \( [a, b] \). Then \( f \) is Riemann integrable if and only the set of discontinuities has measure zero. 
+  
+\end{prop}
+
+\end{document}
