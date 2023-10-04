@@ -1,6 +1,8 @@
 import os
 from PyPDF2 import PdfMerger
 
+print("Running pdf_merge.py...")
+
 # Set the path to the "lectures" folder
 root_dir = os.getcwd()
 lecture_dir = os.path.join(root_dir, "lectures")
