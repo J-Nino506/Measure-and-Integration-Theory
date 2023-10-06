@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#13}
+\rhead{October 5, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{thm}[\textbf{6.4, Holder Inequality}]\footnote{If \( p,q  = 2 \), then this just reduces to the Cauchy-Schwarz inequality.} If \( p \) and \( q \) are nonnegative extended real numbers such that 
+    \[
+        \frac{1}{p} + \frac{1}{q} = 1,  
+    \]
+and if \( f \in L^p \) and \( g \in L^q \), then \( f \cdot g \in L^1 \) and 
+    \[
+        \int | f g | \leq ||f||_{p} \cdot ||g||_{q}. 
+    \]
+
+    \begin{proof}
+        There are two cases. (i) (\(p =1 \), \( q = \infty\) ) ...add notes on this.  (ii) \( p, q \in (1, \infty) \). Without loss of generality, suppose \( f, g \geq 0 \); otherwise, just take the absolute value. Set 
+                \[
+                    h(x) = g(x)^{q - 1} = g(x)^{q/p}    
+                \]
+            and 
+                \[
+                    g(x) = h(x)^{p-1} = h(x)^{p/q}.  
+                \]
+            Then 
+                \begin{align*}
+                    p \cdot t \cdot f(x) \cdot g(x) &= p \cdot t \cdot f(x) \cdot h(x) \\
+                    &\leq (h(x) + tf(x))^{p} - h(x)^{p}.  && \text{Lemma 6.3}
+                \end{align*}
+            Taking the integral of both sides, (pulling out constants),
+                \begin{align*}
+                    p \cdot t \int f(x) g(x) &\leq \int \left|| h(x) + t f(x) \right||^{p}_{p} - \int \left|| h \right||^{p}_{p} \\
+                    &\leq \left( \left||h(x) \right||_{p} + t ||f(x)||_{p} \right)^{p} - ||h(x)||^{p}_{p} && \text{Triangle inequality}\
+                \end{align*}
+            Dividing by \( t \),
+                \[
+                    p \int f(x) g(x) \leq\frac{\left( \left||h(x) \right||_{p} + t ||f(x)||_{p} \right)^{p} - ||h(x)||^{p}_{p}}{t}
+                \]
+            which the right-hand side is derivative of \( \phi(t) = \left( ||h||_p + t||f||_p \right)^{p} \). Taking the derivative with respect to \( t \) at \( t = 0 \), we get that 
+                \begin{align*}
+                    p \int f(x) g(x) &\leq  p \left( \left\lVert h(x) \right\rVert_p^{p-1} + \lVert f(x) \rVert_p \right)^{p-1} = p \lVert f(x) \rVert \lVert g(x) \rVert
+                \end{align*}
+            and so we are done!
+    \end{proof}
+
+\end{thm}
+
+\section*{Section 6.3 Convergence and Completeness}
+
+Recall that if \( \left(X , ||\cdot||\right) \) is a norm space (naturally a metric space), then \( (X, d) \) is a metric space where 
+    \[
+        d(f,g) := ||f - g||  
+    \]
+so the norm is the metric of the space. 
+
+\begin{definition}
+
+    We \( \{f_n\} \in L^p \) converges to an element \( f \in L^p \) in \( L^p \) norm if 
+        \[
+            ||f_n - f||_{p} \to 0.   
+        \]
+    That is, for all \( \epsilon > 0 \), there exists \( N \in \N \) such that for all \( n > N \), we have \( ||f - f_n||_{p} < \epsilon \).
+\end{definition}
+
+\begin{definition}
+    A normed space \( \left( X, ||\cdot|| \right) \) is called a \textbf{complete} space if every Cauchy sequence of \( X \) is convergent. 
+    \begin{itemize}
+        \item Note that a completed normed space is a called a \textbf{Banach space}.
+    \end{itemize}
+\end{definition}
+
+Our goal will be to show that \( L^p \) for \( p \geq 1 \) is a Banach space. 
+
+\begin{definition}
+    A sequence \( {f_n} \subset X \) for any normed space \( X \) is \textbf{summable} to a sum \( s \) in \( X \) if the partial sum converges, i.e.,
+        \[
+            \left\lVert s - \sum_{k=1}^{n} f_k \right\rVert \to 0.
+        \]
+        \begin{itemize}
+            \item A sequence is \textbf{absolute summable} if 
+                \[
+                    \sum_{i=1}^{\infty} \left\lVert f_n \right\rVert < \infty.  
+                \]
+        \end{itemize}
+\end{definition}
+
+\begin{prop}[\textbf{Proposition 6.5}]
+
+    A normed linear space \( X \) is complete if and only if every absolutely summable series is summable.
+
+    \begin{proof}
+        We will need to complete two directions.
+            \begin{enumerate}
+                \item[(\(\Rightarrow\))] Let \( X \) be a Banach space and let \( \{f_n \} \) be an absolute summable sequence. This means we have that
+                    \[
+                        \sum_{n=1}^{\infty} \lVert f_n \rVert < M.
+                    \]
+                Our goal will be show that the partial sums are Cauchy sequence (then convergent by the completeness of a Banach space) i.e.,
+                    \[
+                        S_n =  \sum_{i=1}^{n}f_i  
+                    \]
+                is Cauchy. Then suppose \( n > m \) and so
+                    \begin{align*}
+                        \lVert S_n - S_m \rVert = \left\lVert \sum_{k=m}^{n} f_k \right\rVert \leq \sum_{k=m}^{n} \lVert f_k \rVert &< \sum_{k=m}^{\infty} \lVert f_k \rVert  \\
+                        &< \epsilon
+                    \end{align*}
+                for any \( \epsilon > 0 \) because \( \{f_n\} \) is absolutely summable and therefore convergent. Thus, the partial sums are Cauchy and so convergent.
+                \item[(\( \Leftarrow\) )] Now suppose every absolutely summable series is summable. We will construct a series from the Cauchy sequence. Let \( \{ f_n\} \) be a Cauchy sequence. Pick \( \displaystyle \frac{\epsilon}{2^{k}} \), and then pick the subsequence \( \{f_{n_{k}} \} \) such that 
+                    \[
+                        \left\lVert f_{n_{k+1}} - f_{n_{k}} \right\rVert < \frac{1}{2^{k}} 
+                    \]
+                which we can do because \( \{f_n\}\) is Cauchy.
+                Consider the series \( g_k = f_{n_{k}} - f_{n_{k-1}} \), which is summable because the sequence is decreasing by construction. By assumption, then \( \{g_k\}\) must be absolutely summable; i.e., the sum
+                    \[
+                        S_m = \sum_{k=1}^{m} g_k  
+                    \]
+                has a limit. Note that \( S_m \) is a telescoping series by construction again thus \( S_m = -f_{n_{1}} + f_{n_{m}} \). This implies that \( \{f_{n_{k}} \} \) converges to \( f \) for some \( f \in X \) as \( k \to \infty \). Since \( \{f_n\} \) is Cauchy,
+                    \begin{align*}
+                        \left\lVert f_n - f \right\rVert \leq \lVert f_n - f_{n_{k}} \rVert + \lVert f_{n_{k}} - f \rVert.
+                    \end{align*}
+                Then use the fact that \( \{f_n\} \) is Cauchy and \( \{f_{n_{k}}\}\) is convergent, pick \( \displaystyle \frac{\epsilon}{2} \) for each thing and so the result follows.
+                
+            \end{enumerate}
+    \end{proof}
+    
+\end{prop}
+
+\begin{thm}[\textbf{6.6, Riesz-Fisher}]
+
+    \( L^p \) is complete for \( p \in [1, \infty] \).
+    
+\end{thm}
+
+\end{document}
