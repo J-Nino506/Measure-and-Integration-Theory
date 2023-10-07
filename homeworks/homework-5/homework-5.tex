@@ -1,0 +1,314 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\toM}{\overset{m}{\to}}
+
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+\newcommand{\dif}{\, \mathrm{d}}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Homework \#5}
+\rhead{October 5, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{problem}[4.14] 
+    Some sequence and integral convergence problems.
+    \begin{enumerate}[label = (\alph{*})]
+        \item Show that under the hypotheses of Theorem 4.17 we have
+            \[
+                \int \left| f_n - f \right| \to 0.  
+            \]
+
+            \begin{proof}
+                Let \( \{g_n\} \) be a sequence of integrable functions such that \( g_n \to g \) pointwise with \( g \) integrable. 
+                Let \( \{f_n\} \) be a sequence of measurable functions such that \( |f_n| \leq g \) and \( f_n \to f \) pointwise almost everywhere. Suppose that 
+                    \[
+                        \int g = \lim_{n \to \infty} \int g_n.  
+                    \]
+                For any \( n \in \N \) we have \( |f_n| \leq g \) and so because \( f_n \to f \) and \( g_n \to g \), \( |f| \leq g\).
+                Thus, we have that
+                    \begin{align*}
+                        |f_n| - |f| \leq |f_n - f| &\leq |f_n + f| \\
+                        &\leq |f_n| + |f|  \\
+                        &\leq g_n + g.
+                    \end{align*}
+                This means that the sequence defined by \( \{ (g_n + g) - |f_n - f| \}\) is a nonnegative sequence. So by Fatou's lemma and properties of \( \liminf \) and \( \limsup \),
+                    \begin{align*}
+                        0 \leq \int (g_n + g) - |f_n - f| &\leq \varliminf_{n \to \infty} \int (g_n + g) - |f_n - f| \\
+                        &\leq \int (g_n + g) + \varliminf_{n \to \infty} \int - |f_n - f| \\
+                        &= \int (g_n + g) - \varlimsup_{n \to \infty} \int |f_n - f|.
+                    \end{align*}
+                But then this implies that 
+                    \[
+                        \varlimsup_{n \to \infty} \int |f_n - f| \leq 0 \leq \varliminf_{n \to \infty} \int |f_n - f|
+                    \]
+                and so we have 
+                    \[
+                        \lim_{n \to \infty } \int |f_n -f| = 0.  
+                    \]
+            \end{proof}
+        \item Let \( \{f_n\} \) be a sequence of integrable functions such that \( f_n \to f \) almost everywhere with \( f \) integrable. Then \( \displaystyle \int |f - f_n| \to 0 \) if and only if \( \displaystyle \int |f_n| \to \int |f| \).
+            \begin{proof}
+                We will show two directions to complete this proof.
+                \begin{enumerate}
+                    \item[(\(\Rightarrow\))] First, suppose that 
+                        \[
+                            \lim_{n \to \infty} \int |f_n - f| = 0.  
+                        \]
+                    Then, by using the reverse triangle inequality, can show that 
+                        \begin{align*}
+                            \left| \lim_{n \to \infty} \int |f_n| - \int |f| \right| &\leq \lim_{n \to \infty} \int |f_n| - \int |f| \\
+                            &\leq \lim_{n \to \infty} \int |f_n - f| \\
+                            &= 0.
+                        \end{align*}
+                    Because \( |\cdot | \geq 0 \) always, we know that
+                        \[
+                            0 \leq \lim_{n \to \infty} |f_n| \leq \int |f| \leq 0  
+                        \]
+                    and so 
+                        \[
+                            \lim_{n \to \infty} \int |f_n| = \int |f|.
+                        \]
+                    \item[(\(\Leftarrow\))] Conversely, suppose that 
+                        \[
+                            \lim_{n \to \infty} \int |f_n| = \int |f|.  
+                        \]
+                    Because \( f_n \to f \) a.e, \( |f_n| \leq f \) for all \( n \in \N \). By a similar argument to part (a),
+                    \begin{align*}
+                        |f_n| - |f| \leq |f_n - f| &\leq |f_n + f| \\
+                        &\leq |f_n| + |f|  
+                    \end{align*}
+                    Then the sequence \( \{ (|f_n| + |f|) - |f_n - | \}\) is a nonnegative sequence. Again, similar to part (a), using Fatou's lemma we have
+                    \begin{align*}
+                        0 \leq \int (|f_n| + |f|) - |f_n - f| &\leq \varliminf_{n \to \infty} \int (|f_n|+ |f|) - |f_n - f| \\
+                        &\leq \int (|f_n| + |f|) + \varliminf_{n \to \infty} \int - |f_n - f| \\
+                        &= \int (|f_n| + |f|) - \varlimsup_{n \to \infty} \int |f_n - f|.
+                    \end{align*}
+                   So we again that
+                    \[
+                        \varlimsup_{n \to \infty} \int |f_n - f| \leq 0 \leq \varliminf_{n \to \infty} \int |f_n - f|
+                    \]
+                        and so we have 
+                    \[
+                        \lim_{n \to \infty } \int |f_n -f| = 0.
+                    \]    
+                   finishing the proof. 
+                \end{enumerate}
+            Thus, having showed both directions, \( \displaystyle \int |f - f_n| \to 0 \) if and only if \( \displaystyle \int |f_n| \to \int |f| \).
+            \end{proof}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[4.16]
+    Establish the \emph{Riemann-Lebesgue Theorem}: If \( f \) is an integrable function on 
+    \( (-\infty, \infty) \), then \( \displaystyle \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif x = 0 \). [Hint: The theorem is easy if \( f \) is a step function. Use Problem 15.]
+
+    \begin{proof}
+        Let \( f \) be an integrable function \( (-\infty, \infty) \). Let \( \epsilon > 0 \) be chosen. By Problem 15 part (b), there exists a step function \( \psi \) such that
+            \[  
+                \int \left| f - \psi \right| < \frac{\epsilon}{2}.
+            \]
+        Turning to \( \displaystyle \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif x \), we can note that following:
+            \begin{align*}
+                \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif x &= \left| \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif  x \right|  \\
+                &\leq  \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| f(x) \cos(nx) \right| \dif x  \\
+                &\leq \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| f(x) \cos(nx) \right| \dif x  \\
+                &\leq \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| (f(x) - \psi(x)) \cos(nx)  \right| \dif x + \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| \psi(x) \cos(nx)  \right| \dif x \\
+                &< \frac{\epsilon}{2} + \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| \psi(x) \cos(nx)  \right| \dif x.
+            \end{align*}
+        Because \( \psi(x) \) is a step function, we can integrate the right-hand side integral in the last inequality over \( (-\infty, \infty) \) in each interval which \( \psi(x) \) is constant. So then because \( \phi(x) \) is fixed over these intervals, as \( n \to \infty \), the antiderivative of \( |\cos(nx)| \) goes to zero i.e.,
+            \[ 
+                \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| \psi(x) \cos(nx)  \right| \dif x = 0.
+            \]
+        Since this integral converges to \( 0 \), there exists \( N \in \N \) such for all \( n > N \), we have
+            \[
+                \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| \psi(x) \cos(nx)  \right| < \frac{\epsilon}{2}.
+            \]
+        Thus, we have that
+            \begin{align*}
+                \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif x &< \frac{\epsilon}{2} + \lim_{n \to \infty} \int_{-\infty}^{\infty} \left| \psi(x) \cos(nx)  \right| \\
+                &< \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+                &= \epsilon.
+            \end{align*}
+        Since \( \epsilon \) was chosen arbitrarily, 
+            \[
+                \lim_{n \to \infty} \int_{-\infty}^{\infty} f(x) \cos(nx) \dif x = 0 
+            \]
+        which was our desired result.
+    \end{proof}
+
+
+\end{problem}  
+
+\begin{problem}[4.25]
+
+    A sequence \( \{f_n\} \) of measurable functions is said to be a Cauchy sequence in measure if given \( \epsilon > 0 \), there is \( N \in \N \) such that for all \( m, n \geq N \) we have 
+        \[
+            m \left\{ x: \left| f_n(x) - f_m(x) \right| \geq \epsilon \right\} < \epsilon.
+        \]
+    Show that if \( \{f_n\} \) is a Cauchy sequence in measure, 
+    then there is a function \( f \) to which the sequence \( \{f_n\} \) converges in measure. 
+    
+    \begin{proof}
+        Let \( \{f_n\} \) be a sequence of measurable functions which is Cauchy in measure. Fix \( \nu \in \N \). Choose \( n_{\nu + 1} > v_{\nu} \) such that 
+            \[  
+                m \left\{ x: \left|f_{n_{\nu+1}}(x) - f_{n_{\nu}}(x) \right| \geq \frac{1}{2^{\nu}} \right\} < \frac{1}{2^{\nu}}.
+            \]
+        We claim that the series
+            \[
+               S_n(x) =  \sum_{\nu=1}^{\infty} \left( f_{n_{\nu +1}}(x) - f_{n_{\nu}}(x) \right)  
+            \]
+        converges almost everywhere to a function \( g \). Define the set
+            \[  
+                E_{\nu} = \left\{ x: \left|f_{n_{\nu+1}}(x) - f_{n_{\nu}}(x) \right| \geq \frac{1}{2^{\nu}} \right\}.
+            \]
+        If \( \displaystyle x \not\in A_k = \bigcup_{\nu = k}^{\infty} E_{\nu} \), then
+            \[  
+                \left| f_{n_{\nu +1}}(x) - f_{n_{\nu}}(x) \right| < \frac{1}{2^{v}} \ \text{for all} \ \nu > k.
+            \]
+        Taking the intersection over all \( k \) for \( A \) would mean that this set would be contained in \( A \) i.e.,
+            \[  
+                    \bigcap_{k=1}^{\infty} A_k \subset A_k
+            \]
+        and so 
+            \[  
+                m \left(\bigcap_{k=1}^{\infty} A_k \right) \leq m\left( A_k \right) \leq \sum_{k=1}^{\infty} m(A_k) < \frac{1}{2^{\nu - 1}}.
+            \]
+        Because \( \nu \) is fixed, \( \displaystyle  m \left(\bigcap_{k=1}^{\infty} A_k \right) = 0 \). 
+        Thus \( S_n(x) \to g(x) \) almost everywhere.
+
+        Let \( f = g + f_{n_{1}} \) be a sequence. By construction, the partial sums of this sequence are telescoping i.e., for any \( \nu \in \N \), the partials sums of \(f \) are of the form \( f_{n_{\nu}} - f_{n_{1}} \). Thus \( f_{n_{\nu}} \toM f \). 
+        Now let \( \epsilon > 0 \) be chosen. Because the sequence \( \{f_n\} \) is Cauchy in measure, there exists \( N_1 \in \N \) such for all \( m, n \geq N_1 \),
+            \[
+                m \left\{ x: |f_n(x) - f_m(x)| \geq \frac{\epsilon}{2} \right\} < \frac{\epsilon}{2}.
+            \]  
+        Since \( f_{n_{\nu}} \toM f \), there exists \( N_2 \in \N \) such that for all \( k > N_2 \)
+            \[
+                m \left\{ x: \left| f_{n_{k}} - f(x) \right| \geq \frac{\epsilon}{2} \right\} < \frac{\epsilon}{2}.
+            \]
+        Set \( N = \max\{ N_1, N_2 \}\). So for any \( n, k > N \), we know
+            \begin{align*}
+                m \left\{ x: \left| f_n(x) - f(x) \right| \geq \epsilon \right\} &\leq  m \left\{ x: \left| f_{n_{k}} - f_n(x) \right| \geq \frac{\epsilon}{2} \right\} + m \left\{ x: |f(x) - f_{n_{k}}(x)| \geq \frac{\epsilon}{2} \right\} \\
+                &< \frac{\epsilon}{2} + \frac{\epsilon}{2}  \\
+                &= \epsilon. 
+            \end{align*}
+        Having satisfied the definition of convergence of measure, \( f_n \toM f \) which completes the proof.
+    \end{proof}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Compute \( \displaystyle \lim_{n \to \infty} \int_{0}^{1} (1 + nx^{2})(1 + x^{2})^{-n} \dif x \). Justify your answer.
+
+    \begin{proof}
+        Note that we can rewrite this integral as 
+            \[
+                \lim_{n \to \infty} \int_{0}^{1} \frac{1 + nx^{2}}{(1 + x^{2})^{n}}  \dif x 
+            \]
+         We can interchange the limit operation and the integral because the sequence of functions \( \displaystyle f_n(x) = \left\{ \frac{1+nx^2}{(1 + x^2)^{n}} \right\} \) is uniformly convergent and, in fact, this sequence is uniformly convergent to \( 0 \). To that end fix \( \epsilon > 0 \). Take the derivative of \( \displaystyle f(x) = \frac{1+nx^2}{(1 + x^2)^{n}}  \) with respect to \( x \) as we want to find where this function is maximized over \( [0, 1] \). It can be shown that (saving showing all of the algebra),
+            \[
+                \frac{\dif}{\dif x} \left( \frac{1+nx^2}{(1 + x^2)^{n}} \right)  = -2(n-1) nx^3 (x^2 + 1)^{-n-1}.
+            \]
+        For any \( x \in [0, 1] \), as \( n \to \infty \), this quantity goes to \( 0 \) i.e., \( f(x) \) is maximized when \( x = 0 \). So then \( \displaystyle f(0) = \frac{1}{1^n} = 1 \) for all \( n \in \N \). Thus choose \( N \in \N \) large enough so that \( \displaystyle \frac{1}{N} < \epsilon \). So for any \( n > N \),
+            \[
+                \left|\frac{1+nx^2}{(1 + x^2)^{n}}\right| \leq \frac{1}{n} < \epsilon.
+            \]
+        Thus \( f_n(x) \to  0 \) uniformly and so 
+            \[
+                \lim_{n \to \infty} \int_{0}^{1} \frac{1 + nx^{2}}{(1 + x^{2})^{n}}  \dif x =  \ \int_{0}^{1} \lim_{n \to \infty} \frac{1 + nx^{2}}{(1 + x^{2})^{n}} = \int_{0}^{1} 0 \dif x = 0.
+            \]
+    \end{proof}
+    
+\end{problem}
+
+\end{document}
