@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#14}
+\rhead{October 17, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+
+\begin{thm}[\textbf{6.6, Riesz-Fisher}]
+
+    \( L^p \) is complete for \( p \in [1, \infty] \).
+
+    \begin{proof}
+        Note \( p = \infty \) is an exercise. We want to show every absolute summable series is summable.
+        Let \( \{f_n\}  \subset L^p \) such that 
+            \[
+                \sum_{n=1}^{\infty} \lVert f_n \rVert < M.  
+            \]
+        Consider the function \( \displaystyle g_n(x) = \sum_{k=1}^{n} f_k(x) \) and want to show that \(g_n \) converges some function \( g \) (i.e., the limit exists.) By the triangle inequality,
+            \begin{align*}
+                \lVert g_n(x) \rVert \leq \sum_{k=1}^{n} \lVert f_k(x) \rVert < M
+            \end{align*}
+        and so we know that \( \displaystyle \int |g_n|^p < M^p \). We know we want to do the following:
+        \begin{enumerate}
+            \item Find a limit of \( g_n \).
+            \item Then show it is in \( L^p \).
+        \end{enumerate}
+        For each fixed \( x \in L^P \), \( \{g_n(x) \} \) is monotonically increasing. By the Monotone Convergence Theorem, there exists \( g(x) \in \overline{\R} \) (extended real numbers) and \( g_n(x) \to g(x) \). Because \( g_n \geq 0 \) is measurable, \( g(x) \geq 0 \) is measurable as well an dso 
+            \[
+                \int g^p \leq M^p
+            \]
+        and so this implies that \( g \in L^p \). Notice that for each \( x \) such that \( g(x) \) is finite, \( \displaystyle \sum_{k=1}^{\infty} f_k(x) \) is absolutely summable over \( \R \). Since \( (\R, |\cdot|) \) is complete, we know that \( \displaystyle S_n(x) = \sum_{k=1}^{n} f_k(x) \) is summable i.e.,
+            \[
+                S_n(x) \to S(x) = \sum_{k=1}^{f_k(x)}  
+            \]
+        over \( \R \).  We can look at just the limit \( S(x) \) because we are looking at only where \( g(x)\) has finite measure and defined as
+            \[
+                \widetilde{S} =  \begin{cases}
+                    S_n(x) & g(x) < \infty \\
+                    0 & \text{otherwise}.
+                \end{cases}  
+            \]
+        In other words, \( S(x) \) is measurable since \( \displaystyle S(x) \neq \sum_{k=1}^{\infty} f_k(x) \) only on a measure zero set. Moreover, \( |S_n(x)| \leq |g(x)| \) for all \( n \in \N \) and so 
+        \( |\widetilde{S}(x)| \leq |g(x)| \) and therefore \( \widetilde{S}(x) \in L^p \). We claim that
+                \[
+                    \left\lVert \sum_{k=1}^{n} f_n(x) - \widetilde{S}_n(x) \right\rVert_{p} \to 0 \ \text{as}\ n \to \infty. 
+                \]
+            We know that because \( S \in L^p \), 
+                \[
+                    \left| S_n(x) - \widetilde{S}_n(x) \right|^p \leq 2^p \cdot |g(x)|^p.
+                \]
+            So by the Lebesgue Dominated Convergence, we know that \( \lVert s_n  - \widetilde{s}_n \rVert^p \to 0 \) and so \( \lVert s_n - \widetilde{s}_n \rVert \to 0 \). Thus the sum \( s\) from \( \{f_n\} \) is in \( L^p \).
+     \end{proof}
+\end{thm}
+    
+\section*{Section 6.4 Approximation in \(L^p\)}
+
+Our goal with approximation properties is to approximate functions in \( f \in  L^p \) spaces by step functions \( \phi \) and continuous functions \( g \). That is, for any \( \epsilon > 0 \), there exists functions \( \phi \) and \( g \) such that
+     \[
+        \lVert f - g\rVert_{p} < \epsilon \quad \text{and} \quad \lVert f - \phi \rVert_p < \epsilon.
+     \]
+
+\begin{lemma}[\textbf{6.7}]
+
+    Given \( f \in L^p \), \( p \in [1, \infty] \), and any \( \epsilon > 0 \), there is a bounded measurable functions \( f_M \) with \( |f_m| \leq M \) and \( \lVert f - f_M \rVert < \epsilon \).
+
+        \begin{proof}
+            Consider the function 
+                \[
+                    f_N(x) = \begin{cases}
+                        N & N \leq f(x) \\
+                        f(x) & -N \leq f(x) \leq N \\
+                        -N & f(x) \leq - N.
+                    \end{cases}  
+                \]
+        \end{proof}
+    Note that \( |f_n| \leq N \) and so is measurable for each \( n \in \N \). Then \( f_N(x) \to f(x) \) converges a.e (there may be unbounded points but they are of measure zero) which implies
+    that 
+    \( | f_N(x) - f(x)|^{p} \to 0 \) a.e. Thus,
+        \[
+            |f_N(X) - f(x)|^p < 2|f(x)|^p    
+        \]
+    almost everywhere. So by the Lebesgue Dominated Convergence Theorem,
+        \[
+            \int |f_N(x) - f(x) |^p \to 0   
+        \]
+    or, equivalently, \( \displaystyle \lVert f_N - f(x) \rVert_p \to 0 \) and so \( f_n(x) \to f(x) \) is in \( L^p \).
+    
+\end{lemma}
+
+\begin{prop}[\textbf{6.8}]
+
+    Given \( f \in L^p \), \( p \in [1, \infty) \) and any \( \epsilon > 0 \), there is a step function \( \phi \) and a continuous function \( g\) such that 
+        \[
+            \lVert f - g\rVert_{p} < \epsilon \quad \text{and} \quad \lVert f - \phi \rVert_p < \epsilon.
+        \]  
+        \begin{proof}
+            Let \( \epsilon > 0 \) be chosen. For step functions, we note that by Lemma 6.7, there exists 
+            an \( f_M \) such that \( \displaystyle \lVert f - f_M \rVert < \frac{\epsilon}{2} \). By Theorem 3.22 (Littlewood's 2nd Principle), there exists a step function \( \phi \) such that \( |f_M - \phi| < \frac{\epsilon}{4} \) except on a set \( E \) of measure less than 
+                \[
+                    \delta = \left( \frac{\epsilon}{8M} \right)^p.  
+                \]
+            Then
+                \begin{align*}
+                    \lVert f_M - \phi \rVert_{p} &= \int |f_M - \phi|^p \\
+                    &= \int_{[0,1] \setminus E} \int |f_M - \phi|^p + \int_{E} |f_M - \phi|^p \\
+                    &\leq \int_{[0,1]} \left( \frac{\epsilon}{4}  \right)^{p} + \int_{E} |f_M - \phi|^p  \\
+                    &=\int_{[0,1]} \left( \frac{\epsilon}{4}  \right)^{p} = (2M)^p \cdot m(E) \\
+                    &\leq \int_{[0,1]} \left( \frac{\epsilon}{4} \right) + (2M)^p \cdot \left( \frac{\epsilon}{8M}\right)
+                \end{align*}
+            and taking the \( p \)th root, we know that
+                \[
+                    \lVert f_M - \phi \rVert_p \leq \frac{\epsilon}{2}.  
+                \]
+            Doing the same thing with a continuous functions \( f\) than step function, we can show that
+                \[
+                    \lVert f_M - g \rVert < \frac{\epsilon}{2}.  
+                \]
+        \end{proof}
+\end{prop}
+
+This means that ``step functions'' and ``continuous functions'' are ``dense'' in \( L^p \) (i.e., we can always use step and continuous functions in the limit to approximate functions \( f \in L^p\)).
+
+
+
+\end{document}

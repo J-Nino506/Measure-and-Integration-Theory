@@ -1,0 +1,268 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#15}
+\rhead{October 19, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+
+\section*{Section 5.1 Differentiation of Monotone Functions}
+
+Our goal will be to show if \( f \) is monotone increasing over an interval \( [a,b] \), then \( f \) is 
+differentiable a.e.
+
+\begin{definition}[\textbf{Vitali Cover}]
+
+    Let \( E \subset \R \) and \( \Gamma \) is a collection of intervals. We call \( \Gamma \) a \textbf{Vitali cover}
+    of \( E \) if for all \( x \in E \) and all \( \epsilon > 0 \), there \( I \in \Gamma \) such that \( x \in I \) and 
+    \( 0 < |I| < \epsilon \).
+    
+\end{definition}
+
+Here is an example. Let \( E = [0,1 ] \). Then
+    \[
+        \Gamma_1 = \left\{ \left( x - \frac{\epsilon}{2}, x + \frac{\epsilon}{2}\right) \right\}  
+    \]
+[there was more to the above... finish this after]
+
+\begin{lemma}[\textbf{5.1}]
+
+    Let \( E \subset \R \), \( m^{*}(E) < \infty \), and \( \Gamma \) is a Vitali cover of \( E \). Then for all \( \epsilon > 0 \)
+    there a finite disjoint collection \( \{ I_1, \ldots, I_n\} \subset \Gamma \) such that 
+        \[  
+            m^{*} \left( E \setminus \bigcup_{i=1}^{N} I_i \right) < \epsilon.
+        \]
+    
+\end{lemma}
+
+\begin{definition}[\textbf{Dini Derivatives}]
+
+    We define the \textbf{Dini Derivatives} as follows:
+        \begin{align*}
+            D^{+} f(x) &= \varliminf_{h \to 0+} \frac{f(x+h) - f(x)}{h} \\
+            D^{-} f(x) &= \varliminf_{h \to 0+} \frac{f(x) - f(x - h)}{h} \\
+            D_{+} f(x) &= \varlimsup_{h \to 0+} \frac{f(x+h) - f(x)}{h} \\
+            D_{-} f(x) &= \varlimsup_{h \to 0+} \frac{f(x) - f(x - h)}{h}
+        \end{align*}
+We can remark by definition the following 
+\begin{enumerate}
+    \item \begin{align*}
+        D^{+} f(x)  &\geq D_{+} f(x) \\
+        D^{-} f(x) &\geq D_{-} f(x).
+    \end{align*}
+    \item         
+    Also, \( f \) is differentiable if and only if \( D^{+}_{+} = D_{-}^{-} \).
+\end{enumerate}
+
+    
+\end{definition}
+
+\begin{lemma}
+    Let \( f: [a,b] \to \R \) be an increasing function, and let \( \gamma < R \). Then 
+        \[
+            E = E_{\gamma, R} = \left\{ x \in (a,b): D_{-}f(x) < \gamma < R < D^{+}f(x)\right\}.
+        \]
+    has measure zero.
+
+    \begin{proof}
+        Write \( m^* E = s < \infty \). Let \( \epsilon > 0 \) be chosen. By definition of outer measure, there exists
+        an open set \( E \subset O \) such that \( m(O) < s + \epsilon \). Let \( x \in E \). 
+        Then \( \displaystyle D_{-}f(x) < \gamma \) which implies that for any \( \delta > 0 \), there exists \( h \in (0, \delta) \) with 
+            \[  
+                \frac{f(x) - f(x - h)}{h} < \gamma 
+            \]
+        coming from the definition of \( \liminf \). 
+        Then the collection \( [x - h, x] \) forms a Vitali cover of \( E \). 
+        By the definition of Vitalia covering Lemma (\textbf{Lemma 5.1}), for our fixed \( \epsilon > 0 \),
+        there exists a finite collection \( \left\{ I_1 = [x_1 - h, x_1 ],  \ldots, I_N = [x_N - h, x_N] \right\} \) such that
+            \[
+                m^{*} \left( E \setminus \bigcup_{k=1}^{N} I_k \right) < \epsilon.  
+            \]
+        Let \( \displaystyle A = E \cap \bigcup_{k=1}^{N} I_k \). Then \( m^{*}(A) > s - \epsilon \) (recalling \( s = m^{*}(E) \).)
+        This implies that 
+            \begin{align*}
+                0 \leq \sum_{k=1}^{n} f(x_k) - f(x_k - h_k) &< \gamma \sum_{k=1}^{N} h_k \\
+                &= m^{*}\left( \bigcup_{k=1}^{N} I_k \right) \\
+                &< \gamma \cdot (s + \epsilon) && \text{because} \ \bigcup_{k=1}^{N} I_k \subset O
+            \end{align*}
+        and so we are done with this part.
+
+        Let \( y \in A \), and by \( \limsup \) we know that \( D^+f(x) > R \). Then there exists an arbitrarily small 
+        \( k > 0 \) such that \( [y, y + k] \subset I_n \) for some \( n \in \N \) such that
+            \[
+                f(y + k )  - f(y) > R \cdot k. 
+            \]
+        Then the collection formed from \( [y, y+k] \) forms a Vitali cover on A. Again, by the Vitalia cover lemma (\textbf{Lemma 5.1}), there exists a collection \[J = \left\{  J_1 = [y_1, y_1 + k_1], \ldots, J_M = [y_M, y_M + k_M] \right\} \] such that 
+            \[
+                m^{*} \left( A \setminus \bigcup_{j}^{M} J_{j} \right) < \epsilon.
+            \]
+        This implies that 
+            \[
+                m^{*}\left( A \cap  \setminus \bigcup_{j}^{M} J_{j}\right) > s - 2 \epsilon.
+            \]
+        So we can sum across these intervals and get that
+            \begin{align*}
+                \sum_{j=1}^{M} f(y_j + k_j) - f(y_j) &> R \sum_{j=1}^{M} k_j \\
+                &> R(s - 2\epsilon).
+            \end{align*}
+        Putting this all together and noting that \( f \) is an increasing function
+            \begin{align*}
+                \sum_{n=1}^{N} f(x_n) - f(x_n - h_n) &\geq \sum_{j=1}^{M}f(y_j + k_j) - f(y_j) \\
+                &> R(s - 2\epsilon)
+            \end{align*}
+        and so we get that
+            \[
+                \gamma(s + \epsilon) < R(s - 2 \epsilon)  .
+            \]
+        Thus \( \gamma s \geq Rs \) and implies that \( s = 0 \) (noting that \( R > \gamma \)). Now we are done!
+    \end{proof}
+\end{lemma}
+
+\begin{thm}[\textbf{5.3}]
+
+    Let \( f: [a,b] \to \R \) be monotonic increasing. Then \( f \) is differentiable almost everywhere, \( f' \)
+    is measurable, and 
+        \[
+            \int_{a}^{b} f'(x) \mathrm{d}\,x \leq f(b) - f(a).  
+        \]
+
+        \begin{proof}
+            Let \( E = \{ x: D_{-}f(x) < D^{+} f(x)\} \). Then 
+                \[
+                    E = \bigcup_{r, R \in \Q} E_{r, R}  
+                \]
+            has a measure zero by our lemma above. This tells us that \( f \) is differentiable almost everywhere because
+            we showed that the sets where any two derivates are not equal have measure zero. Thus
+                \[
+                    f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}  
+                \] 
+            exists almost everywhere. Define the function
+                \[
+                    f(x) = \begin{cases}
+                        f(b) & x \geq b \\
+                        f(x) & x \in [a,b]
+                    \end{cases}  
+                \]
+            which extends the function \( f \) to the right. Define the sequence \( \{ G_n\} \) by 
+                    \[
+                        G_n(x) = \frac{f\left( x + \frac{1}{n} \right) - f(x)}{\frac{1}{n}} \geq 0.
+                    \]
+            This sequence converges a.e. to \( f'(x) \) as \( n \to \infty \). So by Fatou's lemma,
+                    \begin{align*}
+                        \int_{a}^{b} f'(x) \, \mathrm{d}x & \leq \varliminf_{n \to \infty} \int_{a}^{b} G_n(x) \, \mathrm{d} x \\
+                        &= \varliminf_{n \to \infty} \int_{a}^{b} n \left( f \left( x + \frac{1}{n}\right) - f(x) \right) \mathrm{d} x \\
+                        &= \int_{a + 1/n}^{b + 1/n} f(y) \, \mathrm{d} y \\
+                        &= \varliminf_{n \to \infty} n \int_{a + 1/n}^{b + 1/n} f(y) \, \mathrm{d} x - \int_{a}^{a + 1/n} f(x) \, \mathrm{d}x \\
+                        &= \varliminf_{n \to \infty} n \left(\int_{b}^{b + 1/n} f(y) \, \mathrm{d} x - \int_{a}^{a + 1/n} f(x) \, \mathrm{d}x \right) \\
+                        &= \varliminf_{n \to \infty} n \cdot f(b) \cdot \frac{1}{n} - \varliminf_{n \to \infty} \int_{a}^{a + 1/n} f(x) \, \mathrm{d}x \\ 
+                        &\leq f(b) -  \varliminf_{n \to \infty} \int_{a}^{a + 1/n} f(x) \, \mathrm{d}x \\
+                        &\leq f(b) - f(a) && \text{noting that} \, f(x) \geq \frac{1}{n}
+                    \end{align*}
+                
+        \end{proof}
+The next thing that will be covered is functions of bounded variation in Section 5.2.
+
+\begin{definition}
+    Let \( f: [a,b ]\to \R  \). Then \( f \) is a function of \textbf{bounded variation} if \( \lVert f \rVert_{TV[a,b]} < \infty \) where \( TV[a,b] \) is the total variation of \( [a,b] \) and
+        \[
+            \lVert f \rVert_{TV[a,b]} = \sup \left\{ \sum_{i=0}^{n} |f(x_{i+1}) - f(x)| : P \ \text{ is a partition of}\ [a,b] \right\}.
+        \]
+\end{definition}
+
+\end{thm}
+
+
+\end{document}
