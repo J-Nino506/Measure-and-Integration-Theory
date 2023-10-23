@@ -98,6 +98,8 @@
 
 \begin{document}
 
+\section*{Chapter 6 Banach Spaces}
+
 \section*{Section 6.1 \(L^p\) Spaces}
 
 \begin{definition}
@@ -109,23 +111,41 @@
 
 Note the following 
     \begin{enumerate}[label = (\arabic{*})]
-        \item \( L^1 \) is the space of integrable functions
-        \item \( L^p \) is closed under \( +  \) and under scalar multiplication i.e., 
+        \item \( L^1 \) is the space of integrable functions.
+        \item \( L^p \) is closed under \( +  \) and under scalar multiplication i.e., if \( f,g \in L^p \) then \( f + cg \in L^p \) for all \( c \in \R \).This implies that \( L^p \) is a linear (vector) space. 
     \end{enumerate}
 
-The \( L^p \) is defined as equivalance classes as follows:
-    \[
-        \left\{ f: \ \text{measurable and} \ \int |f|^p < \infty \right\}  /\sim f = g \ \text{a.e.}
-    \]
-(mod out by functions that are equal almost everywhere)
 \begin{definition}
-    ()
+    The \( L^p \)-norm on a \( L^p \) space for all \( f \in L^p \) is given by 
+        \[
+            \lVert f \rVert = \lVert f \rVert_{p} = \left( \int_{0}^{1} |f|^{p}\right)^{1/p}.
+        \]  
 \end{definition}
 
+In order for \( \lVert \cdot \rVert \) to be a norm over a vector space \( V \), the following properties must be satisfied for all \( v \in V \):
+    \begin{enumerate}[label = (\arabic{*})]
+        \item \( \lVert v \rVert = 0 \) if and only \( v = 0 \).
+        \item For all \( \alpha \in \R \), \( \lVert \alpha v \rVert =  |\alpha| \lVert v \rVert \).
+        \item \( \lVert v + w \rVert \leq \lVert v \rVert + \lVert w \rVert \).
+    \end{enumerate}
+
+In terms of \( L^p \) spaces, this is what we currently have for all \( f \in L^p \):
+    \begin{enumerate}[label = (\arabic{*})]
+        \item \( \lVert f \rVert = 0 \) if and only if \( f = 0 \) a.e.
+        \item \( \lVert \alpha f \rVert = |\alpha| \lVert f \rVert \) for all \( \alpha \in \R \).
+    \end{enumerate}
+but we do not have the triangle inequality (third property from above) for norms of \( L^p \) spaces since \( \lVert f \rVert = 0 \) implies \( f = 0 \) almost everywhere rather than strict equality.
+
+However, if we consider equivalence classes of \( L^p \) where functions are equal almost everywhere, we can define norms on these spaces. That is, define the relation \( \sim \) and 
+    \[
+        \tilde{L^{p}} = L^{P}\bigr/\sim
+    \]
+where \( f \sim g \Leftrightarrow f = g \) a.e. In other words, if mod out by functions that are equal almost everywhere, we can get a ``nice'' normed linear space!!
+
 \begin{definition}
-    The \( L^p \)-norm  on \( L^p \) space is defined as 
+    The \( L^p \)-norm on a \( L^p \) space is defined as 
         \[
-            || f ||_{p} := \left( \int_{0}^{1}|f|^{p} \right).
+            || f ||_{p} := \left( \int_{0}^{1}|f|^{p} \right) \ \text{for all} \ p \in (0, \infty).
         \]
 \end{definition}
 

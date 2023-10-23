@@ -154,7 +154,7 @@ The result aboves follows almost right away from Problem 2.12. Also note that by
     if \( f_n \to f \) almost everywhere is replaced by \( f_n \toM f \).
 
     \begin{enumerate}[label = (\arabic{*})]
-        \item \textbf{Fatuo's Lemma}
+        \item \textbf{Fatou's Lemma}
             \begin{proof}
             Let \( \{f_n\} \) be a sequence of measurable functions such that \( f_n \toM f \). 
             Let us pick a subsequence \( \{x_{n_{k}} \} \) such 
@@ -166,7 +166,7 @@ The result aboves follows almost right away from Problem 2.12. Also note that by
                     \begin{align*}
                         \int f = \lim_{p \to \infty} f_{n_{k_{p}}} & \leq \varliminf_{n \to \infty} \int f_{n_{k_{p}}} \\
                         &= \varliminf_{k \to \infty} \int f_{n_{k}} \\
-                        &= \varliminf_{n to \infty} \int f_{n}
+                        &= \varliminf_{n \to \infty} \int f_{n}
                     \end{align*}
                 and so the result holds!
             \end{proof}
@@ -176,7 +176,7 @@ The result aboves follows almost right away from Problem 2.12. Also note that by
             \]
         
             \begin{proof}
-                We claim that to show this result, we must show that we can any subsequence \( \displaystyle \int f_{n_{k}} \) of \( \int f_n \) which then implies that
+                We claim that to show this result, we must show that we can construct any subsequence \( \displaystyle \int f_{n_{k}} \) such that \( \displaystyle \int f_n \) which then implies that
                     \[
                         \lim_{k \to \infty} \int f_{n_{k}} = \int f.  
                     \]
@@ -194,4 +194,5 @@ The result aboves follows almost right away from Problem 2.12. Also note that by
             \end{proof}
     \end{enumerate}
 \end{prop}
+
 \end{document}
