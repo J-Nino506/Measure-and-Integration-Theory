@@ -1,0 +1,325 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+\newcommand{\dif}{\, \mathrm{d}}
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#16}
+\rhead{October 24, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+The goal of this lecture is to derive a different version of the fundamental theorem of calculus. 
+
+\begin{definition}
+    Let \( f:[a,b] \to R \), and let \( P = \{x_0 = a, x_1, \ldots, x_k = b\} \) be a partition of \( [a,b] \). Then define
+        \begin{align*}
+            p &= \sum_{i=1}^{k} \left( f(x_i) - f(x_{i-1}) \right)^{+}  \\
+            n &= \sum_{i=1}^{k} \left( f(x_i) - f(x_{i-1}) \right)^{-}.
+        \end{align*}
+
+Recall that 
+    \begin{align*}
+        f^{+}(x) &= \max \{ f(x), 0\} \\
+        f^{-}(x) &= \max \{ -f(x), 0 \} \\
+        f(x) &= f^+(x) - f^-(x) \\
+        |f(x)| &= f^+(x) + f^-(x).
+    \end{align*}
+Then
+    \[
+        t = n + p =  \sum_{i=1}^{k} |f(x_i) - f(x_{i-1})|.  
+    \]
+Further, define
+    \begin{align*}
+        P &= \sup_{P} p \\
+        N &= \sup_{P} n \\
+        T &=  \sup_{P} t
+    \end{align*}
+over all partitions \( P \) of \( [a,b] \). Then \( P \) is the \textbf{positive variation} of \( f \), 
+\( N \) is the \textbf{negative variation} of \( f \), 
+and \( T \) is the \textbf{total variation} of \( f \).
+\end{definition}
+
+Note that \( f(b) - f(a)  = p - n \). Also, for each partition of \( [a,b] \), 
+\( p \leq T \leq p + n \).
+
+\begin{definition}
+    Using the same structure of the definition above, \( f \) is a function of \textbf{bounded variation} if
+        \[
+            T = T_{f} < \infty.   
+        \]
+\end{definition}
+
+This tells us that the function is not ``wiggling'' that much (an example of a function that is not of bounded variation is \( f(x) = \sin(1/x). \))
+
+\begin{lemma}[\textbf{5.4}]
+
+    If \( f:[a,b] \to \R \) is a function of bounded variation on \( [a,b]\), then
+        \[
+            T_{a}^{b} = P_{a}^{b} + N_{a}^{b}  
+        \]
+    and 
+        \[
+            f(b) - f(a) =   P_{a}^{b} - N_{a}^{b}.
+        \]
+        
+        \begin{proof}
+            For any partition of \( [a,b] \),
+                \[
+                    p = n + f(b) - f(a);
+                \]
+            in other words, for any partition \( P \) of \( [a,b] \). Taking the supremum over any fixed partition,
+                \[  
+                     p = N + f(b) - f(a).
+                \]
+            Further,
+                \begin{align*}
+                    t = p + n &= p + (p - f(b) + f(a))  \\
+                    &= 2p - f(b) + f(a).
+                \end{align*}
+            Taking the supremum over all partitions again,
+                \[
+                    T = 2P - f(b) - f(a) = P + N  
+                \]
+            and so we are done!
+        \end{proof}
+
+\end{lemma}
+
+\begin{thm}[\textbf{5.5}]
+    A function \( f \) is of bounded variation on \( [a,b] \) if and only if \( f \) is the difference of two monotone (increasing) real-valued functions \( [a,b] \).
+
+        \begin{proof}
+            
+            We will show two directions to complete this proof.
+            \begin{enumerate}
+                \item[(\(\Rightarrow\))]First, we will note that the functions \( P_a^x \), \( N_a^x \), and \( T_a^x \) are increasing functions in \( x \). We also know that \( 0 \leq P_a^x \leq T_a^x \leq T_a^b < \infty \) and \( 0 \leq N_a^x \leq T_a^x \leq T_a^b < \infty \). Set \( g(x) =  P_a^x \) and \( h(x) =  N_a^x \). By our remark, \( g \) and \( h \) are increasing and so 
+                \[
+                    f(x) - f(a) = P_a^x - N_a^x = g(x) - h(x)   
+                \]
+            which follows by Lemma 5.4.
+            \item[(\(\Leftarrow\))] Let \( f = g- h \) and suppose \( g, h \) are increasing on \( [a,b] \). Then for any partition of \( [a,b]\),
+                \begin{align*}
+                    \sum_{i=1}^{k} \left|f(x_{i} - f(x_{i-1})) \right| &\leq \sum_{i=1}^{k} g(x_i) - g(x_{i-1}) - \sum_{i=1}^{k} h(x_{i}) - h(x_{i-1}) \\
+                    &= \left( g(b) - g(a) \right) + \left( h(b) - h(a)\right)
+                \end{align*}
+            which does not depend on the total variation of \( f \). Taking the suprema over partitions,  
+                \[
+                    T_a^b \leq (g(b) - g(a)) + (h(b) - h(a)).  
+                \]
+            \end{enumerate}
+            Having shown a forward and backwards implication, this completes the proof. 
+        \end{proof}
+
+\end{thm}
+
+\begin{cor}[\textbf{5.6}]
+
+    If \( f \) is of bounded variation on \( [a,b] \), then \( f'(x) \) exist almost everywhere on \( [a,b] \).
+
+\end{cor}
+
+\section*{Section 5.3: Differentiation of an Integral}
+
+\begin{definition}
+    Let \( f \) be an integrable function \( [a, b] \). Define
+        \[
+            F(x) = \int_{a}^{x} f(t) \, \mathrm{d}t  
+        \]
+    for all \( x \in [a,b] \) is called the \textbf{indefinite integral} of \( f \) over \( [a,b] \).
+\end{definition}
+
+Our goal is to show that \( F'(x) = f(x) \) almost everywhere provided that \( f \) is integrable. 
+
+\begin{lemma}[\textbf{5.7}]
+
+    If \( f \) is integrable on \( [a, b] \), then then function \( F \) defined by
+        \[
+            F(x) = \int_{a}^{x} f(t) \, \mathrm{d}t  
+        \]
+    is a continuous function of bounded variation. 
+
+        \begin{proof}
+            Let \( f \geq 0 \) and let \( f \in L^{1}[a,b] \) (an integrable function). Fix \( \epsilon > 0 \). Then by Proposition 4.14, there exists \( \delta > 0 \) such that \( A \subset [a,b] \) with \( m(A) < \delta \) implies that
+                \[
+                    \int_{A} f < \epsilon.
+                \]
+            THen we have that 
+                \begin{align*}
+                    F(x + h) - F(x) &= \int_{a}^{x+h}f - \int_{a}^{x} f \\ 
+                    &= \int_{x}^{x + h} f \\
+                    &\leq \int_{A} f \\
+                    &< \epsilon
+                \end{align*}
+            and so \( F \) is continuous. To show bounded variation, fix any partition \( P = \{x_0 = a, x_1, \ldots, x_k = b \} \) of \( [a,b] \).
+            Then 
+                \begin{align*}
+                    \sum_{i=1}^{k}\left| F(x_i) - F(x_{i-1}) \right| &= \sum_{i=1}^{k} \left| \int_{x_{i-1}}^{x_{i}} f(t) \, \mathrm{d} t\right| \\
+                    &\leq \sum_{i=1}^{k} \int_{x_{i-1}}^{x_{i}} \left| f(t) \right| \mathrm{d}t  \\
+                    &= \int_{a}^{b} |f(t)| \, \mathrm{d}t \\
+                    &< \infty
+                \end{align*}
+            and so we are done!
+        \end{proof}
+\end{lemma}
+
+\begin{lemma}[\textbf{5.8}]
+
+    If \( f \) is integrable on \( [a,b] \) and
+        \[
+            \int_{a}^{x} f(t) \dif t = 0 
+        \]
+    for almost everywhere \( x \in [a,b] \), then \( f(t) = 0 \) almost everywhere on \( [a,b] \).
+
+        \begin{proof}
+            By way of contradiction, suppose \( f(t) \neq 0 \) almost everywhere in \( [a,b] \). Let \( E = \{ x: f(x) > 0 \} \) and suppose \( m(E) > 0 \). By Littlewood's first principle, there exists a closed set \( K \subset E\) such that \( m(K) > 0 \). Let \( O = [a,b] \setminus K \) and so is an open set. Then we know that    
+                \begin{align*}
+                    0  = \int_{a}^{b} f &= \underbrace{\int_{K} f}_{> 0} + \int_{O} f 
+                \end{align*}
+            which is true because if \( g \geq 0 \) and \( m(A) > 0 \), then \( \displaystyle g = 0 \) if and only if \( g = 0 \) almost everywhere. 
+            Thus \( \displaystyle \int_{O} f \neq 0 \) as long as \( O \) is an open set. By Lindelof's lemma, 
+                \[
+                    O = \bigcup_{n=1}^{\infty} (a_n, b_n)  
+                \]
+            where \( (a_n, b_n) \cap (a_m, b_m) = \emptyset \) for all \( n \neq m \). So
+                \begin{align*}
+                    0 \neq \int_{O} f = \sum_{i=1}^{\infty} \int_{a_n}^{b_n} f(t) \dif t.
+                \end{align*}
+            So there exists \( n \in \N \) such that 
+                \begin{align*}
+                    0 \neq \int_{a_n}^{b_n} f(x) \dif t &= \int_{b}^{b_n}f(t) \dif t - \int_{a}^{a_n} f(t) \dif t \\
+                    &= 0 + 0 \\
+                    &= 0
+                \end{align*}
+            which comes from assumption. But this implies that \( m(E) = 0 \), which is a contradiction. By a similar argument
+                \[
+                    m\left( \{ x: f(x) < 0 \} \right).
+                \]
+        \end{proof}
+    
+\end{lemma}
+
+\begin{lemma}[\textbf{5.9}]
+
+    If \( f \) is bounded and measurable on \( [a,b] \), and 
+        \[
+            F(x) = \int_{a}^{x} f(t) \dif t,
+        \]  
+    then \( F'(x) = f(x) \) for almost all \( x \in [a,b ] \).
+
+    \begin{proof}
+        By Lemma 5.7, since \( F \) is integrable, \( F \) is a function of bounded variation and so \( F'(x) \) exists almost everywhere on \( [a,b] \). Let \( |f| < K \). Then we write
+            \begin{align*}
+                f_n(x) &= \frac{F\left( x + \frac{1}{n}\right) - F(x)}{\frac{1}{n}} 
+            \end{align*}
+        which as \( n \to \infty \), \( f_n(x) \to F'(x) \). So we have that 
+            \begin{align*}
+                f_n(x) &= \frac{F\left( x + \frac{1}{n}\right) - F(x)}{\frac{1}{n}} \\
+                &= n \cdot \int_{x}^{x+ \frac{1}{n}} F(t) \dif t.
+            \end{align*}
+        Also \( |f_n(x)| \leq K \). Because \( f_n(x) \to F'(x) \) almost everywhere \( f_n(x) \) is bounded, by the Bounded Convergence Theorem, for all \( x \in [a,b] \), 
+            \begin{align*}
+                \int_{a}^{c} F'(t) \dif t &= \lim_{n \to \infty} \int_{a}^{c} f_n(t) \dif t \\
+                &= \lim_{n \to \infty} n \int_{a}^{c} \left( F \left( x + \frac{1}{n}\right) - F(x) \right) \\
+                &= \lim_{n \to \infty} \int_{a}^{c} F \left( x + \frac{1}{n} \right) \dif x - n \int_{a}^{c} F(x) \dif x \\
+                &= \lim_{n \to \infty } n \int_{c}^{c + \frac{1}{n}} F(x) \dif x 0 \int_{a}^{a + \frac{1}{n}} F(x) \dif x \\
+                &= F(c) - F(a) \\
+                &= \int_{a}^{c} f(x) \dif x. 
+            \end{align*}
+    \end{proof}
+    
+\end{lemma}
+
+
+
+\end{document}
