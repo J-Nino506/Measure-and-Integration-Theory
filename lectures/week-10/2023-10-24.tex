@@ -209,6 +209,12 @@ This tells us that the function is not ``wiggling'' that much (an example of a f
 
 \end{cor}
 
+Note that if \( f \) is of bounded variation, this implies that \( f \) is bounded. This is because
+    \[
+        f(x) \leq |f(x) - f(a)| - f(x) \leq t - f(x)
+    \]
+and so \( f \) is bounded.
+
 \section*{Section 5.3: Differentiation of an Integral}
 
 \begin{definition}
@@ -259,7 +265,7 @@ Our goal is to show that \( F'(x) = f(x) \) almost everywhere provided that \( f
         \[
             \int_{a}^{x} f(t) \dif t = 0 
         \]
-    for almost everywhere \( x \in [a,b] \), then \( f(t) = 0 \) almost everywhere on \( [a,b] \).
+    for all \(  \in [a,b] \), then \( f(t) = 0 \) almost everywhere on \( [a,b] \).
 
         \begin{proof}
             By way of contradiction, suppose \( f(t) \neq 0 \) almost everywhere in \( [a,b] \). Let \( E = \{ x: f(x) > 0 \} \) and suppose \( m(E) > 0 \). By Littlewood's first principle, there exists a closed set \( K \subset E\) such that \( m(K) > 0 \). Let \( O = [a,b] \setminus K \) and so is an open set. Then we know that    
@@ -307,12 +313,12 @@ Our goal is to show that \( F'(x) = f(x) \) almost everywhere provided that \( f
                 f_n(x) &= \frac{F\left( x + \frac{1}{n}\right) - F(x)}{\frac{1}{n}} \\
                 &= n \cdot \int_{x}^{x+ \frac{1}{n}} F(t) \dif t.
             \end{align*}
-        Also \( |f_n(x)| \leq K \). Because \( f_n(x) \to F'(x) \) almost everywhere \( f_n(x) \) is bounded, by the Bounded Convergence Theorem, for all \( x \in [a,b] \), 
+        Also \( |f_n(x)| \leq K \). Because \( f_n(x) \to F'(x) \) almost everywhere \( f_n(x) \) is bounded, by the Bounded Convergence Theorem, for all \( c \in [a,b] \), 
             \begin{align*}
                 \int_{a}^{c} F'(t) \dif t &= \lim_{n \to \infty} \int_{a}^{c} f_n(t) \dif t \\
                 &= \lim_{n \to \infty} n \int_{a}^{c} \left( F \left( x + \frac{1}{n}\right) - F(x) \right) \\
-                &= \lim_{n \to \infty} \int_{a}^{c} F \left( x + \frac{1}{n} \right) \dif x - n \int_{a}^{c} F(x) \dif x \\
-                &= \lim_{n \to \infty } n \int_{c}^{c + \frac{1}{n}} F(x) \dif x 0 \int_{a}^{a + \frac{1}{n}} F(x) \dif x \\
+                &= \lim_{n \to \infty} n \left( \int_{a}^{c} F \left( x + \frac{1}{n} \right) \dif x - \int_{a}^{c} F(x) \dif x \right) && \int_{a + 1/n}^{b + 1/n} = \int_{a}^{c} F \left( x + \frac{1}{n} \right) - \int_a^c F(x) \dif x \\
+                &= \lim_{n \to \infty } n  \left(\int_{c}^{c + \frac{1}{n}} F(x) \dif x  - \int_{a}^{a + \frac{1}{n}} F(x) \dif x \right) \\
                 &= F(c) - F(a) \\
                 &= \int_{a}^{c} f(x) \dif x. 
             \end{align*}
