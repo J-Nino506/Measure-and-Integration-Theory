@@ -1,0 +1,207 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+\newcommand{\dif}{\, \mathrm{d}}
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#17}
+\rhead{October 26, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{remark}{Remark}
+
+
+\begin{document}
+
+\begin{remark}
+    Note that if \( f \geq 0 \), 
+        \[  
+            F(x) = \int_{a}^{x} f(t) \dif t
+        \]
+    is increasing. This implies \( F \) is a monotone function and so 
+        \[
+            \int_{a}^{b} F'(x) \dif x \leq F(b) - F(a).    
+        \]
+\end{remark}
+
+\begin{thm}[\textbf{5.10}]
+
+    Let \( f \) be an integrable function on \( [a,b] \) and suppose that 
+        \[  
+            F(x) = F(a) + \int_{a}^{x} f(t) \dif t.
+        \]
+    Then \( F'(x) = f(x) \) for almost all \( x \in [a,b] \).
+
+        \begin{proof}
+            Using the remark above, without loss of generality, suppose \( f \geq 0 \). To use the previous lemma (which supposes \( f \) is bounded), define
+                \[
+                    f_n(x) = \begin{cases}
+                        f(x) & f(x) \leq n \\
+                        n & \text{otherwise}.
+                    \end{cases}  
+                \]
+            Then \( f - f_n \geq 0 \) for all \( n \in \N \). Now define 
+                \[  
+                    G_n(x) = \int_{a}^{x} f  - f_n    
+                \]
+            which is an increasing function since \( f - f_n \) is nonnegative. 
+            So \( G'_n(x) \) exists almost everywhere and \( G'_n(x) \geq 0 \). 
+            By Lemma 5.9, since \( f_n(x) \) is a bounded function,
+                \begin{align*}
+                    \frac{\dif}{\dif x} \left( \int_{a}^{x} f(t) \dif t \right) = f_n(x)
+                \end{align*}
+            almost everywhere. Then 
+                \begin{align*}
+                    F'(x) = \frac{\dif }{\dif x} G_n + \frac{\dif }{\dif x} \int_{a}^{x} f_n
+                \end{align*}
+            implies that \( F'(x) \geq f_n(x) \) almost everywhere.
+            From the beginning remark (so that \( F \) is monotonic), this gives that
+                \begin{align*}
+                    \int_{a}^{b} F'(x) \dif x &\leq F(b) - F(a) \\
+                    &= \int_{a}^{b} f(x) \dif x
+                \end{align*}
+            and so we get that 
+                \[
+                    \int_{a}^{b} \left( \underbrace{F'(x) - f(x)}_{\geq 0} \right) \dif x  = 0  
+                \]
+            implying that \( F'(x) = f(x) \) almost everywhere. 
+        \end{proof}
+\end{thm}
+
+\section*{Section 5.4 Absolute Continuity}
+
+\begin{definition}
+    A real-valued function \( f \) on \( [a,b] \) is said to be \textbf{absolutely continuous} on \( [a,b ] \)
+    if for all \( \epsilon > 0 \), there exists \( \delta > 0 \) such that 
+        \begin{align*}
+            \sum_{i=}^{n} \left| f(x'_i) - f(x'_{i}) \right|
+        \end{align*}
+    for every finite collections of \( \{ (x_i, x'_{i}) \} \) of nonoverlapping intervals with 
+        \[
+            \sum_{i=1}^{n} \left| x'_{i} - x_{i} \right| < \delta.  
+        \]
+\end{definition}
+
+
+\begin{lemma}[\textbf{5.11}]
+
+    If \( f \) is absolutely continuous on \( [a,b] \), then it is of bounded variation on \( [a,b] \).
+
+        \begin{proof}
+            Let \( \epsilon  = 1 \). Then there exists \( \delta > 0 \) for the absolutely continuity property. 
+            Let \( \displaystyle K = \ceil{\frac{b-a}{\delta} + 1} \)
+            For this partition of \( [a,b] \), we group the intervals into \( K \) sets of intervals each with total length less than \( \delta \).
+        \end{proof}
+\end{lemma}
+
+\begin{lemma}[\textbf{5.13}]
+
+    If \( f \) is absolutely continuous on \( [a,b] \) and \( f'(x) = 0 \) almost everywhere, then \( f \) is constant. 
+    
+\end{lemma}
+
+\begin{thm}[\textbf{5.14}]
+
+    A function \( F \) is an indefinite integral if and only \( F \) is absolutely continuous. 
+
+\end{thm}
+
+\begin{remark}
+    The above theorem tells us that there exists an integrable function \( f \) such that 
+        \[
+            F(x) = F(a) + \int_{a}^{x} f(t) \dif t.  
+        \]
+\end{remark}
+
+
+\end{document}
