@@ -104,7 +104,29 @@
     \( \displaystyle \lim_{p \to \infty} \lVert f \rVert_{p} = \lVert f \rVert_{\infty} \).
 
         \begin{proof}
-            
+            First, I will note that \(\displaystyle \lim_{p \to \infty} \lVert f \rVert_{p} \leq \lVert f \rVert_{\infty}  \) follows pretty readily from the definition of \( \lVert \cdot \rVert \). This is because
+                \[
+                \lVert f \rVert_{p} = \left\{ \int_{0}^{1} |f|^p \right\}^{1/p}  \leq  \left\{ \int_{0}^{1} \lVert f \rVert^p_{\infty} \right\}^{1/p} = \lVert f \rVert_{\infty}
+                \]
+            and so as we take the limit of \( \lVert f \rVert_{p} \) as \( p \to \infty \), we get \(\displaystyle \lim_{p \to \infty} \lVert f \rVert_{p} \leq \lVert f \rVert_{\infty}  \).
+            Now we must also show that \(\displaystyle \lim_{p \to \infty} \lVert f \rVert_{p} \geq \lVert f \rVert_{\infty}  \).
+            To that end, let \( \epsilon > 0 \) be chosen. Define the set \( A = \{ x \in [0,1]: |f(x)| > \lVert f \rVert_{\infty} - \epsilon \} \).  
+            Then we have that 
+                \begin{align*}
+                    \lVert f \rVert_{p} = \left\{ \int_{0}^{1} |f|^p \right\}^{1/p} &\geq \left\{ \int_{A} |f|^p \right\}^{1/p} \\
+                     &\geq  \left\{ \int_{A} (\lVert f \rVert_{\infty} - \epsilon)^{p} \right\}^{1/p} \\ 
+                     &= (\lVert f \rVert_{\infty} - \epsilon)^{p} \cdot m(A).
+                \end{align*}
+            This implies that 
+                \[
+                    \lVert f \rVert_{\infty} - \epsilon \cdot (m(A))^{p} \leq \lVert f \rVert_{p}.
+                \]
+            Because \( \lVert f \rVert_{\infty} \) is the essential supremum (i.e. the smallest, greatest value not on a set of measure zero), we know that \( m(A) >  0 \). 
+            Thus, taking the limit of both sides as \( p \to \infty \), we get that 
+                \[
+                  \lim_{p \to \infty} \lVert f \rVert_{\infty} - \epsilon \cdot (m(A))^{p} = \lVert f \rVert_{\infty} - \epsilon \leq \lim_{p \to \infty} \lVert f \rVert_{p},
+                \]
+            Since \( \epsilon \) is arbitrary, then \( \displaystyle \lim_{p \to \infty} \lVert f \rVert \) is a superior bound i.e., \( \displaystyle \lVert f \rVert_{\infty} \leq \lim_{p \to \infty} \lVert f \rVert  \). Thus we get \( \displaystyle \lVert f \rVert_{\infty} = \lim_{p \to \infty} \lVert f \rVert\).
         \end{proof}
 \end{problem}
 
