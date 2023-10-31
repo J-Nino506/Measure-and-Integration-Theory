@@ -79,7 +79,7 @@
   \underline{\int_{#1}^{#2}}
 }
 \newcommand{\dif}{\, \mathrm{d}}
-
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \pagestyle{fancy}
 \lhead{Math 6421: Measure Theory}
 \chead{\bf Jose Nino: Homework \#6}
@@ -121,7 +121,30 @@
             \end{proof}
         \item Use Young's inequality to give a proof of the H\"{o}lder inequality.
             \begin{proof}
-                
+                Let \( p \) and \( q \) be nonnegative extended real numbers such that
+                    \[
+                        \frac{1}{p} + \frac{1}{q} = 1.  
+                    \]
+                Suppose \( f \in L^p \) and \( g \in L^q \). Without loss of generality, assume that \( \norm{f}, \norm{g} \geq 0 \). 
+                With \( \displaystyle a = \frac{|f|}{\norm{f}_p} \) and \( \displaystyle b = \frac{|g|}{\norm{g}_q} \), by Young's Inequality from part (a), we have that
+                    \begin{align*}
+                        \frac{|f|}{\norm{f}_p} \frac{|g|}{\norm{g}_q} \leq \frac{|f|^p}{p\norm{f}^{p}_{p}} \frac{|g|^q_p}{q\norm{g}^{q}_{q}}.
+                    \end{align*}
+                From the monotonocity of integrals, this implies that
+                    \[
+                        \int \frac{|f|}{\norm{f}_p} \frac{|g|}{\norm{g}_q} \leq \int \frac{|f|^p}{p\norm{f}_{p}^{p}} + \frac{|g|^q}{q\norm{g}^{q}_{q}} = \frac{1}{p \norm{f}^{p}_{p}} \int |f|^p + \frac{1}{q\norm{g}^{q}_{q}} \int |g|^q.
+                    \]
+                However, the the integral of \( |f|^p \) is the same as \( \norm{f}^p_p \) and the same argument for \( |g|^p \). 
+                So by cancelling out \( \norm{f}^p_p \) and \( \norm{g}^q_q \), we get that
+                    \[
+                        \int \frac{|f|}{\norm{f}_p} \frac{|g|}{\norm{g}_q} \leq \frac{1}{p} + \frac{1}{q} = 1.
+                    \]
+                Multiplying both sides by \( \norm{f}_p \cdot \norm{g}_q \) and so
+                    \[
+                        \int |fg| \leq \norm{f}_p \cdot \norm{g}_q.
+                    \]
+                Young's inequality is equality if and only \( a^p = b^q \) and so the H\"{o}lder inequality is equality if and only if \( \displaystyle \frac{|f|^p}{\norm{f}^p_p} =  \frac{|g|^q}{\norm{g}_q^q} \). 
+                Thus there exists \( \alpha, \beta \neq 0 \) such that \( \alpha |f|^p = \beta |g|^q \) almost everywhere and so this completes the proof.
             \end{proof}
     \end{enumerate}
     
@@ -130,14 +153,28 @@
 
 \begin{problem}[6.10]
     Let \( \{f_n\} \) be a sequence of functions in \( L^{\infty} \). Prove that \( \{f_n\} \) converges to \( f \) in \( L^{\infty} \) 
-    if and only if there is a set \( E \) of measure zero such that \( f_n \) converges to \( f \) uniformly on \( E \).
+    if and only if there is a set \( E \) of measure zero such that \( f_n \) converges to \( f \) uniformly on \( E^{\C} \).
 
         \begin{proof}
             We will need to complete two directions and so let \( \{f_n\} \) be a sequence of functions in \( L^{\infty} \).  
                 \begin{enumerate}
-                    \item[\((\Rightarrow)\)] First, suppose that \( \{f_n\} \to f \).
-                    \item[(\(\Leftarrow\))] Conversely, suppose there exists a set \( E \) with \( m(E) = 0 \) such that \( f_n \to f \) uniformly on \( E \).
+                    \item[\((\Rightarrow)\)] First, suppose that \( \{f_n\} \to f \), and let \( \epsilon > 0 \) be chosen. Because \( f_n \to f \) in \( L^{\infty} \), there exists \( N \in \N \) such that for all \( n \geq N \),
+                        \[
+                            \norm{f_n - f}_{\infty} = \inf \left\{ M: m\left\{ t : |f_n(t) - f(t| > M \right\} = 0 \right\} < \epsilon.  
+                        \]
+                    Let \( \displaystyle E = \left\{ t: |f_n(t) - f| \geq \epsilon \right\} \).
+                    Per the above expression, for any \( n \geq N \), we have that \( m(E) = 0 \) and \( \norm{f_n - f }_{\infty} < \epsilon \) on the set \( L^{\infty} \setminus E = E^{\C} \). Thus, since \( \epsilon > 0 \) is arbitrary, \( f_n \) converges uniformly to \( f \) on \( E^{\C} \).
+                    \item[(\(\Leftarrow\))] 
+                    Conversely, suppose there exists a set \( E \) with \( m(E) = 0 \) such that \( f_n \to f \) uniformly on \( E^{\C} \). 
+                    Let \( \epsilon > 0 \) be chosen. Since \( f_n \to f \) uniformly on \( E^{\C}\), there exists \( N \in \N \) such that for all \( n \geq N \) and \( t \in E^{\C}\),
+                        \[
+                             |f_n(t) - f(t)| < \frac{\epsilon}{2}.
+                        \]
+                    But then this means that the set \( \displaystyle \left\{t: f_n(t) - f(t) > \frac{\epsilon}{2}  \right\} \subset E \). By the definition of the infimum, for our fixed \( \epsilon > 0 \) and any \( n \geq N \), \[ \inf \left\{ M : m \left\{ t : |f_n(t) - f(t)| > M \right\}  = 0 \right\} < \epsilon. \]
+                    This is the essential supremum and so this means \( \norm{f_n - f}_{\infty} < \epsilon \). 
+                    Therefore, since \( \epsilon \) is arbitrary, \( \norm{f_n - f} < \epsilon \) and which implies that \( f_n \to f \) pointwise on \( L^{\infty} \).
                 \end{enumerate}
+            Thus, having completed the forward and backwards implication, this completes the proof.
         \end{proof}
 
 \end{problem}
