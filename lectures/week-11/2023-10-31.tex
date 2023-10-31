@@ -1,0 +1,259 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+
+\newcommand{\dif}{\, \mathrm{d}}
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#18}
+\rhead{October 31, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{remark}{Remark}
+
+
+\begin{document}
+
+\begin{lemma}[\textbf{5.13}]
+
+    If \( f \) is absolutely continuous on \( [a,b] \) and \( f'(x) = 0 \) almost everywhere, then \( f \) is constant. 
+    
+    \begin{proof}
+        Let \( E \subset [a, c] \) be the set such that for all \( x \in E \), \( f'(x) = 0 \).
+        We claim that for all \( c \in [a,b] \), \( f(a) = f(c) \). 
+        Let \( \epsilon, \eta > 0 \) be chosen. 
+        For every \( x \in E \), this means there exists \( h > 0 \) such that 
+        \( (x, x + h) \subset [a,c] \) and \( |f(x + h) - f(x)| < \eta \cdot h \) since \( \eta \) is arbitrary.
+        By Vitali covering lemma, for any \( \delta > 0 \), there exists a finite cover \( \{ x_k, y_k \} \) 
+        of nonoverlapping intervals contained in \( [a,c]\)
+        such that 
+            \[
+                \sum_{k=0}^{n} | x_{k+1} - y_k | < \delta.     
+            \]
+        So then 
+            \begin{align*}
+                \sum_{k=1}^{n} |f(y_k) - f(x_k)| \leq \eta n \sum_{k=1}^{n} (y_k - x_k) \leq \eta (c-a).
+            \end{align*}
+        Moreover, by the absolute continuity, there exists a \( \delta > 0 \) for our fixed \( \epsilon \) such that
+            \[
+                \sum_{k=0}^{n} |f(x)_{k+1} - f(y_k)|  < \epsilon.
+            \]
+        Then 
+            \begin{align*}
+                |f(x) - f(a)| &= \left| \sum_{k=0}^{n} f(x_{k+1} - f(y_k)) + \sum_{k=0}^{n} f(y_k) - f(x_k) \right| \\
+                &\leq \left| \sum_{k=0}^{n} f(x_{k+1} - f(y_k)) \right| +  \left| \sum_{k=0}^{n} f(y_k) - f(x_k) \right| \\
+                &< \epsilon + \eta(c-a).
+            \end{align*}
+        Because \( \epsilon \) and \( \eta \) are arbitrary, \( |f(c) - f(a)| = 0 \)
+        and so \( f(c) = f(a) \) (i.e., \( f \) is constant).
+    \end{proof}
+\end{lemma}
+
+\begin{thm}[\textbf{5.14}]
+
+    A function \( F \) is an indefinite integral if and only \( F \) is absolutely continuous. 
+    \begin{proof}
+        We will show two directions. 
+        \begin{enumerate}
+            \item[\((\Rightarrow)\)] Suppose \( F \) is an indefinite integral i.e.,
+                \[
+                    F(x) = \int_{a}^{c} f(t) \dif t.  
+                \]
+            Fix \( \epsilon > 0 \).
+            By Proposition 4.14, if \( f \geq 0 \) and \( f \in L^1 \), then there exists \( \delta > 0 \) such that if \( m(A) < \delta \), then 
+                \[
+                    \int_{A} f < \epsilon.  
+                \]
+            Thus absolute continuity follows from this proposition. 
+            \item[\((\Leftarrow)\)] Now suppose \( F \) is absolutely continuous. Because absolute continuity implies a function is of bounded variation,
+            we know that \( F'(x) \) exists almost everywhere. 
+            Additionally, this means it is the subtraction of two monotone increasing functions i.e., \( F(x) = F_1(x) - F_2(x) \).
+            So then 
+                \begin{align*}
+                    |F'(x)| &\leq F'_1(x) + F'_2(x).
+                \end{align*}
+            This implies that
+                \begin{align*}
+                    \int_{a}^{b} |F'(x)| &\leq \int_{a}^{b} F'_{1}(x) + \int_{a}^{b} F'_{2}(x) \\
+                    &\leq \left( F_{1}(b) - F_{2}(a) \right) + \left( F_{2}(b) - F_{2}(a) \right)
+                \end{align*}
+            This means that \( F'(x) \) is integrable on \( (a,b) \). 
+            Consider the function 
+                \[ 
+                    G(x) = \int_{a}^{x} F'(t) \dif t.
+                \]
+            So \( G(x) \) is absolutely continuous on \( [a,b] \) and 
+                \begin{align*}
+                    \left(G(x) - F(x) \right)' &= G'(x) - F'(x) \\
+                    &= 0 
+                \end{align*}
+            almost everywhere. By the previous lemma, we know that \( G(x) - F(x) = x = F(a) \) and so take \( x = a \). Therefore, 
+                \[  
+                    F(x) = \int_{a}^{x} F'(t) \dif t + F(a).    
+                \]
+        \end{enumerate}
+    \end{proof}
+\end{thm}
+
+\section*{Section 6.5 Bounded Linear Functionals on the \( L^p \) Space}
+
+\begin{definition}
+    Let \( \left(X, \norm{\cdot}\right)\) be a normed linear space. 
+    A \textbf{linear functional} is a map \( F: X \to \R \) such that 
+        \[
+            F(\alpha f + \beta g) = \alpha F(f) + \beta F(g) 
+        \]
+    for all \( f,g \in X\) and for \( \alpha, \beta \in \R \). 
+
+    A linear functional \( F \) is \textbf{bounded} if there exists \( M > 0 \) such that
+        \[
+            \left| F(f) \right| \leq M \cdot \norm{f} \ \text{for all} \ f \in X.
+        \]
+    Finally, we can define the norm of \( F \) by
+        \[
+            \norm{F} = \sup_{f \in X} \frac{|F(f)|}{\norm{f}}.  
+        \]
+        
+\end{definition}
+
+For sake of clarity, \( X = L^p \) and \( \norm{\cdot} = \norm{\cdot}_{p} \) 
+and \( p, q \in \R \) always satisfy the equation \( \displaystyle \frac{1}{p}  + \frac{1}{q} = 1 \).
+\begin{remark}
+    If \( g \in L^q \), define
+        \[
+            F_{g}(f) = \int f \cdot g \ \text{for all} \ f \in L^p.  
+        \]
+    By H\"{o}lder's inequality
+        \begin{align*}
+            \int f \cdot g \leq \norm{f}_{p} \cdot \norm{g}_{g}
+        \end{align*}
+    and so this implies that 
+        \[
+            \norm{Fg} \leq \norm{g}_{q}.
+        \]
+    The linear functional \( Fg: L^p \to \R \) is a bounded linear functional. 
+\end{remark}
+
+\begin{prop}[\textbf{6.11}]
+
+    \[
+        \norm{Fg} = \norm{g}_{q}.  
+    \]
+        \begin{proof}
+            We claim there exists \( f \in L^p \) such \( F(f) = \norm{f}_{p}\cdot \norm{g}_{q} \).
+            Set \( f = |g|^{q/p}\). 
+        \end{proof}
+
+\end{prop}
+
+We know that \( \displaystyle Fg = \int fg \) defines a bounded linear functional
+and also vise versa---that is, all bounded, linear functionals can take the form 
+    \[
+        F(f) = \int f \cdot g  
+    \]
+for some \( g \in L^q \).
+
+
+\begin{lemma}[\textbf{6.12}]
+
+    Let \( g \) be an integrable function over \( [0,1] \). Suppose there exists \( M >0 \) such that 
+        \begin{align*}
+            \left| \int fg \right| \leq M \cdot \norm{f}_{p}
+        \end{align*}
+    for all \( f \) which are bounded, measurable functions. 
+    Then \( g \in L^q \) and \( \norm{g}_{q} \leq M \).
+    
+\end{lemma}
+
+\end{document}
