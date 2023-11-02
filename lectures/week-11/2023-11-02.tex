@@ -1,0 +1,296 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+\def\sgn{\mathop{\rm sgn}\nolimits}
+
+
+\newcommand{\dif}{\, \mathrm{d}}
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#19}
+\rhead{November 2, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{remark}{Remark}
+
+
+\begin{document}
+
+\begin{lemma}[\textbf{6.12}]
+
+    Let \( g \) be an integrable function over \( [0,1] \). Suppose there exists \( M >0 \) such that 
+        \begin{align*}
+            \left| \int fg \right| \leq M \cdot \norm{f}_{p}
+        \end{align*}
+    for all \( f \) which are bounded, measurable functions. 
+    Then \( g \in L^q \) and \( \norm{g}_{q} \leq M \).
+
+    \begin{proof}
+        We claim that \( \norm{g}_{q} \leq M \). 
+        We are done if we prove this because then \( g \in L^q \).
+        First, assume that \( p \in (1, \infty) \) and so \( q \) is over the same region as well.
+        Define the function \( g_n \) by
+            \[
+                g_n(x) = \begin{cases}
+                    g(x) & |g(x)| \leq n \\
+                    0 & |g(x)| > n.
+                \end{cases}  
+            \]
+        Now define \( \displaystyle f_n(x) = \abs{g_n}^{q/p} \cdot (\mathrm{sgn} \ g_n) \).
+        Now,
+            \[
+                \norm{f_n}_{p} = \left( \norm{g_n}_{q} \right)^{q/p}  
+            \]
+        and also 
+            \[  
+                \abs{g_n}^q = f_n \cdot g_n = f_n \cdot g.
+            \]
+    Hence,
+            \begin{align*}
+                \left( \norm{g_n}_q \right)^{q} = \int f_n \cdot g \leq M \norm{f_n}_{P}  = M \left( \norm{g_n}_q \right)^{q/p}.
+            \end{align*}
+    Because \( \displaystyle q - \frac{p}{q} = 1 \), then for all \( n \in N \),
+            \[
+                \norm{g_n}_q \leq M. 
+            \]
+    Note that as \( n \to \infty \), \( |g_n|^q \to |g|^q \) almost everywhere and so the above expression implies by Fatuo's lemma 
+            \[
+                \int \abs{g_n}^q \leq \lim_{n \to \infty}  \int \abs{g_n}^q \leq M^q.
+            \]
+    \end{proof}
+    
+\end{lemma}
+
+\begin{thm}[\textbf{6.13, Riesz Representation Theorem}]
+
+    Let \( F \) be a bounded linear functional on \( L^p \). 
+    Then there exists \( g \in L^q \) such that 
+        \[  
+            F(f) = \int fg. 
+        \]
+    We also have \( \norm{F} = \norm{g}_q \).
+
+        \begin{proof}
+            Our outline of the proof will be as follows:
+                \begin{enumerate}[label = Step \Roman{*}:]
+                    \item Find \( g \) which is integrable.
+                    \item Upgrade \( g \) to \( L^q \). 
+                    \item Verify for all \( f \in L^ p\).
+                \end{enumerate}
+            Let \( \chi_s = 1_{[0,s]} \) and \( \Phi(s) = F(\chi_x) \).
+            We claim that \( \Phi(s) \) is absolutely continuous. 
+            This means that there exists \( g \) integrable such that  
+                \[ 
+                    \Phi(s) - \underbrace{\Phi(0)}_{=0} = \int_{0}^{s} g(t) \dif t = \int_{0}^{1} g \cdot \chi_{s}.
+                \]
+            Let \( \epsilon > 0 \) be chosen. Let \( \{ (s_i, s'_{i}) \} \) be a disjoint collection of intervals over \( [0, 1] \) with 
+                \[
+                    \sum_{i=1}^{k} s'_{i} - s_{i} < \delta.    
+                \]
+            We want to show that this implies that
+                \[  
+                    \sum_{i=1}^{k} \abs{ \Phi(s'_{i}) - \Phi(s)} < \epsilon.
+                \]
+            Note that 
+                \[
+                    \sum_{i=1}^{k}  \abs{ \Phi(s'_{i}) - \Phi(s)} = F(f)
+                \]
+            where
+                \begin{align*}
+                    f &= \sum_{i=1}^{k} \left( \chi_{s'_{i}} - \chi_{s_{i}}\right) \cdot \sgn\left( \Phi(s'_{i}) - \Phi(s)  \right) \\
+                    &\leq \sum_{i=1}^{k} \left( s'_{i} - s_{i} \right)  \\
+                    &< \delta
+                \end{align*}
+            and so this implies that \( \norm{f}_{p} < \delta \).
+            By definition of \( \Phi \) and \( F \) being a bounded linear functional, we know that 
+                \begin{align*}
+                    \sum_{i=1}^{k} \abs{ \Phi(s'_{i}) - \Phi(s)} &= F(f) \\
+                    &\leq M \cdot \norm{f}_{p} \\
+                    &< M \cdot \delta \\
+                    &< \epsilon.
+                \end{align*}
+            Thus \( \Phi \) is absolutely continuous if we choose \( \displaystyle \delta = \frac{\epsilon}{M} \). So this tell us
+                \[
+                    \Phi(s) = \int_{0}^{1} g \cdot \chi_{s}  
+                \]
+            for some integrable function \( g \). Since every step function \( \phi \) on \( [0,1] \) is a linear combination of \( \phi'_{s} \)'s, we know that 
+                \[
+                    F(\phi) = \int_{0}^{1} g \phi    
+                \]
+            for every step function \( \phi \).
+            
+            Now we claim that this function \( g \) is in \( L^q \). 
+            To that end, let \( f \) be a bounded measurable function on \( [0,1] \).
+            Then there exists bounded step functions \( \phi_n \) such that \( \phi_n \to f \) almost everywhere. 
+            Thus the sequence \( \displaystyle \left\{ \abs{f - \phi_n}^p \right\} \) is uniformly bounded and converges to \( 0 \) almost everywhere.
+            This tells us that \( \norm{f - \phi_n}_{p} \to 0 \).
+            Since \( F \) is a bounded linear functional, we know that
+                \begin{align*}
+                    \abs{F(f) - F(\phi_n)} &= \abs{F(f - \phi_n)} \\
+                    &\leq M \cdot \norm{f - \phi_n}_{p},
+                \end{align*}
+            and so we know that \( \displaystyle F(f) = \lim_{n \to \infty} F(\phi_n) \). Letting \( \tilde{M} \) be the uniform bound of the \( \phi_n \)'s, we have \( g \phi_n < \abs{g} \cdot \tilde{M} \).
+            By the Lebesgue dominated convergence theorem,
+                \begin{align*}
+                    \int f \cdot g &= \lim_{n \to \infty} \int g \cdot \phi_n \\
+                    &= \lim_{n \to \infty} F(\phi_n) \\
+                    &= F(f)
+                \end{align*}
+            for all \( f \) which are bounded measurable functions. Thus, by the H\"{o}lder inequality,
+                \[
+                    \abs{\int fg} =  \abs{F(f)} \leq \norm{F} \cdot \norm{f}_p.
+                \]
+            By Lemma 6.12, \( g \in L^q \), finishing our second claim. 
+
+            Finally, we claim that 
+                \[
+                    F(f) = \int g \cdot f  
+                \]
+            for all \( f \in L^p \).
+
+            Let \( f \in L^p \) be any function and fix \( \epsilon > 0 \). 
+            By the density of step functions in \( L^p \), there exists a step function \( \phi \) such that 
+                \[
+                    \norm{f - \phi}_{p} < \epsilon  
+                \]
+            and so
+                \[
+                    F(\phi) = \int \phi g.  
+                \]
+            Hence, we have by the linearity of \( F \),
+                \begin{align*}
+                    \abs{F(f) - \int f\cdot g} &= \abs{F(f) - F(\phi) + F(\phi) - \int f \cdot g} \\
+                    &= \abs{F(f - \phi)+ \int g(\phi - f)} \\
+                    &\leq \abs{F(f - \phi)} + \abs{\int g(\phi - f)} \\
+                    &\leq M \cdot \norm{f - \phi}_{p} + \abs{\int g(\phi - f)}  \\
+                    &\leq  M \cdot \underbrace{\norm{f - \phi}_{p}}_{<\epsilon} + \norm{g}_{q} \cdot \underbrace{\norm{f - \phi}_{p}}_{<\epsilon} && \text{H\"{o}lder Inequality} \\
+                \end{align*}
+            This tells us that 
+                \[
+                    F(f) = \int fg.
+                \]
+        \end{proof}
+
+\end{thm}
+
+\section*{Chapter 11 Measure Spaces}
+
+The set up will be that we have any set \( X \) and \( \mathcal{B} \) which is a \(\sigma\)-algebra i.e., a collection of subsets of \( X \) such that 
+    \begin{enumerate}
+        \item \(\emptyset \in \mathcal{B} \)
+        \item If \( A \in \mathcal{B} \), then \( A^{\C} \in \mathcal{B}\).
+        \item Closed under countable union. 
+    \end{enumerate}
+Define \( \mu: \B \to \overline{\R} = \R \cup \{ \pm \infty\} \) to be a set function such that \( E \mapsto \mu(E) \in \overline{\R}\).
+
+\begin{definition}
+    A couple \( (X, \B) \) is called a measurable space consisting of a set \(X\) and a \(\sigma\)-algebra \( \B \) subsets of \( X \). A set \( E \subset X \) is called \textbf{measurable} if \( E \in \B \).
+\end{definition}
+
+\begin{definition}
+    A set function \( \mu: \B \to \overline{\R} \) is called a \textbf{measure} if we have the following:
+        \begin{enumerate}
+            \item \( \mu(\emptyset) = 0 \) 
+            \item Countable additivity i.e., \( \displaystyle \mu \left( \bigcup_{i=1}^{\infty} E_i \right) = \sum_{i-1}^{\infty} \mu \left( E_i \right)\) 
+            for any \( E_i \cap E_j = 0 \) with \( i \neq j \).
+        \end{enumerate}
+    We then call the triple \( (X, \B, \mu) \) a  \textbf{measure space}.
+\end{definition}
+
+\begin{remark}
+    We know that countable additivity implies finite additivity. An example of this is the triple \( (\R, \mathcal{M}, m) \) where \(\mathcal{M} \) is all Lebesgue measurable sets and \( m \) is the Lebesgue measure. 
+\end{remark}
+
+\end{document}
