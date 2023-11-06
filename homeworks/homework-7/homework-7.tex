@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\toM}{\overset{m}{\to}}
+
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+\newcommand{\dif}{\, \mathrm{d}}
+\newcommand{\abs}[1]{
+    \left\lvert #1 \right\rvert
+}
+\newcommand{\norm}[1]{
+    \left\lVert #1 \right\rVert
+}
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Homework \#7}
+\rhead{October 26, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{problem}[6.11]
+
+    Prove that \( L^{\infty} \) is complete. 
+
+    \begin{proof}
+        To show that \( L^{\infty} \) is complete, we must show every Cauchy sequence converges. 
+        To that end, let \( \{f_n\} \) be any Cauchy sequence in \( L^{\infty} \) and let \( \epsilon> 0 \) be chosen. 
+        Since \( \{f_n\} \) is Cauchy, there exists \( N_1 \in \N \) such that for all \( n, m \geq N_1 \), we have 
+            \[
+                \norm{f_n - f_m}_{\infty} = \inf \left\{  M : m \left\{ t : \abs{f_n(t) - f_m(t)} > M \right\} = 0 \right\} < \frac{\epsilon}{2}.  
+            \]
+        So for any fixed \( n,m \geq N_1 \), there exists \( \displaystyle M < \frac{\epsilon}{2} \) such that \( \displaystyle m\left\{ t: \abs{f_n(t) - f_m(t)} > M \right\} = 0 \). implying that  \( \displaystyle m\left\{ t: \abs{f_n(t) - f_m(t)} > \frac{\epsilon}{2} \right\} = 0 \). 
+        So then on the set \( L^{\infty} \setminus \left\{ t: \abs{f_n(t) - f_m(t)} > \frac{\epsilon}{2} \right\}  \), the sequence \( \{f_n\} \) converges to some function \( f \) almost everywhere. 
+        We must show that this limit function \( f \) is in \( L^{\infty} \)
+
+        Since \( f_n \to f \) almost everywhere, there exists \( N_2 \in \N \) such that for any \( n > N_2 \), \( \displaystyle \abs{f_n - f} < \frac{\epsilon}{2} \). 
+        Let \( N = \max\{ N_1, N_2 \} \). 
+        Then for any fixed \( n > N \), we can see that 
+            \[
+                \norm{f_n - f}_{\infty} = \inf \left\{  M : m \left\{ t : \abs{f_n(t) - f(t)} > M \right\} = 0 \right\} < \epsilon 
+            \]
+        which, because \( \epsilon \) is arbitrary, means that \( \norm{f_n - f} \to 0 \). Thus \( f \in L^{\infty} \) and so \( L^{\infty} \) is complete. 
+    \end{proof}
+    
+\end{problem}
+
+\begin{problem}[6.13]
+
+    Let \( C = C[0,1] \) be the space of all continuous functions on \( [0,1 ] \) and define \( \norm{f} = \max |f(x)| \).
+    Show that \( C \) is a Banach space. 
+
+        \begin{proof}
+            To show that the space \( (C, \norm{\cdot})\) is a Banach space, we must show \( \norm{f} = \max |f(x)| \) is indeed a norm and that \( C \) with this norm is a complete space. 
+            
+            First, we will show that \( \norm{\cdot} \) defined above on \( C \) is a norm. 
+            That is, we must show the following the following three properties:
+                \begin{enumerate}[label = (\roman{*})]
+                    \item For any \( f \in C \), \( \norm{f} = 0 \) if and only if \( f = 0 \).
+                    \item For any \( f, g \in C \), \( \norm{f + g} \leq \norm{f} + \norm{g} \).
+                    \item For any \( f \in C \) and for all \( \alpha \in \R \), \( \norm{\alpha f } = \abs{\alpha} \norm{f} \).
+                \end{enumerate}
+            For (i), first suppose that \( \norm{f} = 0 \). Then \( \max \abs{f(x) = 0 } \) which is true only if \( f(x) = 0 \) for any \( x \in [0,1] \). 
+            Conversely, suppose \( f = 0 \). Then for any \( x \in [0,1] \), we have that \( \norm{f} = \max \abs{f(x)} = \max 0 = 0 \).
+
+            To prove (ii), fix \( f, g \in C \). By the triangle inequality, we know that \( \abs{f + g} \leq \abs{f} + \abs{g} \).
+            The \( \max \) function adheres to the triangle inequality and so 
+                \begin{align*}
+                    \norm{f + g} &= \max \abs{f + g} \\
+                    &\leq \max \abs{f} + \max \abs{g} \\
+                    &= \norm{f} + \norm{g}.
+                \end{align*}
+            
+            Finally, let \( \alpha \in \R \) and \( f \in C \) be chosen. 
+            Then 
+                \begin{align*}
+                    \norm{\alpha f} = \max \abs{\alpha f} &= \max \abs{\alpha} \abs{f} \\
+                    &= \abs{\alpha} \max \abs{f} \\
+                    &= \abs{\alpha} \norm{f}
+                \end{align*}
+            where the last equality follows since \( \alpha \) is a scalar and not dependent upon taking the \( \max \) over \( [0,1] \).
+
+            To show \( C \) is complete, let \( \{f_n\} \) be a Cauchy sequence on \( C \).
+            Let \( \epsilon > 0 \) be chosen.
+            Since \( \{f_n\} \) is Cauchy, there exists \( N \in \N \) such that for all \( n,m \geq N \), we have that 
+                \[
+                    \norm{f_n - f_m} < \epsilon.  
+                \]
+            From how \( \norm{\cdot} \) is defined, this implies that \( |f_n(x) - f_m(x)| < \epsilon \) for any \( x \in [0,1] \). 
+            But this means we can always find \( n > N \) large enough so that \( |f_n - f| < \epsilon \) i.e., \( \{f_n\} \) converges to a function \( f \) pointwise. 
+            Because \( x \in [0,1] \), this means that that this convergence is uniform and so \( \norm{f_n  - f} < \epsilon \) i.e., \( \norm{f_n - f} \to 0 \). Thus, \( f \in C \) and so \( C \) is a complete space.
+
+            Therefore, having shown that \( \norm{f} = \max \abs{f} \) is a norm and \( C \) is a complete space, \( C \) is a Banach space.
+        \end{proof}
+    
+\end{problem}
+
+
+\begin{problem}[5.1]
+
+    Let \( f \) be the function defined 
+        \[
+            f(x) = \begin{cases}
+                x \sin \left( \frac{1}{x}\right) & x \neq 0 \\
+                0 & x = 0.
+            \end{cases}  
+        \]
+    Find \( D^+f(0)\), \( D_+f(0)\), \( D^-f(0)\), and \( D_-f(0)\).
+
+            \begin{proof}
+                First, we will note that 
+                    \begin{align*}
+                        D^+(0) =  \frac{f(0 + h) - f(0)}{h} = \varlimsup_{h \to 0^+} \sin \left( \frac{1}{h}\right) = 1.
+                    \end{align*}
+                Similarly,
+                    \[
+                        D^-(0) =  \frac{f(0) - f(0 - h)}{h} = \varlimsup_{h \to 0^+} \sin \left( \frac{1}{h}\right) = 1.
+                    \]
+                However, this flips once we look at the limit inferior i.e.,
+                    \begin{align*}
+                        D_+(0) = \varliminf_{h \to 0^+} \sin \left( \frac{1}{h}\right) = -1
+                    \end{align*}
+                and
+                    \[
+                        D_-(0) =  \frac{f(0) - f(0 - h)}{h} = \varlimsup_{h \to 0^+} \sin \left( \frac{1}{h}\right) = -1..
+                    \]
+            \end{proof}
+
+
+\end{problem}
+
+
+
+\end{document}
