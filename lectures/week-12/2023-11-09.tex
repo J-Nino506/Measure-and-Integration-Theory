@@ -1,0 +1,305 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+\def\ess{\mathop{\rm ess}\nolimits}
+\def\sgn{\mathop{\rm sgn}\nolimits}
+
+
+\newcommand{\dif}{\, \mathrm{d}}
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+\newcommand{\toM}{\overset{m}{\to}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Lecture \#21}
+\rhead{November 9, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{remark}{Remark}
+
+
+\begin{document}
+
+\begin{definition}
+  
+  Let \( (X, \B, \mu) \) be a measure space (and will always be implicitly assumed).  
+  Let \( f \geq 0 \) be a nonnonegative measurable function. Then define
+    \[
+        \int f \dif \mu := \sup_{\phi} \left\{ \int \phi \dif \mu \right\}
+    \]
+  where \( 0 \leq \phi \leq f \) is a simple function. 
+\end{definition}
+
+\begin{prop}
+
+  Note that the following comes from the definition above:
+    \begin{enumerate}[label = (\arabic{*})]
+      \item If \( c \geq 0 \), then \( \displaystyle \int cf  = c \int f \).
+      \item If \( 0 \leq f \leq g \), then \( \displaystyle \int f \leq \int g \).
+    \end{enumerate}
+
+\end{prop}
+
+\begin{remark}
+    We will prove the linearity of integrals in a general measure space i.e., for any \( \alpha, \beta \in \R \), we have that 
+      \[
+        \int \alpha f + \int \beta g = \alpha \int f + \beta \int g.
+      \]
+
+\end{remark}
+
+\begin{thm}[11.11, Fatuo's Lemma]
+
+    Let \( \{f_n\} \) be a sequence of nonnegative measurable functions. 
+    Suppose that \( f_n \to f \) almost everywhere on \( E \in \B \).
+    Then 
+      \[
+          \int_{E} f \dif \mu \leq \varliminf_{n \to \infty} \int_{E} f_n.
+      \]
+        \begin{proof}
+          Without loss of generality, we may assume that \( f_n \to f \) everywhere for each \( x \in E \). 
+          We want to show that for any simple function \( 0 \leq \phi \leq f \), we have 
+            \[
+                \int_{E} \phi \dif \mu \leq \varliminf_{n \to \infty} \int_{E} f_n \dif \mu.
+            \] 
+          We can write the simple function \( \phi \) in its canonical representation i.e.,
+            \[
+                \phi(x) = \sum_{i=1}^{n} c_i \chi_{E_{i}}
+            \]
+          for \( c_i \in \R \).
+
+          We have two cases to show: (i) If \( \displaystyle \int_{E} \phi = \infty \), then \( \displaystyle \int_{E} f_n \to \infty \).
+
+          Then this means that there exists \( i \in \N \) such that \( \mu \left( E_i \cap E\right) = \infty \). 
+          For notation, let \( a = c_i \) and \( A = E_i \cap E \).
+          Consider the set 
+            \[
+              A_n = \left\{ x \in E : f_k(x) > a, \ \text{for all} \ k \geq n\right\}.  
+            \]
+          We can note two things:
+            \begin{enumerate}[label = (\arabic{*})]
+              \item The sequence \( \{A_n\} \) is an increasing sequence i.e., \( A_{n+1} \supset A_{n} \),
+              \item And \( \displaystyle A = \bigcup_{n=1}^{\infty} A_n \).
+            \end{enumerate}
+          Since \( \mu(A) = \infty \) and \( \{A_n\} \) is an increasing sequence (i.e., the measure of each subsequence \(A_n\) is increasing), we know that \( \mu(A_n) \to \infty \).
+          This implies that 
+            \[  
+                \int_{E} f_n \geq a \cdot \mu(A_n)
+            \]
+          From this, we know that 
+            \[
+                \lim_{n \to \infty} = \infty = \int_{E} \phi
+            \]
+          and completes this case.
+
+          For case (ii), we will suppose \( \displaystyle \int_{E} \phi < \infty \). Define the set 
+            \[  
+                A = \left\{ x \in E: \phi(x) > 0 \right\} \in \B 
+            \]
+          which has \( \mu(A) < \infty \) because \( A \subset E \) and \( E \) has finite measure as well. 
+
+          Let \( \epsilon > 0 \) be chosen, and let \( M \) be equal to the max of \( \phi \).
+          For this fixed \( \epsilon \), we can construct a sequence of sets such that 
+            \[
+                A_n = \left\{  x \in E : f_k(x) > (1 - \epsilon) \phi(x), \ \text{for all} \ k \geq n \right\}.
+            \]
+          Since \( f_n \to f \) on \(E \), we know that \( \{A_n\} \) is an increasing sequence as in case (i), and also \( \displaystyle \lim_{n \to \infty} A_n = A \subset \bigcup_{n=1}^{\infty} A_n \).
+          In other words, \( A \setminus A_n = A \cap A_n^{\C} \) and the sequence \( \{ A \setminus A_n\} \) is decreasing which means that 
+            \[
+                \bigcap_{n=1}^{\infty} \left( A \setminus A_n \right) = \emptyset.
+            \]
+          This implies that \( \displaystyle \lim_{n \to \infty} \mu(A \setminus A_n) = 0 \). 
+          So for our fixed \( \epsilon \), there exists \( n \in \N \) such that \( \mu(A \setminus A_n) < \epsilon \).
+          Then for all \( k \geq n \),
+            \begin{align*}
+              \int_{E} f_k &\geq \int_{A_k} \geq \int_{A_{k}} (1 - \epsilon) \phi(x) \\
+              &\geq (1 - \epsilon) \int_{E} \phi - \int_{A \setminus A_{k}} \phi 
+            \end{align*}
+          and so it follows that 
+            \begin{align*}
+              (1- \epsilon) \int_{A_{k}} \phi + \int_{A \setminus A_{k}} \phi  
+              &\geq (1 - \epsilon) \int_{A} \phi \\
+              &\geq \int_{E} \phi - \epsilon \left( \int_{E} \phi + M \right).
+            \end{align*}
+          Thus, from the definition of \( \liminf \),
+            \[
+                \varliminf_{n \to \infty} \int_{E} f_n \geq int_{E} \phi - \epsilon \left( \int_{E} \phi + M \right)
+            \]
+          and since \( \epsilon \) was arbitrary,
+            \[ \varliminf_{n \to \infty} \int_{E} f_n \geq \int_{E} \phi. \]
+        \end{proof}
+
+\end{thm}
+
+\begin{thm}[11.12, Monotone Convergence Theorem]
+
+  Let \( \{f_n\} \) be a sequence of nonnegative measurable functions such that \( f_n \to f \) almost everywhere.
+  Suppose that for all \( n \in \N \), \( f_n \leq f \).
+  Then
+    \[
+        \int f = \lim_{n \to \infty} \int f_n.
+    \]  
+      \begin{proof}
+        By monotonicity, since \( f_n \geq f \),
+          \[
+              \int f_n \leq \int f.
+          \]
+        Then by Fatuo's lemma,
+          \[
+              \varlimsup_{n \to \infty} \int f_n \leq \int f \leq \varliminf_{n \to \infty} \int f_n.
+          \]
+      \end{proof}
+\end{thm}
+
+
+\begin{prop}[11.13, Linearity]
+
+  If \( f, g \geq 0 \) and \( a,b \geq 0 \), then
+    \[  
+        \int af + \int bg = a \int f + b \int g.
+    \]
+  We have \( \displaystyle \int f \geq 0 \) with equality if and only if \( f = 0 \) almost everywhere. 
+
+\end{prop}
+
+\begin{definition}
+      Let \( f \geq 0 \). 
+      
+        \begin{enumerate}[label = (\arabic{*})]
+          \item Then \( f \) is called integrable over \( E \in \B \) if
+            \[
+                \int f \dif \mu < \infty
+            \]
+          or \( f \in L^1(E) \), \( f \in L^1(\mu) \), or \( f \in L^1(X, \mu) \).
+          \item A measurable function \( f \) is called integrable if \( f^+ \) and \( f^- \)are integrable. In this case.
+            \[
+                \int_{E} f := \int_{E} f^+ \int_{E} f^-.
+            \]
+        \end{enumerate}
+
+\end{definition}
+
+\begin{prop}
+
+  Let \( f,g \in L^1(X, \mu) \).
+  Then we have 
+    \begin{enumerate}[label = (\arabic{*})]
+      \item \( \displaystyle \int_{E} af + bg = a \int_{E} f + b \int_{E} g \).
+      \item If \( \abs{h} \leq \abs{f} \) and \( h \) is measurable, then
+       \( h \in L^1(X, \mu )\).
+       \item If \( f \geq g \) almost everywhere, then \( \displaystyle \int f \geq \int g \).
+    \end{enumerate}
+
+\end{prop}
+
+\begin{thm}[11.16, Lesbesgue Convergence Theorem]
+
+    Let \( f \in L^1(X, \mu) \) and suppose \( \{f_n\} \) is a sequence of measurable functions such that \( \abs{f_n(x) \leq g } \) and such that almost everywhere, \( f_n(x) \to f \) for \( x \in E \). Then
+      \[  
+          \int_{E} f = \lim_{n \to \infty} f_n.
+      \]
+  
+\end{thm}
+
+\subsection*{Section 11.3 General Convergence Theorems}
+
+\begin{definition}
+  We say \( \{\mu_{n}\}_{n=1}^{\infty} \) converges to \( \mu \) setwisely if \( \mu_n(A) \to \mu(A) \) for all \( A \in \B \).
+\end{definition}
+
+\begin{prop}
+  
+  Let \( \{\mu_n\} \) be a sequence of measures which converges setwisely to \( \mu \), and \( \{f_n\} \) be nonnegative and converge to \( f \) pointwise. Then
+    \[
+        \int f \dif \mu = \varliminf \int f_n \dif \mu.
+    \]
+\end{prop}
+\end{document}
