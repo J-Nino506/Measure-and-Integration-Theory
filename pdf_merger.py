@@ -7,11 +7,18 @@ print("Running pdf_merge.py...")
 root_dir = os.getcwd()
 lecture_dir = os.path.join(root_dir, "lectures")
 
+# Define a custom sorting function for the week folders
+def sort_week_folders(folder_name):
+    try:
+        return int(folder_name.split("-")[1])
+    except ValueError:
+        return float('inf')  # Assign a very large number for non-numeric folders
+
 # Create a PdfFileMerger object
 merger = PdfMerger()
 
 # Loop through each subfolder and add its PDF files to the merger
-for week_folder in sorted(os.listdir(lecture_dir)):
+for week_folder in sorted(os.listdir(lecture_dir), key = sort_week_folders):
     week_path = os.path.join(lecture_dir, week_folder)
     if os.path.isdir(week_path):
         for file in sorted(os.listdir(week_path)):
@@ -31,7 +38,7 @@ homework_dir = os.path.join(root_dir, "homeworks")
 merger = PdfMerger()
 
 # Loop through each subfolder and add its PDF files to the merger
-for week_folder in sorted(os.listdir(homework_dir)):
+for week_folder in sorted(os.listdir(homework_dir), key = sort_week_folders):
     week_path = os.path.join(homework_dir, week_folder)
     if os.path.isdir(week_path):
         for pdf_file in sorted(os.listdir(week_path)):
