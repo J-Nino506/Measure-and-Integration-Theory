@@ -115,7 +115,7 @@
       Is \( f \) of bounded variation on \( [-1,1] \)?
 
           \begin{proof}
-            
+            No, this function is not of bounded variation. 
           \end{proof}
     \item  Not assigned. 
   \end{enumerate}
@@ -127,7 +127,31 @@
 
   The Cantor ternary function (Problem 2.48) is continuous and monotone but not absolutely continuous. 
     \begin{proof}
-      
+      By Problem 2.48, the Cantor function is continuous and monotone on \( [0,1] \).
+      Thus, we must show that the Cantor function \( f \) is not absolutely continuous. 
+      By way of contradiction, suppose that \( f \) is indeed absolutely continuous on \( [0,1] \).
+      By Theorem 5.14, for any \( x \in [0,1] \), \( f \) can be written as an indefinite integral i.e.,
+        \[
+            f(x) = \int_{0}^{x} f'(t) \dif t + f(0)
+        \]
+      or, equivalently,
+        \[
+          f(x) - f(0) = \int_{0}^{x} f'(t) \dif t.
+        \]
+      First, we will show that the Cantor set has measure \( 0 \). 
+      Let \( \{C_n\} \) represent the sequence of Cantor sets where \( \displaystyle C_0 = [0,1] \), \( \displaystyle C_1 = \left[ 0, \frac{1}{3} \right] \cup \left[ \frac{2}{3}, 1 \right] \), and so on. 
+      Note that the Cantor is represented by \( \displaystyle C = \bigcap_{n=1}^{\infty} C_n \).
+      We can see that the measure of the \( n^{\text{th}} \) cantor set is \( \displaystyle m \left(C_n\right) = \left( \frac{2}{3} \right)^{n} \), and that \( \{C_n\} \) is a decreasing sequence of measurable sets.
+       So we can apply Proposition 3.14 and say that 
+        \[
+              \lim_{n \to \infty} m(C_n) = 0 = m \left( \bigcap_{n=1}^{\infty} C_n \right) = m(C)
+        \]
+      and so the measure of the Cantor set is \( 0 \). By definition of the function, \( f \) is constant if an element is not in the Cantor set. 
+      Thus \( f \) is constant on \( [0,1] \) almost everywhere and so \( f'(x) = 0 \) almost everywhere as well (i.e., for all \( x \in [0,1] \setminus C \)). However, suppose that \( x = 1 \). Then we have that 
+        \[
+          f(1) - f(0) = 1 \neq \int_{0}^{x} f'(t) \dif t = 0
+        \]        
+      which contradicts Theorem 5.14. Thus the Cantor function \( f \) is not absolutely continuous. 
     \end{proof}
 \end{problem}
 
@@ -141,7 +165,39 @@
     \item  Show that an absolutely continuous function \( f \) satisfies a Lipschitz condition if and only \( \abs{f'} \) is bounded. 
     
       \begin{proof}
-        
+        We will show a forward and reverse implication. Let \( f \) be an absolutely continuous function on an interval \( I \subset \R \).
+          \begin{enumerate}
+            \item[(\(\Rightarrow\))] First, suppose that \( f \) satisfies a Lipschitz condition.  
+            Note that the definition of the derivative says that 
+              \[
+                  f'(x) = \lim_{y \to x}  \frac{f(y) - f(x)}{y - x}.
+              \]
+            Because \( f \) satisfies a Lipschitz condition, there exists \( M \in \R \) such that 
+              \[
+                 \abs{f(x) - f(y)} \leq M \abs{x - y} 
+              \]
+            or 
+              \[
+                 \frac{\abs{f(x) - f(y)}}{\abs{x - y}}  \leq M.
+              \]
+            It can be shown readily that 
+              \[
+                 \abs{f'(x)} = \lim_{y \to x}  \abs{\frac{f(y) - f(x)}{y - x}}
+              \]
+            and so we can conclude that 
+              \[
+                  \abs{f'(x)} \leq M
+              \]
+            and therefore \( f' \) is bounded.
+            \item[(\(\Leftarrow\))] We proceed by contraposition, and so first suppose that \( f \) does not satisfy the Lipschitz condition. So for any \( M > 0\), there exists \( x,y \in I \) such that \( \abs{f(x) - f(y)} > M \abs{x - y} \).
+            equivalently, 
+              \[  
+                  \abs{\frac{f(x) - f(y)}{x - y}}> M.
+              \]
+            Because \( f \) is absolutely continuous and therefore continuous on \( I \), we can apply the Mean Value Theorem. 
+            Thus, there exists \( c \in I \) such that \( \abs{f'(c)} > M \) which completes the proof.
+          \end{enumerate}
+  
       \end{proof}
   \end{enumerate}
     
