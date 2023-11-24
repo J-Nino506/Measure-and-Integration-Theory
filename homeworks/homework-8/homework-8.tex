@@ -115,7 +115,23 @@
       Is \( f \) of bounded variation on \( [-1,1] \)?
 
           \begin{proof}
-            No, this function is not of bounded variation. 
+            It will suffice to show that the function is not of bounded variation on \( [0,1] \) as the function is symmetric across the y-axis and thus the same argument holds for \( [-1, 1] \).
+            Consider the following subdivision/partition \( \mathcal{P} \) of \( [0, 1] \):
+              \[
+                   0 < \sqrt{\frac{1}{\pi n}} < \cdots < \sqrt{\frac{2}{\pi(1 + 4n)}} < 1
+              \]
+            for any \( n \in \N \). Note that we picked these points because \(\)
+              \[
+                  f\left( \sqrt{\frac{1}{\pi n}}  \right) = 0 \quad \text{and} \quad f \left(  \sqrt{\frac{2}{\pi(1 + 4n)}}\right) = 1
+              \]
+            since \( \displaystyle \sin \left( \frac{1}{x^2}\right) = 1\) when \( \displaystyle x = \sqrt{\frac{1}{\pi n}} \) and \( \displaystyle \sin \left( \frac{1}{x^2}\right) = 1 \) when \( \displaystyle x = \frac{2}{\pi(1 + 4n)} \).
+
+             Additionally, note that the range of \(f\) is \( [0,1] \).
+             When a point \( x \in [0, 1] \) can be written as \( \displaystyle \sqrt{\frac{1}{\pi n}}\) for some \( n \in \N \), the variation of \( f \) across all of these points is \( 0 \). The maximum of \( f \) is \( 1 \) and so this means the total variation of \( f \) is determined by \( x^2 \) where \( \displaystyle \sin \left( \frac{1}{x^2}  \right) = 1 \). So we have that 
+              \[
+                  T_f = \sum_{n=1}^{k} \abs{\left(\sqrt{\frac{2}{\pi(1 + 4n)}}\right)^{2}} = \sum_{n=1}^{k} \frac{2}{\pi(1 + 4n)} = \frac{2}{\pi} \sum_{i=1}^{k} \frac{1}{1 + 4n}
+.              \]
+            The series on the right-hand side is of a form similar to the harmonic series so as \( k \to \infty \), this means \( T_f \to \infty \). Therefore, the function \( f \) is not of bounded variation. 
           \end{proof}
     \item  Not assigned. 
   \end{enumerate}
