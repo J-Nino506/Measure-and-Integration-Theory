@@ -59,6 +59,8 @@
 \def\num{\mathop{\#}\limits}
 \def\cl{\mathop{\rm Cl}\nolimits}
 \def\lub{\mathop{\rm lub}\nolimits}
+\def\sgn{\mathop{\rm sgn}\nolimits}
+
 
 
 \newcommand{\proj}{\operatorname{proj}}
@@ -109,10 +111,32 @@
             \[
                 \int fg = \norm{g}_{1} \cdot \norm{f}_{\infty}.  
             \]
+
+                \begin{proof}
+                    Let \( g \) be an integrable function on \( [0,1] \). This brings two cases: (i) \( \norm{g}_1 = 0 \) or (ii) \( \norm{g}_1 \neq 0 \). 
+                    For case (i), if \( \norm{g}\), then \( g = 0 \) almost everywhere. Thus, let \( f = 1 \) which gives us that 
+                        \[
+                            \int 1 \cdot g = \int g = 0 = \norm{g}_1 \cdot \norm{f}_{\infty} . 
+                        \]
+                    Now suppose \( \norm{g}_1 \neq 0 \). Define \( f = \sgn{g} \). Then \( f \) is a bounded and measurable function, \( \norm{f}_{\infty} = 1 \), and thus
+                        \[
+                            \int fg = \int \abs{g} =  \norm{g}_{1} = \norm{g} \norm{f}_{\infty} .
+                        \]
+                    So having exhausted all cases, this completes the proof. 
+                \end{proof}
         \item Let \( g \) be a bounded measurable function. Show that for each \( \epsilon > 0 \), there is an integrable function \( f \) such that 
             \[
                 \int fg \geq \left( \norm{g}_{\infty} - \epsilon \right) \norm{f}_{1}. 
             \]
+                \begin{proof}
+                    Let \( g \) be a bounded measurable function, and let \( \epsilon > 0 \) be chosen. 
+                    Define the set \( E = \left\{  x: g(x) > \norm{g}_{\infty} - \epsilon \right\}\) and the function \( f \) by \( f(x) = \chi_{E}(x) \). 
+                    Then we have that
+                        \begin{align*}
+                            \int fg = \int_{E} g \geq \left(\norm{g}_{\infty} - \epsilon \right) m(E) = \left(\norm{g}_{\infty} - \epsilon \right) \cdot \norm{f}_{1}
+                        \end{align*}
+                    and which completes the proof. 
+                \end{proof}
     \end{enumerate}
 
 
@@ -122,6 +146,17 @@
 
     \begin{enumerate}[label = (\alph{*})]
         \item Show that \( \mu(E_1 \bigtriangleup E_2) = 0 \) implies \( \mu(E_1) = \mu(E_2) \) provided that \( E_1, E_2 \in \B  \). 
+            \begin{proof}
+                Let \( E_1, E_2 \in \B \) and suppose that \( \mu(E_1 \bigtriangleup E_2) = 0 \). This means that
+                    \[
+                        \mu(E_1 \setminus E_2) = \mu(E_2 \setminus E_1) = 0.
+                    \]
+                From this, we can write \( E_1 \) and \( E_2 \) as disjoint unions and show that 
+                    \begin{align*}
+                        \mu(E_1) = \mu(E_1 \setminus E_2) + \mu(E_1 \cap E_2) =  \mu(E_2 \setminus E_1) + \mu(E_1 \cap E_2) =  \mu(E_2)
+                    \end{align*}
+                which shows the desired result.
+            \end{proof}
         \item Not assigned.
     \end{enumerate}
 
