@@ -1,0 +1,222 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,fullpage,graphicx,fancyhdr,enumerate,amsthm,amssymb,tikz,tikz-cd,color,pgfplots,tabularx,amsfonts,amscd}
+\usepackage{enumitem}
+\usetikzlibrary{arrows,chains,matrix,positioning,scopes}
+\pgfplotsset{compat=1.13}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{7pt}
+\newcommand{\bsnl}{\bigskip\newline}
+\pagestyle{fancy}
+\usepackage[paper=a4paper, margin = 1in]{geometry}
+\usepackage{hyperref}% http://ctan.org/pkg/hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\hypersetup{ % colors hyperlinks with colors to make noticeable but is not an ugly green box like default
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage[mathscr]{euscript}\usepackage{pifont}
+\usepackage{cleveref}
+\usepackage{parskip}
+\usepackage[makeroom]{cancel}
+
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\aa}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\dd}{\mathbf{d}}
+\newcommand{\FF}{\mathbf{F}}
+\newcommand{\ii}{\mathbf{i}}
+\newcommand{\jj}{\mathbf{j}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\ww}{\mathbf{w}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\D}{\mathbb{D}}
+
+\def\dim{\mathop{\rm dim}\nolimits}
+\def\image{\mathop{\rm Im}\nolimits}  
+\def\interior{\mathop{\rm Int}\nolimits}
+\def\kernel{\mathop{\rm Ker}\nolimits}
+\def\cokernel{\mathop{\rm Coker}\nolimits}
+\def\bd{\mathop{\rm Bd}\nolimits}
+\def\ext{\mathop{\rm Ext}\nolimits}
+\def\num{\mathop{\#}\limits}
+\def\cl{\mathop{\rm Cl}\nolimits}
+\def\lub{\mathop{\rm lub}\nolimits}
+
+
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\pa}{\partial}
+\newcommand{\ol}{\overline{}}
+
+
+\newcommand{\degree}{^{\circ}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\toM}{\overset{m}{\to}}
+
+
+\newcommand{\upint}[2]{
+  \overline{\int_{#1}^{#2}}
+}
+\newcommand{\lowint}[2]{
+  \underline{\int_{#1}^{#2}}
+}
+\newcommand{\dif}{\, \mathrm{d}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+
+\pagestyle{fancy}
+\lhead{Math 6421: Measure Theory}
+\chead{\bf Jose Nino: Homework \#8}
+\rhead{November 2, 2023}
+\cfoot{Page \thepage}
+% \setlength{\headheight}{10pt}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+
+
+\begin{document}
+
+\begin{problem}[5.10]
+
+  \begin{enumerate}[label = (\alph{*})]
+    \item  Let \( f \) be defined  by
+      \[
+          f(x) = \begin{cases}
+            0 & x = 0 \\
+            x^2 \sin \left( \frac{1}{x^2} \right) & x \neq 0.
+          \end{cases}
+      \]
+      Is \( f \) of bounded variation on \( [-1,1] \)?
+
+          \begin{proof}
+            It will suffice to show that the function is not of bounded variation on \( [0,1] \) as the function is symmetric across the y-axis and thus the same argument holds for \( [-1, 1] \).
+            Consider the following subdivision/partition \( \mathcal{P} \) of \( [0, 1] \):
+              \[
+                   0 < \sqrt{\frac{1}{\pi n}} < \cdots < \sqrt{\frac{2}{\pi(1 + 4n)}} < 1
+              \]
+            for any \( n \in \N \). Note that we picked these points because \(\)
+              \[
+                  f\left( \sqrt{\frac{1}{\pi n}}  \right) = 0 \quad \text{and} \quad f \left(  \sqrt{\frac{2}{\pi(1 + 4n)}}\right) = 1
+              \]
+            since \( \displaystyle \sin \left( \frac{1}{x^2}\right) = 1\) when \( \displaystyle x = \sqrt{\frac{1}{\pi n}} \) and \( \displaystyle \sin \left( \frac{1}{x^2}\right) = 1 \) when \( \displaystyle x = \frac{2}{\pi(1 + 4n)} \).
+
+             Additionally, note that the range of \(f\) is \( [0,1] \).
+             When a point \( x \in [0, 1] \) can be written as \( \displaystyle \sqrt{\frac{1}{\pi n}}\) for some \( n \in \N \), the variation of \( f \) across all of these points is \( 0 \). The maximum of \( f \) is \( 1 \) and so this means the total variation of \( f \) is determined by \( x^2 \) where \( \displaystyle \sin \left( \frac{1}{x^2}  \right) = 1 \). So we have that 
+              \[
+                  T_f = \sum_{n=1}^{k} \abs{\left(\sqrt{\frac{2}{\pi(1 + 4n)}}\right)^{2}} = \sum_{n=1}^{k} \frac{2}{\pi(1 + 4n)} = \frac{2}{\pi} \sum_{i=1}^{k} \frac{1}{1 + 4n}
+.              \]
+            The series on the right-hand side is of a form similar to the harmonic series so as \( k \to \infty \), this means \( T_f \to \infty \). Therefore, the function \( f \) is not of bounded variation. 
+          \end{proof}
+    \item  Not assigned. 
+  \end{enumerate}
+
+    
+\end{problem}
+
+\begin{problem}[5.15]
+
+  The Cantor ternary function (Problem 2.48) is continuous and monotone but not absolutely continuous. 
+    \begin{proof}
+      By Problem 2.48, the Cantor function is continuous and monotone on \( [0,1] \).
+      Thus, we must show that the Cantor function \( f \) is not absolutely continuous. 
+      By way of contradiction, suppose that \( f \) is indeed absolutely continuous on \( [0,1] \).
+      By Theorem 5.14, for any \( x \in [0,1] \), \( f \) can be written as an indefinite integral i.e.,
+        \[
+            f(x) = \int_{0}^{x} f'(t) \dif t + f(0)
+        \]
+      or, equivalently,
+        \[
+          f(x) - f(0) = \int_{0}^{x} f'(t) \dif t.
+        \]
+      First, we will show that the Cantor set has measure \( 0 \). 
+      Let \( \{C_n\} \) represent the sequence of Cantor sets where \( \displaystyle C_0 = [0,1] \), \( \displaystyle C_1 = \left[ 0, \frac{1}{3} \right] \cup \left[ \frac{2}{3}, 1 \right] \), and so on. 
+      Note that the Cantor is represented by \( \displaystyle C = \bigcap_{n=1}^{\infty} C_n \).
+      We can see that the measure of the \( n^{\text{th}} \) cantor set is \( \displaystyle m \left(C_n\right) = \left( \frac{2}{3} \right)^{n} \), and that \( \{C_n\} \) is a decreasing sequence of measurable sets.
+       So we can apply Proposition 3.14 and say that 
+        \[
+              \lim_{n \to \infty} m(C_n) = 0 = m \left( \bigcap_{n=1}^{\infty} C_n \right) = m(C)
+        \]
+      and so the measure of the Cantor set is \( 0 \). By definition of the function, \( f \) is constant if an element is not in the Cantor set. 
+      Thus \( f \) is constant on \( [0,1] \) almost everywhere and so \( f'(x) = 0 \) almost everywhere as well (i.e., for all \( x \in [0,1] \setminus C \)). However, suppose that \( x = 1 \). Then we have that 
+        \[
+          f(1) - f(0) = 1 \neq \int_{0}^{x} f'(t) \dif t = 0
+        \]        
+      which contradicts Theorem 5.14. Thus the Cantor function \( f \) is not absolutely continuous. 
+    \end{proof}
+\end{problem}
+
+\begin{problem}[5.20] 
+  A function \( f \) is said to satisfy a Lipschitz condition on an interval if there is a constant \( M \) such that \( \abs{f(x) - f(y)} \leq M \abs{x - y} \) for all \( x \) and \( y \) in the interval. 
+  \begin{enumerate}[label = (\alph{*})]
+    \item Show that a function satisfying a Lipschitz condition is absolutely continuous. 
+      \begin{proof}
+        Not assigned.
+      \end{proof}
+    \item  Show that an absolutely continuous function \( f \) satisfies a Lipschitz condition if and only \( \abs{f'} \) is bounded. 
+    
+      \begin{proof}
+        We will show a forward and reverse implication. Let \( f \) be an absolutely continuous function on an interval \( I \subset \R \).
+          \begin{enumerate}
+            \item[(\(\Rightarrow\))] First, suppose that \( f \) satisfies a Lipschitz condition.  
+            Note that the definition of the derivative says that 
+              \[
+                  f'(x) = \lim_{y \to x}  \frac{f(y) - f(x)}{y - x}.
+              \]
+            Because \( f \) satisfies a Lipschitz condition, there exists \( M \in \R \) such that 
+              \[
+                 \abs{f(x) - f(y)} \leq M \abs{x - y} 
+              \]
+            or 
+              \[
+                 \frac{\abs{f(x) - f(y)}}{\abs{x - y}}  \leq M.
+              \]
+            It can be shown readily that 
+              \[
+                 \abs{f'(x)} = \lim_{y \to x}  \abs{\frac{f(y) - f(x)}{y - x}}
+              \]
+            and so we can conclude that 
+              \[
+                  \abs{f'(x)} \leq M
+              \]
+            and therefore \( f' \) is bounded.
+            \item[(\(\Leftarrow\))] We proceed by contraposition, and so first suppose that \( f \) does not satisfy the Lipschitz condition. So for any \( M > 0\), there exists \( x,y \in I \) such that \( \abs{f(x) - f(y)} > M \abs{x - y} \).
+            equivalently, 
+              \[  
+                  \abs{\frac{f(x) - f(y)}{x - y}}> M.
+              \]
+            Because \( f \) is absolutely continuous and therefore continuous on \( I \), we can apply the Mean Value Theorem. 
+            Thus, there exists \( c \in I \) such that \( \abs{f'(c)} > M \) which completes the proof.
+          \end{enumerate}
+  
+      \end{proof}
+  \end{enumerate}
+    
+\end{problem}
+
+\end{document}
