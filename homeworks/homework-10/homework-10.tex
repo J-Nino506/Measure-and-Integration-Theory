@@ -105,23 +105,110 @@
 \begin{problem}[11.10]
 
     Prove Proposition 11.7 which is stated follows:
-        \begin{prop}[11.7]
-            Let \( f \) be an nonnegative measurable function. 
-  Then there is a sequence \( \{\phi_n\} \) of simple functions with \( \phi_{n+1} \geq \phi_n \) such that \( \displaystyle f = \lim_{n \to \infty} \phi_n \) at each point of \( X \), If \( f \) is defined on a  \( \sigma \)-finite measure space, then we may choose the functions \( \phi_n \) so that each vanishes outside a set of finite measure. 
-        \end{prop}
+\begin{prop}[11.7]
+Let \( f \) be an nonnegative measurable function. 
+Then there is a sequence \( \{\phi_n\} \) of simple functions with \( \phi_{n+1} \geq \phi_n \) such that \( \displaystyle f = \lim_{n \to \infty} \phi_n \) at each point of \( X \). If \( f \) is defined on a  \( \sigma \)-finite measure space, then we may choose the functions \( \phi_n \) so that each vanishes outside a set of finite measure.
+    \begin{proof}
+        Let \( f \) be a nonnegative measurable function. Per the hint, for every pair of integers \( (n,k) \), let 
+            \[
+                E_{n,k} = \{ x: k 2^{-n} \leq f(x) < (k+1)2^{-n} \}, \, \text{and set} \ \phi_n = 2^{-n} \sum_{k=0}^{2^{2n}} k \chi_{E_{n,k}}.
+            \]
+        Let \( (n,k) \) be any arbitrary pair of each integers. 
+        Then because \( f \) is measurable, each \( E_{n,k} \) is a measurable set and so \( \phi_n \) is a simple function defined on each \( E_{n,k} \).
+            First, we will note that
+            \[
+                E_{n,k} = E_{n+1, 2k} \cup E_{n+1, 2k+1}.
+            \]  
+            Let \( x \in E_{n,k} \). This means \( \phi_n(x) = k 2^{-n} \). 
+            Now suppose \( x \in E_{n+1, 2k} \).
+            Then we know that 
+                \[
+                    \phi_{n+1}(x) = (2k)2^{-(n+1)} = k2^{-n} = \phi_n(x). 
+                \]
+            Lastly, suppose that \( x \in E_{n+1, 2k+1} \). Then we know that
+                \[
+                    \phi_{n+1}(x) = (2k+1) 2^{-(n+1)} > (2k)2^{-(n+1)} \phi_n(x). 
+                \]
+            Thus, in all cases, \( \phi_n(x) \leq \phi_{n+1}(x) \).
+            
+            To prove pointwise convergence, let \( x \in X \) be any point. This brings two cases: either (i) \( f(x) < \infty\) or (ii) \( f(x) = \infty \).
+            First, assume that \( f(x) < \infty \). Because of how we defined \( \phi_n \) and \( E_{n,k} \), we know that
+                \[
+                    \abs{f(x) - \phi_n(x)} \leq 2^{-n}  
+                \]
+            will always exist with \( n \in \N \) large enough. 
+            But because \( (n,k) \) are chosen arbitrarily, we have that \( \displaystyle f = \lim_{n \to \infty} \phi_n \).
+            Now, suppose that \( f(x) = \infty \). Then 
+                \[
+                    \phi_n(x) = (2^{2n} + 1)2^{-n} = 2^{n} + \frac{1}{2^{n}} > 2^{n}. 
+                \]
+            So as \( n \to \infty\), \( \phi_n \to \infty \) as well and so we still have \( \displaystyle f = \lim_{n \to \infty} \phi_n \). Therefore, in all cases, we have pointwise convergence. 
+            
 
-
+        Suppose \( f \) is defined on a \( \sigma \)-finite measure space. 
+        Then \( \displaystyle X = \bigcup_{n} X_n \) with \( \mu(X_n) < \infty \) for all \( n \in \N \).
+        Define \( E_{n,k} \) the same as above but define \( \phi_n \) on the set \( \displaystyle E_{n,k} \cap \bigcup_{m=1}^{n} X_m \) i.e.,
+            \[
+                \phi_n = 2^{-n} \sum_{k=0}^{2^{2n}} k \chi_{E_{n,k} \cap \bigcup_{m=1}^{n} X_m}.
+            \]
+        So, by a similar argument to above, \( \phi_{n+1} \geq \phi_n \) and \( \displaystyle f = \lim_{n \to \infty} \phi_n \). 
+        However, each simple function will vanish outside of the set of finite measure, \( \displaystyle \bigcup_{m=1}^{n} X_m \).  This completes the proof.
+    \end{proof}
+\end{prop}
 \end{problem}
 
 \begin{problem}[11.22]
 
     \begin{enumerate}[label = (\alph{*})]
-        \item Let \( (X, \B, \mu) \) be a measure space and \( g \) a nonnegative measurable function on \( X \). Set \( \displaystyle vE = \int fg \dif \mu \). 
-        Show that \( v \) is a measure on \( \B \).
+        \item Let \( (X, \B, \mu) \) be a measure space and \( g \) a nonnegative measurable function on \( X \). Set \( \displaystyle \nu(E) = \int_{E} g \dif \mu \). 
+        Show that \( \nu \) is a measure on \( \B \).
+
+            \begin{proof}
+                Let \( g \) be a nonnegative measurable function on the measure space \( (X, \B, \mu) \). Set \( \displaystyle \nu(E) = \int g \dif  \). Let \( E = \emptyset \). Then certainly
+                    \[
+                        \int_{E} g  = 0
+                    \]
+                and so \( \nu(\emptyset) = 0 \).
+
+                To prove countable additivity, let \( \{E_n\} \) be a sequence of sets with \( E_i \cap E_j = \emptyset \) for any \( i \neq j \). Thus, we have then that
+                    \begin{align*}
+                        \nu \left( \bigcup_{n=1}^{\infty} E_n \right) = \int_{\bigcup_{n=1}^{\infty} E_n} g \dif \mu &= \int g \chi_{\bigcup_{n=1}^{\infty} E_n} \dif \mu \\ 
+                        &= \int \sum_{n=1}^{\infty} g \chi_{E_n} \dif \mu \\
+                        &= \sum_{n=1}^{\infty} \int g \chi_{E_n} \dif \mu \\
+                        &= \sum_{n=1}^{\infty} \int_{E} g \dif \mu \\
+                        &= \sum_{n=1}^{\infty} \nu \left( E_n \right)
+                    \end{align*}
+                which completes this proof. 
+            \end{proof}
         \item Let \(f \) be a nonnegative measurable function on \( X \). Then 
             \[
                 \int f \dif v = \int fg \dif \mu.  
             \]
+
+            \begin{proof}
+                Let \(f \) be a nonnegative measurable function on \( X \).
+                We will work through two cases: (i) \( f \) is a simple function and (ii) \( f \) is any other measurable function. 
+                Suppose \( f \) is a simple function i.e., 
+                    \[
+                        f = \sum_{n=1}^{\infty}  c_i \chi_{E_{i}}.
+                    \]
+                Using properties of simple function, we can show the following:
+                    \begin{align*}
+                        \int f \dif \mu = \sum_{i=1}^{n} c_i \nu(E_i) &= \sum_{i=1}^{n} c_i \int_{E_i} g \dif \mu  \\
+                        &= \sum_{i=1}^{n} c_i \int g \chi_{E_{i}} \dif \mu \\
+                        &= \int_{E} \sum_{i=1}^{n} c_i  g \chi_{E_{i}} \dif \mu \\
+                        &= \int_{E} fg.
+                    \end{align*}
+                Now, suppose \( f \) is any measurable but not simple function. 
+                Because \( f \) is nonnegative, there exists an increasing sequence of simple functions \( \{\phi_n\}\) such that \( \displaystyle f = \lim_{n \to \infty} \phi_n \).
+                Now take the sequence \( \{\phi_n g\} \) at each point on \( X \).
+                We have \( g \) as nonnegative and so \( \{\phi_n g \} \) is also an increasing sequence of functions and converges with \( \displaystyle fg = \lim_{n \to \infty} \phi_n g \).
+                Thus, having satisfied the properties of the Monotone Convergence Theorem, we have that
+                    \[
+                        \int fg \dif \mu = \lim_{n \to \infty} \int \phi_n g \dif \mu = \lim_{n \to \infty} \int \phi_n \dif \nu = \int f \dif \nu. 
+                    \]
+                Therefore, having exhausted all cases, this completes the proof. 
+            \end{proof}
     \end{enumerate}
 
 
